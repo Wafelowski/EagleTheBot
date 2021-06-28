@@ -1,0 +1,6 @@
+token.json
+config.json
+.vs/
+.vscode/
+node_modules
+*.code-workspace
