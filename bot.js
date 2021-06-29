@@ -9,7 +9,7 @@ var bot = {};
 //-=-=-=-=-=-=-=-
 //Load cogs
 //-=-=-=-=-=-=-=-
-const coreCogs = ["./cogs/test.js", "./cogs/kick.js"]
+const coreCogs = ["./cogs/test.js", "./cogs/moderation/purge.js", "./cogs/moderation/kick.js", "./cogs/moderation/ban.js"]
 var loadedCogs = {};
 var listeners = {};
 
