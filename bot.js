@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const {Intents} = require('discord.js');
+const sqlite = require('sqlite3');
 const client = new Discord.Client({ intents: Intents.ALL, allowedMentions: { parse: ['users', 'roles'], repliedUser: false } });
 const { exit } = require('process');
 
