@@ -118,6 +118,9 @@ bot.registerCommand("ping", async function (msg) {
   .setTimestamp()
   await msg.channel.send( {embeds: [embed] })
 });
+bot.registerCommand("cogs", async function (msg) {
+  msg.reply(`Cogs - ${loadedCogs}`)
+});
 bot.registerCommand("shutdown", async function (msg) {
   if (msg.author.id !== config.ownerID) return;
   await msg.reply('Zamykanie!');
