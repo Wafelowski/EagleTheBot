@@ -18,11 +18,11 @@ var ban = function (msg) {
         return
     }
     if (!user.kickable) {
-        msg.reply("Nie mogę wyrzucić tego użytkownika!")
+        msg.reply("Nie mogę zbanować tego użytkownika!")
         return
     }
     if (user == msg.author) {
-        msg.reply("Dlaczego chcesz wyrzucić samego siebie?")
+        msg.reply("Dlaczego chcesz zbanować samego siebie?")
         return
     }
     if (!reason) {
