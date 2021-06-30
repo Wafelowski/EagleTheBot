@@ -1,6 +1,6 @@
 token.json
 config.json
-.db/
+db/
 .vs/
 .vscode/
 node_modules
