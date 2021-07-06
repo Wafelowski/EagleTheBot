@@ -52,7 +52,8 @@ client.on('ready', () => {
       { type: 'PLAYING',  message: 'pałowanie symulator' },
       { type: 'LISTENING', message: 'AS-320' },
       { type: 'COMPETING', message: 'prawa autorskie' },
-      { type: 'PLAYING',  message: 'banowanie gier Roblox' }
+      { type: 'PLAYING',  message: 'banowanie gier Roblox' },
+      { type: 'WATCHING', message: 'polishemergencyv@gmail.com'}
   ];
 
   setInterval(() => {
