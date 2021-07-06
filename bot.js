@@ -87,12 +87,18 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
   if (!bot.ready) return;
   const addedRoles = newMember.roles.cache.filter(role => !oldMember.roles.cache.has(role.id));
 	if (!addedRoles.size > 0) return;
-  //const channel = bot.client.channels.cache.get('853208523605147659');
+  var channel;
   var guildID = oldMember.guild.id;
-  console.log("line 92")
+  if (guildID == 531961175114645534) {
+    // eslint-disable-next-line no-redeclare
+    var channel = bot.client.channels.cache.get('842395141880152095');
+  }
+  else if (guildID == 847039824321183804) {
+    // eslint-disable-next-line no-redeclare
+    var channel = bot.client.channels.cache.get('853208523605147659');
+  }
   var serverDB = new sqlite.Database(`./db/servers/${guildID}.db`, sqlite.OPEN_READWRITE);
   serverDB.all('SELECT * FROM roles WHERE role = ?', "verification", function(err, rows) {
-    console.log("line 95")
     if (err) {
       console.log(`guildMemberUpdate Error: ${err}`);
       return false;
@@ -103,33 +109,21 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
     else {
       let VerificationRole = [];
       rows.forEach( row => VerificationRole.push(`${row.roleid}`) );
-      console.log("line 105");
-      console.log(VerificationRole);
-      if (oldMember.roles.cache.some(role => role.id === VerificationRole)) {
+      if (oldMember.roles.cache.some(role => role.id == VerificationRole) == false) return;
+      if (oldMember.roles.cache.some(role => role.id == VerificationRole)) {
         const addedRoles = newMember.roles.cache.filter(role => !oldMember.roles.cache.has(role.id));
-        console.log("line 114")
         var addedRoleID = addedRoles.map(r => r.id)
         var addedRoleName = addedRoles.map(r => r.name)
         console.log(`${addedRoleID.values().next().value}`)
         if (addedRoles.size > 0) console.log(`Role "${addedRoles.map(r => r.name)}" zostały przyznane ${oldMember.displayName}.`);
         newMember.roles.remove(addedRoleID, "Anty-Alt")
         if (addedRoles.size > 0) console.log(`Rola "${addedRoleName}" zostały usunięte ${oldMember.displayName}.`);
+        channel.send( { content: `Próbowano dodać rolę ${addedRoles.map(r => r.name)} do użytkownika <@${oldMember.id}> (${oldMember.user.tag}) w trakcie weryfikacji. Została usunięta. \n------ \n<@273904398261026817>` })
       }
       serverDB.close();
       return VerificationRole;
     }
   });
-
-  if (oldMember.roles.cache.some(role => role.id === VerificationRole)) {
-    const addedRoles = newMember.roles.cache.filter(role => !oldMember.roles.cache.has(role.id));
-    console.log("line 114")
-    var addedRoleID = addedRoles.map(r => r.id)
-    var addedRoleName = addedRoles.map(r => r.name)
-    console.log(`${addedRoleID.values().next().value}`)
-    if (addedRoles.size > 0) console.log(`Role "${addedRoles.map(r => r.name)}" zostały przyznane ${oldMember.displayName}.`);
-    newMember.roles.remove(addedRoleID, "Anty-Alt")
-    if (addedRoles.size > 0) console.log(`Rola "${addedRoleName}" zostały usunięte ${oldMember.displayName}.`);
-  }
   
   // // If the role(s) are present on the old member object but no longer on the new one (i.e role(s) were removed)
 	// const removedRoles = oldMember.roles.cache.filter(role => !newMember.roles.cache.has(role.id));
