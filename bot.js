@@ -135,6 +135,7 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
         const addedRoles = newMember.roles.cache.filter(role => !oldMember.roles.cache.has(role.id));
         var addedRoleID = addedRoles.map(r => r.id)
         var addedRoleName = addedRoles.map(r => r.name)
+        if (addedRoleID == 732493824223477844) return;
         console.log(`${addedRoleID.values().next().value}`)
         if (addedRoles.size > 0) console.log(`Role "${addedRoles.map(r => r.name)}" zostały przyznane ${oldMember.displayName}.`);
         newMember.roles.remove(addedRoleID, "Anty-Alt")
