@@ -1,7 +1,8 @@
 token.json
 config.json
+db/
 .vs/
 .vscode/
 node_modules
 *.code-workspace
-cogs/!cog-template-no-comment.js
+cogs/useless/!cog-template-no-comment.js
