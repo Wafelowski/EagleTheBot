@@ -48,6 +48,10 @@ client.on('ready', () => {
       { type: 'COMPETING', message: 'Elektra vs FSV' },
       { type: 'PLAYING', message: 'PEUP 4.0 | Jutro o 18' },
       { type: 'LISTENING', message: 'Elektra GES 110' },
+      { type: 'WATCHING',  message: 'kolumnnę OPP'  },
+      { type: 'PLAYING',  message: 'pałowanie symulator'  },
+      { type: 'LISTENING', message: 'AS-320' },
+      { type: 'COMPETING', message: 'prawa autorskie' }
   ];
 
   setInterval(() => {
