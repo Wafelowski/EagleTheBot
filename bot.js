@@ -56,7 +56,7 @@ client.on('ready', () => {
 
       bot.client.user.setActivity(presence.message, { type: presence.type });
       client.user.setActivity(presence.message, { type: presence.type });
-  }, 30000);
+  }, 120000);
 
   let serversDB = new sqlite.Database('./db/servers.db', sqlite.OPEN_READWRITE | sqlite.OPEN_CREATE);
   serversDB.run(`CREATE TABLE IF NOT EXISTS servers(serverid INTEGER NOT NULL, serverowner TEXT NOT NULL)`);
