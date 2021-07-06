@@ -42,6 +42,21 @@ client.on('ready', () => {
 
   bot.client.user.setStatus('online');
   bot.client.user.setActivity('przejazdy alarmowe', { type: 'WATCHING' });
+  var state = 0;
+  const presences = [
+      { type: 'WATCHING',  message: 'przejazdy alarmowe'  },
+      { type: 'COMPETING', message: 'Elektra vs FSV' },
+      { type: 'PLAYING', message: 'PEUP 4.0 | Jutro o 18' },
+      { type: 'LISTENING', message: 'Elektra GES 110' },
+  ];
+
+  setInterval(() => {
+      state = (state + 1) % presences.length;
+      const presence = presences[state];
+
+      bot.client.user.setActivity(presence.message, { type: presence.type });
+      client.user.setActivity(presence.message, { type: presence.type });
+  }, 30000);
 
   let serversDB = new sqlite.Database('./db/servers.db', sqlite.OPEN_READWRITE | sqlite.OPEN_CREATE);
   serversDB.run(`CREATE TABLE IF NOT EXISTS servers(serverid INTEGER NOT NULL, serverowner TEXT NOT NULL)`);
