@@ -44,14 +44,15 @@ client.on('ready', () => {
   bot.client.user.setActivity('przejazdy alarmowe', { type: 'WATCHING' });
   var state = 0;
   const presences = [
-      { type: 'WATCHING',  message: 'przejazdy alarmowe'  },
+      { type: 'WATCHING',  message: 'przejazdy alarmowe' },
       { type: 'COMPETING', message: 'Elektra vs FSV' },
       { type: 'PLAYING', message: 'PEUP 4.0 | Jutro o 18' },
       { type: 'LISTENING', message: 'Elektra GES 110' },
-      { type: 'WATCHING',  message: 'kolumnnę OPP'  },
-      { type: 'PLAYING',  message: 'pałowanie symulator'  },
+      { type: 'WATCHING',  message: 'kolumnę OPP' },
+      { type: 'PLAYING',  message: 'pałowanie symulator' },
       { type: 'LISTENING', message: 'AS-320' },
-      { type: 'COMPETING', message: 'prawa autorskie' }
+      { type: 'COMPETING', message: 'prawa autorskie' },
+      { type: 'PLAYING',  message: 'banowanie gier Roblox' }
   ];
 
   setInterval(() => {
