@@ -10,7 +10,9 @@ var bot = {};
 //-=-=-=-=-=-=-=-
 //Load cogs
 //-=-=-=-=-=-=-=-
-const coreCogs = ["./cogs/setup.js", "./cogs/useless/test.js", "./cogs/moderation/purge.js", "./cogs/moderation/kick.js", "./cogs/moderation/bans.js"]
+const coreCogs = ["./cogs/setup.js", "./cogs/useless/test.js", "./cogs/moderation/purge.js", 
+"./cogs/moderation/kick.js", "./cogs/moderation/bans.js", "./cogs/moderation/blacklist.js", 
+"./cogs/tickets/faq.js"]
 var loadedCogs = {};
 var listeners = {};
 
@@ -50,10 +52,10 @@ client.on('ready', () => {
       { type: 'LISTENING', message: 'Elektra GES 110' },
       { type: 'WATCHING',  message: 'kolumnę OPP' },
       { type: 'PLAYING',  message: 'pałowanie symulator' },
-      { type: 'LISTENING', message: 'AS-320' },
+      { type: 'LISTENING', message: 'AS-420' },
       { type: 'COMPETING', message: 'prawa autorskie' },
       { type: 'PLAYING',  message: 'banowanie gier Roblox' },
-      { type: 'WATCHING', message: 'polishemergencyv@gmail.com'}
+      { type: 'WATCHING', message: 'przecieki'}
   ];
 
   setInterval(() => {
@@ -110,11 +112,11 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
 	if (!addedRoles.size > 0) return;
   var channel;
   var guildID = oldMember.guild.id;
-  if (guildID == 531961175114645534) {
+  if (guildID == "531961175114645534") {
     // eslint-disable-next-line no-redeclare
     var channel = bot.client.channels.cache.get('842395141880152095');
   }
-  else if (guildID == 847039824321183804) {
+  else if (guildID == "847039824321183804") {
     // eslint-disable-next-line no-redeclare
     var channel = bot.client.channels.cache.get('853208523605147659');
   }
