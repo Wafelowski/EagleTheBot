@@ -5,7 +5,6 @@ const client = new Discord.Client({ intents: Intents.ALL, allowedMentions: { par
 const { exit } = require('process');
 
 //BotInfo
-const moment = require("moment");
 let os = require('os')
 let cpuStat = require("cpu-stat")
 //----
