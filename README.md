@@ -10,6 +10,10 @@ Bot używany na serwerze [PolishEmergencyV](https://discord.gg/kYnKgf4na2).
 ## Instalacja
 #### **Wymagania**
 - Discord.js v13
+- Node.js v8
+
+Poszczególne komendy:
+- botinfo: moment, cpu-stat
 
 #### **Tokeny**
 Skopiuj plik config-example.json, wklej tam poprawne tokeny, a następnie zmień jego nazwę na `config.json`
