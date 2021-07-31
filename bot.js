@@ -221,7 +221,17 @@ bot.registerCommand("botinfo", async function (msg) {
       if (err) {
           return console.log(err);
       }
-      const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
+      function msToTime(ms) {
+        let seconds = (ms / 1000).toFixed(1);
+        let minutes = (ms / (1000 * 60)).toFixed(1);
+        let hours = (ms / (1000 * 60 * 60)).toFixed(1);
+        let days = (ms / (1000 * 60 * 60 * 24)).toFixed(1);
+        if (seconds < 60) return seconds + " Sek";
+        else if (minutes < 60) return minutes + " Min(s)";
+        else if (hours < 24) return hours + " Hour(s)";
+        else return days + " Day(s)"
+      }
+      ///const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
       var apii = Math.round(client.ws.ping)
       var api = apii.toString().replace("-","")
       const botinfo = new Discord.MessageEmbed()
@@ -229,7 +239,7 @@ bot.registerCommand("botinfo", async function (msg) {
           .setColor("RANDOM")
           .addField("⏳ RAM", `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} / ${(os.totalmem() / 1024 / 1024).toFixed(2)} MB`, true)
           .addField("📡 API", `${api}ms`, true)
-          .addField("⌚️ Uptime ", `${duration}`, true)
+          .addField("⌚️ Uptime ", `${msToTime(client.uptime)}`, true)
           .addField("📁 Użytkownicy", `${client.users.cache.size}`, true)
           .addField("📁 Serwery", `${client.guilds.cache.size}`, true)
           .addField("📁 Kanały ", `${client.channels.cache.size}`, true)
