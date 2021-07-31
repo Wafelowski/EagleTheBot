@@ -4,6 +4,12 @@ const sqlite = require('sqlite3');
 const client = new Discord.Client({ intents: Intents.ALL, allowedMentions: { parse: ['users', 'roles'], repliedUser: false } });
 const { exit } = require('process');
 
+//BotInfo
+const moment = require("moment");
+let os = require('os')
+let cpuStat = require("cpu-stat")
+//----
+
 const config = require('./config.json');
 var bot = {};
 
@@ -208,6 +214,37 @@ bot.registerCommand("shutdown", async function (msg) {
   if (msg.author.id !== config.ownerID) return;
   await msg.reply('Zamykanie!');
   exit()
+});
+
+bot.registerCommand("botinfo", async function (msg) {
+  cpuStat.usagePercent(function(err, percent) {
+      if (err) {
+          return console.log(err);
+      }
+      const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
+      var apii = Math.round(client.ws.ping)
+      var api = apii.toString().replace("-","")
+      const botinfo = new Discord.MessageEmbed()
+          .setTitle("**Bot Info:**")
+          .setColor("RANDOM")
+          .addField("⏳ RAM", `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} / ${(os.totalmem() / 1024 / 1024).toFixed(2)} MB`, true)
+          .addField("📡 API", `${api}ms`, true)
+          .addField("⌚️ Uptime ", `${duration}`, true)
+          .addField("📁 Użytkownicy", `${client.users.cache.size}`, true)
+          .addField("📁 Serwery", `${client.guilds.cache.size}`, true)
+          .addField("📁 Kanały ", `${client.channels.cache.size}`, true)
+          .addField("👾 Discord.js", `v13.0.0`, true)
+          //Disabled due to long name
+          //.addField("👾 Discord.js", `v${Discord.version}`, true)
+          .addField("🔰 Node", `${process.version}`, true)
+          .addField("🤖 CPU", `\`\`\`md\n${os.cpus().map(i => `${i.model}`)[0]}\`\`\``)
+          .addField("🤖 Zużycie CPU", `\`${percent.toFixed(2)}%\``, true)
+          .addField("🤖 Architektura", `\`${os.arch()}\``, true)
+          .addField("💻 Platforma", `\`\`${os.platform()}\`\``, true)
+          .setFooter(config.footerCopyright, config.footerCopyrightImage)
+          .setTimestamp()  
+      msg.channel.send({embeds: [botinfo] })
+  });
 });
 
 //-=-=-=-=-=-=-=-
