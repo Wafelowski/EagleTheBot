@@ -1,7 +1,9 @@
 const Discord = require('discord.js');
-const {Intents} = require('discord.js');
+const Intents = ['GUILDS', 'GUILD_MESSAGES','GUILD_MEMBERS', 'GUILD_EMOJIS_AND_STICKERS', 'GUILD_INTEGRATIONS','GUILD_WEBHOOKS' , 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_PRESENCES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS','GUILD_MESSAGE_TYPING', 'DIRECT_MESSAGES', 'DIRECT_MESSAGES','DIRECT_MESSAGE_TYPING'];
+//const {Intents} = require('discord.js');
 const sqlite = require('sqlite3');
-const client = new Discord.Client({ intents: Intents.ALL, allowedMentions: { parse: ['users', 'roles'], repliedUser: false } });
+const client = new Discord.Client({ intents: Intents, allowedMentions: { parse: ['users', 'roles'], repliedUser: false } });
+// const client = new Discord.Client({ intents: Intents.ALL, allowedMentions: { parse: ['users', 'roles'], repliedUser: false } });
 const { exit } = require('process');
 
 //BotInfo
@@ -17,7 +19,8 @@ var bot = {};
 //-=-=-=-=-=-=-=-
 const coreCogs = ["./cogs/setup.js", "./cogs/useless/test.js", "./cogs/moderation/purge.js", 
 "./cogs/moderation/kick.js", "./cogs/moderation/bans.js", "./cogs/moderation/blacklist.js", 
-"./cogs/tickets/faq.js"]
+"./cogs/tickets/faq.js",
+"./cogs/util/avatar.js", "./cogs/util/serverinfo"]
 var loadedCogs = {};
 var listeners = {};
 
@@ -81,7 +84,7 @@ client.on('ready', () => {
   bot.ready = true;
 });
 
-client.on('message', msg => {
+client.on('messageCreate', msg => {
   if (!bot.ready) {
     console.warn("Command received, before bot became ready.");
     return;
@@ -153,7 +156,7 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
       return VerificationRole;
     }
   });
-  
+
   // // If the role(s) are present on the old member object but no longer on the new one (i.e role(s) were removed)
 	// const removedRoles = oldMember.roles.cache.filter(role => !newMember.roles.cache.has(role.id));
 	// if (removedRoles.size > 0) console.log(`The roles ${removedRoles.map(r => r.name)} were removed from ${oldMember.displayName}.`);
