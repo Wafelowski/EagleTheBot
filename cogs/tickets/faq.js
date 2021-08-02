@@ -132,6 +132,18 @@ var gameconfig = function (msg) {
     msg.delete();
 }
 
+var kanalpomocy = function (msg) {
+    const embed = new Discord.MessageEmbed()
+    .setAuthor(`PolishEmergencyV`)
+    .setDescription(`<#531964192207405096>`)
+    .setColor("#2a44ff")
+    .setImage(`https://media.giphy.com/media/n9CMNbvOSY4MQGWcon/giphy.gif`)
+    .setFooter(config.footerCopyright, config.footerCopyrightImage)
+    .setTimestamp()
+    msg.channel.send( {embeds: [embed] })
+    msg.delete();
+}
+
 var setup = function (b) {
     bot = b;
     bot.registerCommand("zamknij", zamknij);
@@ -141,6 +153,7 @@ var setup = function (b) {
     bot.registerCommand("dlclist", dlclist);
     bot.registerCommand("els", els);
     bot.registerCommand("gameconfig", gameconfig);
+    bot.registerCommand("kanalpomocy", kanalpomocy);
 }
 
 
