@@ -17,7 +17,7 @@ var bot = {};
 //-=-=-=-=-=-=-=-
 //Load cogs
 //-=-=-=-=-=-=-=-
-const coreCogs = ["./cogs/setup.js", "./cogs/useless/test.js", "./cogs/moderation/purge.js", 
+const coreCogs = ["./cogs/setup.js", "./cogs/useless/test.js", //"./cogs/moderation/purge.js", 
 "./cogs/moderation/kick.js", "./cogs/moderation/bans.js", "./cogs/moderation/blacklist.js", 
 "./cogs/tickets/faq.js",
 "./cogs/util/avatar.js", "./cogs/util/serverinfo"]
