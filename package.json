@@ -1,32 +1,26 @@
 {
-  "name": "asystentlekcyjnyjs",
+  "name": "eaglethebot",
   "version": "1.0.0",
-  "description": "Bot do integracji z dzienniczkiem Wulkanowy UONET+.",
+  "description": "Bot do czegoś tam.",
   "main": "bot.js",
   "dependencies": {
     "cpu-stat": "^2.0.1",
     "discord.js": "^13.0.0-dev.t1627732975.331a9d3",
     "eslint": "^7.27.0",
-    "jimp": "^0.16.1",
     "moment": "^2.29.1",
-    "normalize-date": "^0.0.4",
-    "request": "^2.88.2",
-    "sqlite3": "^5.0.2",
-    "valid-url": "^1.0.9",
-    "websocket": "^1.0.32",
-    "yahoo-weather": "^2.2.2"
+    "sqlite3": "^5.0.2"
   },
   "scripts": {
     "test": "node bot.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HeavyWolfPL/AsystentLekcyjnyJs.git"
+    "url": "git+https://github.com/HeavyWolfPL/EagleTheBot.git"
   },
   "author": "Wafelowski",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/HeavyWolfPL/AsystentLekcyjnyJs/issues"
+    "url": "https://github.com/HeavyWolfPL/EagleTheBotissues"
   },
-  "homepage": "https://github.com/HeavyWolfPL/AsystentLekcyjnyJs#readme"
+  "homepage": "https://github.com/HeavyWolfPL/EagleTheBot#readme"
 }
