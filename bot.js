@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const Intents = ['GUILDS', 'GUILD_MESSAGES','GUILD_MEMBERS', 'GUILD_EMOJIS_AND_STICKERS', 'GUILD_INTEGRATIONS','GUILD_WEBHOOKS' , 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_PRESENCES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS','GUILD_MESSAGE_TYPING', 'DIRECT_MESSAGES', 'DIRECT_MESSAGES','DIRECT_MESSAGE_TYPING'];
 //const {Intents} = require('discord.js');
 const sqlite = require('sqlite3');
+const fs = require('fs');
 const client = new Discord.Client({ intents: Intents, allowedMentions: { parse: ['users', 'roles'], repliedUser: false } });
 // const client = new Discord.Client({ intents: Intents.ALL, allowedMentions: { parse: ['users', 'roles'], repliedUser: false } });
 const { exit } = require('process');
@@ -18,12 +19,11 @@ var bot = {};
 //Load cogs
 //-=-=-=-=-=-=-=-
 const coreCogs = ["./cogs/setup.js", "./cogs/useless/test.js", //"./cogs/moderation/purge.js", 
-"./cogs/moderation/kick.js", "./cogs/moderation/bans.js", "./cogs/moderation/blacklist.js", 
+"./cogs/moderation/kick.js", "./cogs/moderation/bans.js", "./cogs/moderation/watchlist.js", 
 "./cogs/tickets/faq.js",
 "./cogs/util/avatar.js", "./cogs/util/serverinfo"]
 var loadedCogs = {};
 var listeners = {};
-
 
 bot.listeners = listeners;
 bot.config = config;
@@ -33,11 +33,25 @@ bot.ready = false;
 var cog;
 
 //-=-=-=-=-=-=-=-
+//Load events
+//-=-=-=-=-=-=-=-
+const eventFiles = fs.readdirSync('./cogs/events').filter(file => file.endsWith('.js'));
+
+for (const file of eventFiles) {
+	const event = require(`./cogs/events/${file}`);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args, client));
+	} else {
+		client.on(event.name, (...args) => event.execute(...args, client));
+	}
+}
+
+//-=-=-=-=-=-=-=-
 //Client events
 //-=-=-=-=-=-=-=-
 
-//client.on('debug', console.log)
-//      .on('warn', console.log)
+client.on('debug', console.log)
+      .on('warn', console.log)
   
 
 client.on('ready', () => {
@@ -112,58 +126,6 @@ client.on('messageCreate', msg => {
     } else {
       msg.reply("Komenda nieznana.");
     }
-});
-
-client.on('guildMemberUpdate', (oldMember, newMember) => {
-  if (!bot.ready) return;
-  const addedRoles = newMember.roles.cache.filter(role => !oldMember.roles.cache.has(role.id));
-	if (!addedRoles.size > 0) return;
-  var channel;
-  var guildID = oldMember.guild.id;
-  if (guildID == "531961175114645534") {
-    // eslint-disable-next-line no-redeclare
-    var channel = bot.client.channels.cache.get('842395141880152095');
-  }
-  else if (guildID == "847039824321183804") {
-    // eslint-disable-next-line no-redeclare
-    var channel = bot.client.channels.cache.get('853208523605147659');
-  }
-  var serverDB = new sqlite.Database(`./db/servers/${guildID}.db`, sqlite.OPEN_READWRITE);
-  serverDB.all('SELECT * FROM roles WHERE role = ?', "verification", function(err, rows) {
-    if (err) {
-      console.log(`guildMemberUpdate Error: ${err}`);
-      return false;
-    }
-    if (rows === undefined) {
-      return false;
-    } 
-    else {
-      let VerificationRole = [];
-      rows.forEach( row => VerificationRole.push(`${row.roleid}`) );
-      if (oldMember.roles.cache.some(role => role.id == VerificationRole) == false) return;
-      if (oldMember.roles.cache.some(role => role.id == VerificationRole)) {
-        const addedRoles = newMember.roles.cache.filter(role => !oldMember.roles.cache.has(role.id));
-        var addedRoleID = addedRoles.map(r => r.id)
-        var addedRoleName = addedRoles.map(r => r.name)
-        if (addedRoleID == 732493824223477844) return;
-        console.log(`${addedRoleID.values().next().value}`)
-        if (addedRoles.size > 0) console.log(`Role "${addedRoles.map(r => r.name)}" zostały przyznane ${oldMember.displayName}.`);
-        newMember.roles.remove(addedRoleID, "Anty-Alt")
-        if (addedRoles.size > 0) console.log(`Rola "${addedRoleName}" zostały usunięte ${oldMember.displayName}.`);
-        channel.send( { content: `Próbowano dodać rolę ${addedRoles.map(r => r.name)} do użytkownika <@${oldMember.id}> (${oldMember.user.tag}) w trakcie weryfikacji. Została usunięta. \n------ \n<@273904398261026817>` })
-      }
-      serverDB.close();
-      return VerificationRole;
-    }
-  });
-
-  // // If the role(s) are present on the old member object but no longer on the new one (i.e role(s) were removed)
-	// const removedRoles = oldMember.roles.cache.filter(role => !newMember.roles.cache.has(role.id));
-	// if (removedRoles.size > 0) console.log(`The roles ${removedRoles.map(r => r.name)} were removed from ${oldMember.displayName}.`);
-	// // If the role(s) are present on the new member object but are not on the old one (i.e role(s) were added)
-	// const addedRoles = newMember.roles.cache.filter(role => !oldMember.roles.cache.has(role.id));
-	// if (addedRoles.size > 0) console.log(`The roles ${addedRoles.map(r => r.name)} were added to ${oldMember.displayName}.`);
-
 });
 
 bot.registerCommand = function (command, func) {
