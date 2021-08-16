@@ -1,10 +1,13 @@
 const Discord = require('discord.js');
 const Intents = ['GUILDS', 'GUILD_MESSAGES','GUILD_MEMBERS', 'GUILD_EMOJIS_AND_STICKERS', 'GUILD_INTEGRATIONS','GUILD_WEBHOOKS' , 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_PRESENCES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS','GUILD_MESSAGE_TYPING', 'DIRECT_MESSAGES', 'DIRECT_MESSAGES','DIRECT_MESSAGE_TYPING'];
-//const {Intents} = require('discord.js');
+const client = new Discord.Client({ intents: Intents, allowedMentions: { parse: ['users', 'roles'], repliedUser: false } });
+
+//-=-=-=-=-=-=-=-
+//Requirements
+//-=-=-=-=-=-=-=-
+const config = require('./config.json');
 const sqlite = require('sqlite3');
 const fs = require('fs');
-const client = new Discord.Client({ intents: Intents, allowedMentions: { parse: ['users', 'roles'], repliedUser: false } });
-// const client = new Discord.Client({ intents: Intents.ALL, allowedMentions: { parse: ['users', 'roles'], repliedUser: false } });
 const { exit } = require('process');
 
 //BotInfo
@@ -12,12 +15,11 @@ let os = require('os')
 let cpuStat = require("cpu-stat")
 //----
 
-const config = require('./config.json');
-var bot = {};
 
 //-=-=-=-=-=-=-=-
 //Load cogs
 //-=-=-=-=-=-=-=-
+var bot = {};
 const coreCogs = ["./cogs/setup.js", "./cogs/useless/test.js", //"./cogs/moderation/purge.js", 
 "./cogs/moderation/kick.js", "./cogs/moderation/bans.js", "./cogs/moderation/watchlist.js", 
 "./cogs/tickets/faq.js",
@@ -35,10 +37,10 @@ var cog;
 //-=-=-=-=-=-=-=-
 //Load events
 //-=-=-=-=-=-=-=-
-const eventFiles = fs.readdirSync('./cogs/events').filter(file => file.endsWith('.js'));
+const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 
 for (const file of eventFiles) {
-	const event = require(`./cogs/events/${file}`);
+	const event = require(`./events/${file}`);
 	if (event.once) {
 		client.once(event.name, (...args) => event.execute(...args, client));
 	} else {
@@ -207,9 +209,7 @@ bot.registerCommand("botinfo", async function (msg) {
           .addField("📁 Użytkownicy", `${client.users.cache.size}`, true)
           .addField("📁 Serwery", `${client.guilds.cache.size}`, true)
           .addField("📁 Kanały ", `${client.channels.cache.size}`, true)
-          .addField("👾 Discord.js", `v13.0.0`, true)
-          //Disabled due to long name
-          //.addField("👾 Discord.js", `v${Discord.version}`, true)
+          .addField("👾 Discord.js", `v${Discord.version}`, true)
           .addField("🔰 Node", `${process.version}`, true)
           .addField("🤖 CPU", `\`\`\`md\n${os.cpus().map(i => `${i.model}`)[0]}\`\`\``)
           .addField("🤖 Zużycie CPU", `\`${percent.toFixed(2)}%\``, true)
