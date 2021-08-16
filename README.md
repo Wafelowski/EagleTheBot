@@ -10,7 +10,7 @@ Bot używany na serwerze [PolishEmergencyV](https://discord.gg/kYnKgf4na2).
 ## Instalacja
 #### **Wymagania**
 - Discord.js v13
-- Node.js v8
+- Node.js v16
 
 Poszczególne komendy:
 - botinfo: cpu-stat
