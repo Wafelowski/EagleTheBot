@@ -5,7 +5,7 @@
   "main": "bot.js",
   "dependencies": {
     "cpu-stat": "^2.0.1",
-    "discord.js": "^13.0.0-dev.t1627732975.331a9d3",
+    "discord.js": "^13.0.0",
     "eslint": "^7.27.0",
     "moment": "^2.29.1",
     "sqlite3": "^5.0.2"
