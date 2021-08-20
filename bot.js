@@ -21,7 +21,7 @@ let cpuStat = require("cpu-stat")
 //-=-=-=-=-=-=-=-
 var bot = {};
 const coreCogs = ["./cogs/setup.js", "./cogs/useless/test.js", "./cogs/moderation/purge.js", 
-"./cogs/moderation/kick.js", "./cogs/moderation/bans.js", "./cogs/moderation/watchlist.js", 
+"./cogs/moderation/bans.js", "./cogs/moderation/watchlist.js", //"./cogs/moderation/kick.js", 
 "./cogs/tickets/faq.js",
 "./cogs/util/avatar.js", "./cogs/util/serverinfo"]
 var loadedCogs = {};
