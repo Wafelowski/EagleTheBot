@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const Intents = ['GUILDS', 'GUILD_MESSAGES','GUILD_MEMBERS', 'GUILD_EMOJIS_AND_STICKERS', 'GUILD_INTEGRATIONS','GUILD_WEBHOOKS' , 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_PRESENCES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS','GUILD_MESSAGE_TYPING', 'DIRECT_MESSAGES', 'DIRECT_MESSAGES','DIRECT_MESSAGE_TYPING'];
+const Intents = ['GUILDS', 'GUILD_MESSAGES','GUILD_MEMBERS', 'GUILD_INTEGRATIONS','GUILD_WEBHOOKS' , 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_PRESENCES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS','GUILD_MESSAGE_TYPING', 'DIRECT_MESSAGES', 'DIRECT_MESSAGES','DIRECT_MESSAGE_TYPING'];
 const client = new Discord.Client({ intents: Intents, allowedMentions: { parse: ['users', 'roles'], repliedUser: false } });
 
 //-=-=-=-=-=-=-=-
@@ -21,7 +21,7 @@ let cpuStat = require("cpu-stat")
 //-=-=-=-=-=-=-=-
 var bot = {};
 const coreCogs = ["./cogs/setup.js", "./cogs/useless/test.js", "./cogs/moderation/purge.js", 
-"./cogs/moderation/bans.js", "./cogs/moderation/watchlist.js", //"./cogs/moderation/kick.js", 
+"./cogs/moderation/bans.js", //"./cogs/moderation/watchlist.js", //"./cogs/moderation/kick.js", 
 "./cogs/tickets/faq.js",
 "./cogs/util/avatar.js", "./cogs/util/serverinfo"]
 var loadedCogs = {};
