@@ -144,16 +144,32 @@ var kanalpomocy = function (msg) {
     msg.delete();
 }
 
+var zmodeler = function (msg) {
+    const embed = new Discord.MessageEmbed()
+    .setAuthor(`PolishEmergencyV`)
+    .setDescription(`Nie świadczymy pomocy w tworzeniu własnych modyfikacji. Internet oferuje poradniki oraz fora, tworzenie modyfikacji to nie jest bułka z masłem. Uprzedzając, nie polecimy żadnego poradnika, nie pomożemy Ci prywatnie, a ten serwer nie posiada tematyki pomocy w tworzeniu modów. Liczymy na wyrozumiałość.`)
+    .setColor("#2a44ff")
+    .setFooter(config.footerCopyright, config.footerCopyrightImage)
+    .setTimestamp()
+    msg.channel.send( {embeds: [embed] })
+    msg.delete();
+}
+
 var setup = function (b) {
     bot = b;
     bot.registerCommand("zamknij", zamknij);
     bot.registerCommand("fivem", fivem);
     bot.registerCommand("log", log);
     bot.registerCommand("stroje", stroje);
+    bot.registerCommand("eup", stroje);
+    bot.registerCommand("peup", stroje);
     bot.registerCommand("dlclist", dlclist);
     bot.registerCommand("els", els);
     bot.registerCommand("gameconfig", gameconfig);
     bot.registerCommand("kanalpomocy", kanalpomocy);
+    bot.registerCommand("pomoc", kanalpomocy);
+    bot.registerCommand("zmodeler", zmodeler);
+    bot.registerCommand("zmodeler3", zmodeler);
 }
 
 
