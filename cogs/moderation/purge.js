@@ -1,23 +1,40 @@
 const Discord = require('discord.js');
-const {Intents} = require('discord.js');
-const client = new Discord.Client({ intents: Intents.ALL, allowedMentions: { parse: ['users', 'roles'], repliedUser: false } });
+require('../throwError.js')();
 const config = require('../../config.json');
 var bot = {};
 
 var purge = function (msg) {
-    const user = msg.mentions.users.first();
-    const amount = parseInt(msg.content.split(' ')[1]) ? parseInt(msg.content.split(' ')[1]) : parseInt(msg.content.split(' ')[2])
+    const args = msg.content.trim().split(' ');
+    const amount = args[0];
     if (!amount) return msg.reply('Musisz podać ilość wiadomości!');
-    if (!amount && !user) return msg.reply('Musisz podać użytkownika oraz ilość wiadomości lub samą ilość!');
+
+    if (isNaN(amount) || parseInt(amount <= 0)) return msg.reply('Podana wartość nie jest liczbą!');
+    
+    if (parseInt(amount) > 100) return msg.reply('Podana wartość jest większa od stu. Jestem zbyt leniwy by dodać większy limit.');
+    //const amount = parseInt(msg.content.split(' ')[1]) ? parseInt(msg.content.split(' ')[1]) : parseInt(msg.content.split(' ')[2])
     msg.channel.messages.fetch({
-    limit: 100,
+    limit: parseInt(amount) + 1,
     }).then((messages) => {
-        if (user) {
-            const filterBy = user ? user.id : client.user.id;
-            messages = messages.filter(m => m.author.id === filterBy).array().slice(0, amount);
-        }
-        msg.channel.bulkDelete(messages).catch(error => console.log(error.stack));
+        msg.channel.bulkDelete(messages).catch(error => throwError(msg, error, "20", "purge " + msg.content));  //console.log(error.stack));
     });
+    let reason;
+    if (args[1] != undefined) {
+        args.shift();
+        // reason = args.map(function (x) {
+        //     return x.replace(',', ' ');
+        // });
+        reason = args.join(' ');
+        console.log(reason);
+    }
+    else reason = "Brak";
+    const embed = new Discord.MessageEmbed()
+          .setAuthor(`Usunięto wiadomości`)
+          .setDescription(`**Ilość**: \`${amount}\` \n**Powód**: \`${reason}\``)
+          .setColor("#ff0000")
+          .setFooter(config.footerCopyright, config.footerCopyrightImage)
+          .setTimestamp()
+    msg.channel.send( {embeds: [embed] })
+    embed.delete()
 }
 
 var setup = function (b) {

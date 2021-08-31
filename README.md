@@ -10,17 +10,17 @@ Bot używany na serwerze [PolishEmergencyV](https://discord.gg/kYnKgf4na2).
 ## Instalacja
 #### **Wymagania**
 - Discord.js v13
+- Node.js v16
+
+Poszczególne komendy:
+- botinfo: cpu-stat
+- serverinfo: moment
 
 #### **Tokeny**
 Skopiuj plik config-example.json, wklej tam poprawne tokeny, a następnie zmień jego nazwę na `config.json`
 
 #### **Komendy**
-- kick
-- ban / unban
-- mute / unmute
-- ping
-- test
-- shutdown (Owner only)
+jakby mi się to chciało jeszcze pisać nie
 ---
 
 #### To-Do
