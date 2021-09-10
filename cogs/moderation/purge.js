@@ -33,8 +33,7 @@ var purge = function (msg) {
           .setColor("#ff0000")
           .setFooter(config.footerCopyright, config.footerCopyrightImage)
           .setTimestamp()
-    msg.channel.send( {embeds: [embed] })
-    embed.delete()
+    msg.channel.send( {embeds: [embed] });
 }
 
 var setup = function (b) {
