@@ -23,7 +23,7 @@ var bot = {};
 const coreCogs = ["./cogs/setup.js", "./cogs/useless/test.js", "./cogs/moderation/purge.js", 
 "./cogs/moderation/bans.js", //"./cogs/moderation/watchlist.js", //"./cogs/moderation/kick.js", 
 "./cogs/tickets/faq.js",
-"./cogs/util/avatar.js", "./cogs/util/serverinfo"]
+"./cogs/util/avatar.js", "./cogs/util/serverinfo.js", "./cogs/util/userinfo.js"]
 var loadedCogs = {};
 var listeners = {};
 
