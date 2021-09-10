@@ -4,17 +4,16 @@ var bot = {};
 
 var userinfo = function (msg) {
     const user = msg.author;
-    let snowflake;
-    let epoch;
-    function convertSnowflakeToDate(snowflake, epoch = DISCORD_EPOCH) {
+    const DISCORD_EPOCH = 1420070400000;
+    function convertSnowflakeToDate(snowflake) {
         // return new Date(snowflake / 4194304 + epoch)
-        return Math.floor((snowflake / 4194304 + epoch) / 1000)
+        return Math.floor((snowflake / 4194304 + DISCORD_EPOCH) / 1000)
     }
-    const DISCORD_EPOCH = 1420070400000
-
+    
     if (msg.member.flags == undefined) {
         msg.member.flags = "Brak"
     }
+    
     let roles = msg.member.roles.cache.map(role => role.id);
     roles.pop();
     const roles2 = roles.join(">, <@&");
