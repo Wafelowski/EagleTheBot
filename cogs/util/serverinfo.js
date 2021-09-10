@@ -20,14 +20,13 @@ var serverinfo = function (msg) {
         .addField("Role", `${msg.guild.roles.cache.size}`, true)
         .setThumbnail(msg.guild.iconURL())
         .setTimestamp()
-        .setFooter(msg.author.username, msg.author.avatarURL);
+        .setFooter(config.footerCopyright, config.footerCopyrightImage);
     msg.reply( {embeds: [serverembed] })
 }
 
 var setup = function (b) { 
     bot = b;
-    bot.registerCommand("serverinfo", serverinfo); 
-}
+    bot.registerCommand("serverinfo", serverinfo); }
 
 exports.requires = [];
 exports.setup = setup;

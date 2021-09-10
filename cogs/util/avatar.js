@@ -15,6 +15,7 @@ var avatar = function (msg) {
             .setColor(member.displayHexColor)
             .setImage(member.user.displayAvatarURL({ dynamic: true, size: 2048 }))
             .setURL(member.user.avatarURL())
+            .setFooter(config.footerCopyright, config.footerCopyright)
         msg.reply( {embeds: [avatar] })
             .catch(() => msg.reply('**Błąd**: Brak uprawnień - `Embed` '));
 }
