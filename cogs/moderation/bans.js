@@ -1,10 +1,11 @@
+// eslint-disable-next-line no-unused-vars
 const Discord = require('discord.js');
 require('../throwError.js')();
 var bot = {};
 
 var ban = function (msg) {
     let args = msg.content.trim().split(' ');
-    if (args.length === 0) return msg.reply('Musisz podać użytkownika `!ban <id/@> (0-7 dni) (Powód)`');
+    if (args.length === 0) return msg.reply('Musisz podać użytkownika! \n> `!ban <id/@> (0-7 dni) (Powód)` \n> Dni określają czas usunięcia wiadomości użytkownika.');
     let member = msg.mentions.members.first();
     let userid;
     if (member) userid = member.id;
@@ -14,14 +15,14 @@ var ban = function (msg) {
             member = msg.guild.members.fetch(`${id}`)
             .then(userid = id)
             // eslint-disable-next-line no-undef
-            .catch(error => throwError(msg, error, "55", "ban " + msg.content));
+            .catch(error => throwError(msg, error, "18", "ban " + msg.content));
             //userid = `${id}`;
         }
         else {
             member = msg.guild.members.fetch(`${args[0]}`)
             .then(userid = args[0])
             // eslint-disable-next-line no-undef
-            .catch(error => throwError(msg, error, "62", "ban " + msg.content));
+            .catch(error => throwError(msg, error, "25", "ban " + msg.content));
             //userid = `${args[0]}`;
         }
     }
