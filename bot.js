@@ -105,10 +105,9 @@ client.on('messageCreate', msg => {
     console.warn("Command received, before bot became ready.");
     return;
   }
-  //if (msg.attachments.size > 0) {
-  if ((msg.channelId == '853208523605147659' || msg.channelId == '693928898173337650' || msg.channelId == '899326059764383775') && msg.attachments.size > 0) {
-    msg.react('⭐');
-  }
+  // if ((msg.channelId == '853208523605147659' || msg.channelId == '693928898173337650' || msg.channelId == '899326059764383775') && msg.attachments.size > 0) {
+  //   msg.react('⭐');
+  // }
   if (!msg.content.startsWith(config.prefix) || msg.author.bot) {
     return;
   }
