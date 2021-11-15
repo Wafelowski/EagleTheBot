@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const Intents = ['GUILDS', 'GUILD_MESSAGES','GUILD_MEMBERS', 'GUILD_EMOJIS_AND_STICKERS', 'GUILD_INTEGRATIONS','GUILD_WEBHOOKS' , 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_PRESENCES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS','GUILD_MESSAGE_TYPING', 'DIRECT_MESSAGES', 'DIRECT_MESSAGES','DIRECT_MESSAGE_TYPING'];
+const Intents = ['GUILDS', 'GUILD_MESSAGES','GUILD_MEMBERS', 'GUILD_INTEGRATIONS','GUILD_WEBHOOKS' , 'GUILD_INVITES', 'GUILD_VOICE_STATES', 'GUILD_PRESENCES', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS','GUILD_MESSAGE_TYPING', 'DIRECT_MESSAGES', 'DIRECT_MESSAGES','DIRECT_MESSAGE_TYPING'];
 const client = new Discord.Client({ intents: Intents, allowedMentions: { parse: ['users', 'roles'], repliedUser: false } });
 
 //-=-=-=-=-=-=-=-
@@ -21,9 +21,9 @@ let cpuStat = require("cpu-stat")
 //-=-=-=-=-=-=-=-
 var bot = {};
 const coreCogs = ["./cogs/setup.js", "./cogs/useless/test.js", "./cogs/moderation/purge.js", 
-"./cogs/moderation/bans.js", "./cogs/moderation/watchlist.js", //"./cogs/moderation/kick.js", 
+"./cogs/moderation/bans.js", //"./cogs/moderation/watchlist.js", //"./cogs/moderation/kick.js", 
 "./cogs/tickets/faq.js",
-"./cogs/util/avatar.js", "./cogs/util/serverinfo"]
+"./cogs/util/avatar.js", "./cogs/util/serverinfo.js", "./cogs/util/userinfo.js"]
 var loadedCogs = {};
 var listeners = {};
 
@@ -105,6 +105,9 @@ client.on('messageCreate', msg => {
     console.warn("Command received, before bot became ready.");
     return;
   }
+  // if ((msg.channelId == '853208523605147659' || msg.channelId == '693928898173337650' || msg.channelId == '899326059764383775') && msg.attachments.size > 0) {
+  //   msg.react('⭐');
+  // }
   if (!msg.content.startsWith(config.prefix) || msg.author.bot) {
     return;
   }
@@ -129,6 +132,7 @@ client.on('messageCreate', msg => {
       msg.reply("Komenda nieznana.");
     }
 });
+
 
 bot.registerCommand = function (command, func) {
   bot.listeners[command] = func;

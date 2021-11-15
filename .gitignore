@@ -3,6 +3,7 @@ config.json
 db/
 .vs/
 .vscode/
+db/
 node_modules
 *.code-workspace
 cogs/useless/!cog-template-no-comment.js
