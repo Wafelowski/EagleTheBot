@@ -155,6 +155,56 @@ var zmodeler = function (msg) {
     msg.delete();
 }
 
+var licencja = function (msg) {
+    msg.channel.send("https://polishemergencyv.com/licencja")
+    msg.delete();
+}
+
+var rph = function (msg) {
+    const embed = new Discord.MessageEmbed()
+    .setAuthor(`PolishEmergencyV`)
+    .setDescription(`**1. Plugin "XXX" was terminated because it caused the game to freeze?**
+    Podczas włączania RagePluginHooka kliknij ikonkę Ustawień (trybik), a następnie w polu "Plugin Timeout Threshold" wpisz "60000" (4 zera). 
+    
+    **2. Insufficient Permissions or Bad Antivirus**
+    Są 2 zasady:
+    - Nie możesz włączać GTA z innego folderu niż oryginalnie zainstalowałeś. 
+    - Nie możesz zmieniać nazwy folderu.
+
+    Na początek postaraj się wyłączyć wszystkie antywirusy, później aplikacje które mogą przyśpieszać gry (np. Razer Cortex, RivaTuner).
+    Jeśli nadal nie podziałało kliknij prawym na GTA5.exe -> Właściwości -> Zabezpieczenia. Upewnij się że SYSTEM, Administratorzy oraz twój użytkownik posiadają wszystkie uprawnienia (możesz zignorować "Uprawnienia specjalne").
+    Jeśli tak nie jest, kliknij przycisk "Edytuj" i dodaj im brakujące uprawnienia.
+
+    Spróbuj teraz włączyć grę.`)
+    .setColor("#2a44ff")
+    .setFooter(config.footerCopyright, config.footerCopyrightImage)
+    .setTimestamp()
+    msg.channel.send( {embeds: [embed] })
+    msg.delete();
+}
+
+var faq = function (msg) {
+    const embed = new Discord.MessageEmbed()
+    .setAuthor(`PolishEmergencyV`)
+    .setDescription(`**Lista komend FAQ**
+    - zamknij
+    - fivem
+    - log
+    - stroje/eup/peup
+    - dlclist
+    - els
+    - gameconfig
+    - kanalpomocy
+    - zmodeler/zmodeler3
+    - licencja
+    - rph`)
+    .setColor("#2a44ff")
+    .setFooter(config.footerCopyright, config.footerCopyrightImage)
+    .setTimestamp()
+    msg.channel.send( {embeds: [embed] })
+    msg.delete();
+}
+
 var setup = function (b) {
     bot = b;
     bot.registerCommand("zamknij", zamknij);
@@ -170,6 +220,9 @@ var setup = function (b) {
     bot.registerCommand("pomoc", kanalpomocy);
     bot.registerCommand("zmodeler", zmodeler);
     bot.registerCommand("zmodeler3", zmodeler);
+    bot.registerCommand("licencja", licencja);
+    bot.registerCommand("rph", rph);
+    bot.registerCommand("faq", faq);
 }
 
 
