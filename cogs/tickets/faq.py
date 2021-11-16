@@ -22,12 +22,17 @@ class FAQ(commands.Cog):
         lastMessage = await ctx.channel.history(limit=100).flatten()
         urlText = ""
         if "Twój ticket właśnie został utworzony" in lastMessage[-1].content:
-            urlText = f"\nReakcję znajdziesz [tutaj]({lastMessage[-1].jump_url} 'Kliknij by skoczyć do wiadomości!')."
+            view = discord.ui.View()
+            view.add_item(discord.ui.Button(label="Kliknij mnie!", url=lastMessage[-1].jump_url, style=discord.ButtonStyle.url))
+            urlText = "\nPrzejdziesz do reakcji klikając poniższy przycisk."
         embed=discord.Embed(description=f"Jeśli to wszystko, zamknij proszę ticket klikając :lock: oraz potwierdzając :white_check_mark:. {urlText}", color=0xff0000, timestamp=ctx.message.created_at)
         embed.set_author(name="PolishEmergencyV")
         embed.set_footer(text=footer, icon_url=footer_img)
         await ctx.message.delete()
-        await ctx.send(embed=embed)
+        if urlText == "":
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send(embed=embed, view=view)
 
     @bot.command() 
     async def fivem(self, ctx):
