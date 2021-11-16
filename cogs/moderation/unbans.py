@@ -7,6 +7,8 @@ from discord.ext.commands.errors import MissingPermissions
 with open("config.json", "r") as config: 
     data = json.load(config)
     prefix = data["prefix"]
+    footer = data["footerCopyright"]
+    footer_img = data["footerCopyrightImage"]
 
 class Unbans(commands.Cog):
     def __init__(self, bot):
