@@ -40,7 +40,7 @@ class Unbans(commands.Cog):
             await ctx.send("Brak uprawnień!")
             raise error
         else:
-            await ctx.send("Nieznany błąd!")
+            await ctx.send(f"Wystąpił błąd! **Treść**: \n```{error}```")
 
 def setup(bot):
     bot.add_cog(Unbans(bot))

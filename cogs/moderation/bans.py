@@ -64,7 +64,7 @@ class Bans(commands.Cog):
             await ctx.reply("Brak uprawnień!", mention_author=False)
             raise error
         else:
-            await ctx.send("Nieznany błąd!")
+            await ctx.send(f"Wystąpił błąd! **Treść**: \n```{error}```")
 
 def setup(bot):
     bot.add_cog(Bans(bot))
