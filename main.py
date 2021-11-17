@@ -27,9 +27,9 @@ def __init__(self, bot):
     self._last_member = None
 
 # Intents
-#intents = discord.Intents.default()
-#intents.members = True
-intents = discord.Intents.all()
+intents = discord.Intents.default()
+intents.members = True
+# intents = discord.Intents.all()
 # The bot
 bot = commands.Bot(command_prefix='!', intents = intents)
 
