@@ -17,6 +17,38 @@ class FAQ(commands.Cog):
 
     bot = commands.Bot(command_prefix=prefix)
 
+    @bot.command(name='24h') 
+    async def _24h(self, ctx):
+        lastMessage = await ctx.channel.history(limit=100).flatten()
+        urlText = ""
+        if "Twój ticket właśnie został utworzony" in lastMessage[-1].content:
+            view = discord.ui.View()
+            view.add_item(discord.ui.Button(label="Kliknij mnie!", url=lastMessage[-1].jump_url, style=discord.ButtonStyle.url))
+            urlText = "\nPrzejdziesz do reakcji klikając poniższy przycisk."
+        description = f"""**Ticket zostanie zamknięty z powodu nieaktywności przez 24 godziny!**
+W przypadku ciągłego występowania problemu, odpisz na ticket.\n
+Jeśli to wszystko, zamknij proszę ticket klikając :lock: oraz potwierdzając :white_check_mark:.{urlText}"""
+        embed=discord.Embed(description=description, color=0x2a44ff, timestamp=ctx.message.created_at)
+        embed.set_author(name="PolishEmergencyV")
+        embed.set_footer(text=footer, icon_url=footer_img)
+        await ctx.message.delete()
+        if urlText == "":
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send(embed=embed, view=view)
+
+    @_24h.error
+    async def _24h_error(self, ctx, error):
+        if isinstance(error, commands.errors.CommandInvokeError):
+            error = error.original
+        if isinstance(error, commands.errors.MissingRequiredArgument):
+            await ctx.reply("Nie podano wszystkich argumentów!", mention_author=False)
+        elif isinstance(error, commands.errors.MissingPermissions):
+            await ctx.reply("Brak uprawnień!", mention_author=False)
+            raise error
+        else:
+            await ctx.send(f"Wystąpił błąd! **Treść**: \n```{error}```")
+    
     @bot.command() 
     async def zamknij(self, ctx):
         lastMessage = await ctx.channel.history(limit=100).flatten()
@@ -25,7 +57,7 @@ class FAQ(commands.Cog):
             view = discord.ui.View()
             view.add_item(discord.ui.Button(label="Kliknij mnie!", url=lastMessage[-1].jump_url, style=discord.ButtonStyle.url))
             urlText = "\nPrzejdziesz do reakcji klikając poniższy przycisk."
-        embed=discord.Embed(description=f"Jeśli to wszystko, zamknij proszę ticket klikając :lock: oraz potwierdzając :white_check_mark:. {urlText}", color=0xff0000, timestamp=ctx.message.created_at)
+        embed=discord.Embed(description=f"Jeśli to wszystko, zamknij proszę ticket klikając :lock: oraz potwierdzając :white_check_mark:. {urlText}", color=0x2a44ff, timestamp=ctx.message.created_at)
         embed.set_author(name="PolishEmergencyV")
         embed.set_footer(text=footer, icon_url=footer_img)
         await ctx.message.delete()
@@ -36,9 +68,9 @@ class FAQ(commands.Cog):
 
     @bot.command() 
     async def fivem(self, ctx):
-        description = """Obecnie pracujemy nad paczką naszych modów zoptymalizowaną specjalnie pod FiveM. Prace jednak trwają, dlatego postanowiliśmy zawiesić wydawanie nowych zgód. 
-    Radzimy jednak poczekać i obserwować kanał ogłoszeń. Postaramy się by w tym roku pojawiły się tam pierwsze informacje oraz zapowiedzi odnośnie wspomnianej paczki. 
-    Warto poczekać, ponieważ nasze pojazdy będą się cechowały wybitną optymalizacją oraz jakością. Dla serwerów chcących skorzystać z wspomnianej paczki będziemy również oferować dodatkową pomoc oraz pewne bonusy, na razie, prosimy o uzbrojenie się w cierpliwość :wink:"""
+        description = """   Obecnie pracujemy nad paczką naszych modów zoptymalizowaną specjalnie pod FiveM. Prace jednak trwają, dlatego postanowiliśmy zawiesić wydawanie nowych zgód. 
+Radzimy jednak poczekać i obserwować kanał ogłoszeń. Postaramy się by w tym roku pojawiły się tam pierwsze informacje oraz zapowiedzi odnośnie wspomnianej paczki. 
+Warto poczekać, ponieważ nasze pojazdy będą się cechowały wybitną optymalizacją oraz jakością. Dla serwerów chcących skorzystać z wspomnianej paczki będziemy również oferować dodatkową pomoc oraz pewne bonusy, na razie, prosimy o uzbrojenie się w cierpliwość :wink:"""
         embed=discord.Embed(description=description, color=0x2a44ff, timestamp=ctx.message.created_at)
         embed.set_author(name="PolishEmergencyV")
         embed.set_footer(text=footer, icon_url=footer_img)
@@ -55,14 +87,14 @@ class FAQ(commands.Cog):
         await ctx.message.delete()
         await ctx.send(embed=embed)
 
-    @bot.command() 
+    @bot.command(aliases=["eup", "peup", "ciuchy"]) 
     async def stroje(self, ctx):
         description = """**Spis błędów**
 
-        **1.** Mieszają mi się stroje z amerykańskimi
-        **2.** Zainstalowałem automatycznym instalatorem i są dziwne stroje oraz stare jednostki w LSPDFR
-        **3.** Mam polskie jednostki, ale dziwne stroje.
-        **4.** Konfig do UltimateBackup"""
+**1.** Mieszają mi się stroje z amerykańskimi
+**2.** Zainstalowałem automatycznym instalatorem i są dziwne stroje oraz stare jednostki w LSPDFR
+**3.** Mam polskie jednostki, ale dziwne stroje.
+**4.** Konfig do UltimateBackup"""
         embed=discord.Embed(description=description, color=0x2a44ff, timestamp=ctx.message.created_at)
         embed.set_author(name="PolishEmergencyV")
         embed.set_footer(text=footer, icon_url=footer_img)
@@ -82,10 +114,10 @@ class FAQ(commands.Cog):
         async def home(self, button: discord.ui.Button, interaction: discord.Interaction):
             description = """**Spis błędów**
 
-            **1.** Mieszają mi się stroje z amerykańskimi
-            **2.** Zainstalowałem automatycznym instalatorem i są dziwne stroje oraz stare jednostki w LSPDFR
-            **3.** Mam polskie jednostki, ale dziwne stroje.
-            **4.** Konfig do UltimateBackup"""
+**1.** Mieszają mi się stroje z amerykańskimi
+**2.** Zainstalowałem automatycznym instalatorem i są dziwne stroje oraz stare jednostki w LSPDFR
+**3.** Mam polskie jednostki, ale dziwne stroje.
+**4.** Konfig do UltimateBackup"""
             embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
             embed.set_author(name="PolishEmergencyV")
             embed.set_footer(text=footer, icon_url=footer_img)
@@ -94,8 +126,8 @@ class FAQ(commands.Cog):
         @discord.ui.button(label="Nr. 1", style=discord.ButtonStyle.grey)
         async def one(self, button: discord.ui.Button, interaction: discord.Interaction):
             description = """**1. Mieszają mi się stroje z amerykańskimi**
-            - w OpenIV usuń folder EUP z `update -> x64 -> dlcpacks`
-            - Zainstaluj ponownie PEUP bez instalacji EUP L&O i S&R"""
+- w OpenIV usuń folder EUP z `update -> x64 -> dlcpacks`
+- Zainstaluj ponownie PEUP bez instalacji EUP L&O i S&R"""
             embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
             embed.set_author(name="PolishEmergencyV")
             embed.set_footer(text=footer, icon_url=footer_img)
@@ -105,7 +137,7 @@ class FAQ(commands.Cog):
         @discord.ui.button(label="Nr. 2", style=discord.ButtonStyle.grey)
         async def two(self, button: discord.ui.Button, interaction: discord.Interaction):
             description = """**2. Zainstalowałem automatycznym instalatorem i są dziwne stroje oraz stare jednostki w LSPDFR**
-            Zainstaluj konfigi, które są w tym samym archiwum co instalator."""
+Zainstaluj konfigi, które są w tym samym archiwum co instalator."""
             embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
             embed.set_author(name="PolishEmergencyV")
             embed.set_footer(text=footer, icon_url=footer_img)
@@ -115,7 +147,7 @@ class FAQ(commands.Cog):
         @discord.ui.button(label="Nr. 3", style=discord.ButtonStyle.grey)
         async def three(self, button: discord.ui.Button, interaction: discord.Interaction):
             description = """**3. Mam polskie jednostki, ale dziwne stroje.**
-            Zainstaluj od nowa pliki konfiguracyjne oraz stroje. Nie instaluj EUP Law&Order czy Server&Rescue."""
+Zainstaluj od nowa pliki konfiguracyjne oraz stroje. Nie instaluj EUP Law&Order czy Server&Rescue."""
             embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
             embed.set_author(name="PolishEmergencyV")
             embed.set_footer(text=footer, icon_url=footer_img)
@@ -125,8 +157,8 @@ class FAQ(commands.Cog):
         @discord.ui.button(label="Nr. 4", style=discord.ButtonStyle.grey)
         async def four(self, button: discord.ui.Button, interaction: discord.Interaction):
             description = """**4. Konfig do UltimateBackup**
-            [LSPDFR.com](https://www.lcpdfr.com/downloads/gta5mods/misc/29319-ultimate-backup-config-for-polish-eup-polskie-stroje-dla-ultimate-backup/ 'Kliknij by przejść do LSPDFR.com!')
-            [Nasza strona](https://polishemergencyv.com/file/3-ultimate-backup-config-for-polish-eup/ 'Kliknij by przejść do PolishEmergencyV.com!')"""
+[LSPDFR.com](https://www.lcpdfr.com/downloads/gta5mods/misc/29319-ultimate-backup-config-for-polish-eup-polskie-stroje-dla-ultimate-backup/ 'Kliknij by przejść do LSPDFR.com!')
+[Nasza strona](https://polishemergencyv.com/file/3-ultimate-backup-config-for-polish-eup/ 'Kliknij by przejść do PolishEmergencyV.com!')"""
             embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
             embed.set_author(name="PolishEmergencyV")
             embed.set_footer(text=footer, icon_url=footer_img)
@@ -153,9 +185,9 @@ class FAQ(commands.Cog):
     async def els(self, ctx):
         description = """**Spis błędów**
 
-        **1.** ELS nie działa!
-        **2.** ELS Key Lock Active w prawym dolnym rogu
-        **3.** Światła nie błyskają, działa tylko cruise mode."""
+**1.** ELS nie działa!
+**2.** ELS Key Lock Active w prawym dolnym rogu
+**3.** Światła nie błyskają, działa tylko cruise mode."""
         embed=discord.Embed(description=description, color=0x2a44ff, timestamp=ctx.message.created_at)
         embed.set_author(name="PolishEmergencyV")
         embed.set_footer(text=footer, icon_url=footer_img)
@@ -170,9 +202,9 @@ class FAQ(commands.Cog):
         async def home(self, button: discord.ui.Button, interaction: discord.Interaction):
             description = """**Spis błędów**
 
-            **1.** ELS nie działa!
-            **2.** ELS Key Lock Active w prawym dolnym rogu
-            **3.** Światła nie błyskają, działa tylko cruise mode."""
+**1.** ELS nie działa!
+**2.** ELS Key Lock Active w prawym dolnym rogu
+**3.** Światła nie błyskają, działa tylko cruise mode."""
             embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
             embed.set_author(name="PolishEmergencyV")
             embed.set_footer(text=footer, icon_url=footer_img)
@@ -182,8 +214,8 @@ class FAQ(commands.Cog):
         async def one(self, button: discord.ui.Button, interaction: discord.Interaction):
             description = """**1. ELS nie działa!**
             Upewnij się że masz zainstalowany: 
-            - ScriptHookV (http://www.dev-c.com/gtav/scripthookv/)
-            - AdvancedHook (ten przychodzi z ELSem)"""
+- ScriptHookV (http://www.dev-c.com/gtav/scripthookv/)
+- AdvancedHook (ten przychodzi z ELSem)"""
             embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
             embed.set_author(name="PolishEmergencyV")
             embed.set_footer(text=footer, icon_url=footer_img)
@@ -193,7 +225,7 @@ class FAQ(commands.Cog):
         @discord.ui.button(label="Nr. 2", style=discord.ButtonStyle.grey)
         async def two(self, button: discord.ui.Button, interaction: discord.Interaction):
             description = """**2. ELS Key Lock Active**
-            Wciśnij Scroll Lock."""
+Wciśnij Scroll Lock."""
             embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
             embed.set_author(name="PolishEmergencyV")
             embed.set_footer(text=footer, icon_url=footer_img)
@@ -204,14 +236,14 @@ class FAQ(commands.Cog):
         async def three(self, button: discord.ui.Button, interaction: discord.Interaction):
             description = """**3. Światła nie błyskają, działa tylko cruise mode.**
         
-            - Włącz OpenIV
-            - Tools -> ASI Manager
-            - Odinstaluj wszytkie opcje
-            - Odinstaluj OpenIV
-            - Zrestartuj komputer
-            - Zainstaluj OpenIV od nowa
-            - Zainstaluj pierwsze dwie opcje w ASI Manager
-            - Sprawdź w grze"""
+- Włącz OpenIV
+- Tools -> ASI Manager
+- Odinstaluj wszytkie opcje
+- Odinstaluj OpenIV
+- Zrestartuj komputer
+- Zainstaluj OpenIV od nowa
+- Zainstaluj pierwsze dwie opcje w ASI Manager
+- Sprawdź w grze"""
             embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
             embed.set_author(name="PolishEmergencyV")
             embed.set_footer(text=footer, icon_url=footer_img)
@@ -293,8 +325,8 @@ class FAQ(commands.Cog):
         async def home(self, button: discord.ui.Button, interaction: discord.Interaction):
             description = """**Spis błędów**\n
             
-            **1.** Plugin "XXX" was terminated because it caused the game to freeze?
-            **2.** Insufficient Permissions or Bad Antivirus"""
+**1.** Plugin "XXX" was terminated because it caused the game to freeze?
+**2.** Insufficient Permissions or Bad Antivirus"""
             embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
             embed.set_author(name="PolishEmergencyV")
             embed.set_footer(text=footer, icon_url=footer_img)
@@ -303,7 +335,7 @@ class FAQ(commands.Cog):
         @discord.ui.button(label="Nr. 1", style=discord.ButtonStyle.grey)
         async def one(self, button: discord.ui.Button, interaction: discord.Interaction):
             description = """**1. Plugin "XXX" was terminated because it caused the game to freeze?**
-            Podczas włączania RagePluginHooka kliknij ikonkę Ustawień (trybik), a następnie w polu "Plugin Timeout Threshold" wpisz "60000" (4 zera)."""
+Podczas włączania RagePluginHooka kliknij ikonkę Ustawień (trybik), a następnie w polu "Plugin Timeout Threshold" wpisz "60000" (4 zera)."""
             embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
             embed.set_author(name="PolishEmergencyV")
             embed.set_footer(text=footer, icon_url=footer_img)
@@ -313,15 +345,15 @@ class FAQ(commands.Cog):
         @discord.ui.button(label="Nr. 2", style=discord.ButtonStyle.grey)
         async def two(self, button: discord.ui.Button, interaction: discord.Interaction):
             description = """**2. Insufficient Permissions or Bad Antivirus**
-            Są 2 zasady:
-            - Nie możesz włączać GTA z innego folderu niż oryginalnie zainstalowałeś. 
-            - Nie możesz zmieniać nazwy folderu.
+Są 2 zasady:
+- Nie możesz włączać GTA z innego folderu niż oryginalnie zainstalowałeś. 
+- Nie możesz zmieniać nazwy folderu.
 
-            Na początek postaraj się wyłączyć wszystkie antywirusy, później aplikacje które mogą przyśpieszać gry (np. Razer Cortex, RivaTuner).
-            Jeśli nadal nie podziałało kliknij prawym na GTA5.exe -> Właściwości -> Zabezpieczenia. Upewnij się że SYSTEM, Administratorzy oraz twój użytkownik posiadają wszystkie uprawnienia (możesz zignorować "Uprawnienia specjalne").
-            Jeśli tak nie jest, kliknij przycisk "Edytuj" i dodaj im brakujące uprawnienia.
+Na początek postaraj się wyłączyć wszystkie antywirusy, później aplikacje które mogą przyśpieszać gry (np. Razer Cortex, RivaTuner).
+Jeśli nadal nie podziałało kliknij prawym na GTA5.exe -> Właściwości -> Zabezpieczenia. Upewnij się że SYSTEM, Administratorzy oraz twój użytkownik posiadają wszystkie uprawnienia (możesz zignorować "Uprawnienia specjalne").
+Jeśli tak nie jest, kliknij przycisk "Edytuj" i dodaj im brakujące uprawnienia.
 
-            Spróbuj teraz włączyć grę."""
+Spróbuj teraz włączyć grę."""
             embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
             embed.set_author(name="PolishEmergencyV")
             embed.set_footer(text=footer, icon_url=footer_img)
@@ -344,18 +376,19 @@ class FAQ(commands.Cog):
     @bot.command() 
     async def faq(self, ctx):
         description = """**Lista komend FAQ**
-        - zamknij
-        - fivem
-        - log
-        - stroje/eup/peup
-        - dlclist
-        - els
-        - gameconfig
-        - kanalpomocy
-        - zmodeler/zmodeler3
-        - licencja
-        - rph
-        - pomusz/brakdetali/helpme"""
+- 24h
+- zamknij
+- fivem
+- log
+- stroje/eup/peup/ciuchy
+- dlclist
+- els
+- gameconfig
+- kanalpomocy
+- zmodeler/zmodeler3
+- licencja
+- rph
+- pomusz/brakdetali/helpme"""
         embed=discord.Embed(description=description, color=0x2a44ff, timestamp=ctx.message.created_at)
         embed.set_author(name="PolishEmergencyV")
         embed.set_footer(text=footer, icon_url=footer_img)
