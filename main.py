@@ -1,12 +1,12 @@
-from datetime import datetime
 import os
 import discord
 import time
 import json
+import logging
 from discord.ext import commands
 from discord.ext.tasks import loop
 from asyncio import sleep
-
+from datetime import datetime
 
 
 # Get configuration.json
@@ -29,7 +29,6 @@ def __init__(self, bot):
 # Intents
 intents = discord.Intents.default()
 intents.members = True
-# intents = discord.Intents.all()
 # The bot
 bot = commands.Bot(command_prefix='!', intents = intents)
 
@@ -157,5 +156,11 @@ async def on_command_error(ctx, error):
     channel = bot.get_channel(847040167353122856)
     await channel.send(f"```{ctx}``` \n\n```{error}```") 
     raise error
+
+logger = logging.getLogger('discord')
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler(filename='logs/discord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(handler)
 
 bot.run(token)

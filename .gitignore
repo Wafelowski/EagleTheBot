@@ -6,3 +6,4 @@ db/
 db/
 *.code-workspace
 **/__pycache__/
+logs/
