@@ -367,7 +367,7 @@ Spróbuj teraz włączyć grę."""
     @bot.command(aliases=["nodetails", "brakdetali", "helpme"])
     async def pomusz(self, ctx):
         embed=discord.Embed(title="Pomusz mi! Nie umiem udzielić informacji", color=0x2a44ff)
-        embed.set_image(url="https://cdn.discordapp.com/attachments/690185755989114885/909949405954736138/unknown.png")
+        embed.set_image(url="https://cdn.discordapp.com/attachments/690185755989114885/911343294850682920/pomusz_mi.png")
         await ctx.send(embed=embed)
 
     @bot.command() 
