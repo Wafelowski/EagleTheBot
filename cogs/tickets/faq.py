@@ -1,9 +1,6 @@
 import json
 import discord
 from discord.ext import commands
-from discord.ext.commands import context
-from discord.ext.commands.core import has_permissions
-from discord.ext.commands.errors import MissingPermissions 
 
 with open("config.json", "r") as config: 
     data = json.load(config)
