@@ -260,19 +260,19 @@ Wciśnij Scroll Lock."""
     @bot.command() 
     async def gameconfig(self, ctx):
         description = """**1. Jak zainstalować gameconfig?**
-    Na kanale <#690184232097939591> są dwa filmy zrobione przez nas, część pierwsza pokazuje instalację gameconfigu.
-    
-    **2. Co to jest X traffic i ped?**
-    #x to jest mnożnik danej wartości; 
-    - Traffic odpowiada za wielkość ruchu samochodów, 
-    - Ped odpowiada za ilość NPC na ulicy. 
-    Stock to domyślne wartości GTA.
-    
-    **3. Gdzie jest gameconfig?**
-    \`mods -> update -> update.rpf -> common -> data\`
-    
-    **Link**
-    https://pl.gta5-mods.com/misc/gta-5-gameconfig-300-cars"""
+Na kanale <#690184232097939591> są dwa filmy zrobione przez nas, część pierwsza pokazuje instalację gameconfigu.
+
+**2. Co to jest X traffic i ped?**
+#x to jest mnożnik danej wartości; 
+- Traffic odpowiada za wielkość ruchu samochodów, 
+- Ped odpowiada za ilość NPC na ulicy. 
+Stock to domyślne wartości GTA.
+
+**3. Gdzie jest gameconfig?**
+\`mods -> update -> update.rpf -> common -> data\`
+
+**Link**
+https://pl.gta5-mods.com/misc/gta-5-gameconfig-300-cars"""
         embed=discord.Embed(description=description, color=0x2a44ff, timestamp=ctx.message.created_at)
         embed.set_author(name="PolishEmergencyV")
         embed.set_footer(text=footer, icon_url=footer_img)
@@ -292,8 +292,8 @@ Wciśnij Scroll Lock."""
     @bot.command(aliases=["zmodeler3", "zmodeler2"]) 
     async def zmodeler(self, ctx):
         description = """Nie świadczymy pomocy w tworzeniu własnych modyfikacji. Internet oferuje poradniki oraz fora, tworzenie modyfikacji to nie jest bułka z masłem. 
-        Uprzedzając, nie polecimy żadnego poradnika, nie pomożemy Ci prywatnie, a ten serwer nie posiada tematyki pomocy w tworzeniu modów. 
-        Liczymy na wyrozumiałość."""
+Uprzedzając, nie polecimy żadnego poradnika, nie pomożemy Ci prywatnie, a ten serwer nie posiada tematyki pomocy w tworzeniu modów. 
+Liczymy na wyrozumiałość."""
         embed=discord.Embed(description=description, color=0x2a44ff, timestamp=ctx.message.created_at)
         embed.set_author(name="PolishEmergencyV")
         embed.set_footer(text=footer, icon_url=footer_img)
@@ -308,9 +308,9 @@ Wciśnij Scroll Lock."""
     @bot.command(aliases=["rage", "ragepluginhook"]) 
     async def rph(self, ctx):
         description = """**Spis błędów**\n
-        
-        **1.** Plugin "XXX" was terminated because it caused the game to freeze?
-        **2.** Insufficient Permissions or Bad Antivirus"""
+    
+**1.** Plugin "XXX" was terminated because it caused the game to freeze?
+**2.** Insufficient Permissions or Bad Antivirus"""
         embed=discord.Embed(description=description, color=0x2a44ff, timestamp=ctx.message.created_at)
         embed.set_author(name="PolishEmergencyV")
         embed.set_footer(text=footer, icon_url=footer_img)
