@@ -5,7 +5,7 @@
 	
 	"prefix": "!",
 	"token": "TOKEN_GOES_HERE",
-	"errorChannel": "CHANNEL_ID_GOES_HERE",
+	"errorChannel": 123456789,
 	"ownerID": "YOUR_ID",
 	"debug": "false",
 
