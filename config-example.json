@@ -5,17 +5,9 @@
 	
 	"prefix": "!",
 	"token": "TOKEN_GOES_HERE",
+	"errorChannel": "CHANNEL_ID_GOES_HERE",
 	"ownerID": "YOUR_ID",
 	"debug": "false",
-
-	"_Separator3_": 	"---------------------------",
-	"_DziennikConfig_": "-----Dziennik Settings-----",
-	"_Separator4_": 	"---------------------------",
-	
-	"dziennik_enabled": true,
-	"dziennikToken": "TOKEN_GOES_HERE",
-	"dziennikSymbol": "SYMBOL_GOES_HERE",
-	"dziennikPIN": "PIN_GOES_HERE",
 
 	"_Separator5_": 	"---------------------------",
 	"_Embeds_": 		"-------Embed Settings------",

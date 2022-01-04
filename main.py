@@ -15,6 +15,7 @@ with open("config.json", "r") as config:
     prefix = data["prefix"]
     token = data["token"]
     owner_id = data["ownerID"]
+    error_channel = data["errorChannel"]
     footer = data["footerCopyright"]
     footer_img = data["footerCopyrightImage"]
 
@@ -153,7 +154,7 @@ async def on_reaction_add(reaction, user):
 
 @bot.event
 async def on_command_error(ctx, error):
-    channel = bot.get_channel(847040167353122856)
+    channel = bot.get_channel(error_channel)
     await channel.send(f"```{ctx}``` \n\n```{error}```") 
     raise error
 
