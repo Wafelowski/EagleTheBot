@@ -59,7 +59,7 @@ class Bans(commands.Cog):
         if isinstance(error, commands.errors.CommandInvokeError):
             error = error.original
         if isinstance(error, commands.errors.MissingRequiredArgument):
-            await ctx.reply(f"Nie podano wszystkich argumentów! \n```{prefix} <@Uzytkownik> <powód> (-s) (-24h/-7d)", mention_author=False)
+            await ctx.reply(f"Nie podano wszystkich argumentów! \n```{prefix} <@Użytkownik> <powód> (-s) (-24h/-7d) \n```", mention_author=False)
         elif isinstance(error, commands.errors.MissingPermissions):
             await ctx.reply("Brak uprawnień!", mention_author=False)
             raise error
