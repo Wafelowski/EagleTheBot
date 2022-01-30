@@ -368,7 +368,109 @@ Spróbuj teraz włączyć grę."""
     async def pomusz(self, ctx):
         embed=discord.Embed(title="Pomusz mi! Nie umiem udzielić informacji", color=0x2a44ff)
         embed.set_image(url="https://cdn.discordapp.com/attachments/690185755989114885/911343294850682920/pomusz_mi.png")
+        await ctx.message.delete()
         await ctx.send(embed=embed)
+
+    @bot.command(aliases=["weekend", "cierpliwości", "cierpliwosci", "cierpliwość"])
+    async def cierpliwosc(self, ctx):
+        description = """
+Niestety, nie jesteśmy w stanie odpowiadać regularnie na wszystkie tickety. Każdy z nas ma swoje prywatne życie, zainteresowania, pracę czy szkołę. 
+Postaramy się odpowiedzieć, gdy ktoś z nas znajdzie chociaż chwilkę czasu.
+
+Za utrudnienia serdecznie przepraszamy.
+        """
+        embed=discord.Embed(title="PolishEmergencyV", description=description, color=0x2a44ff)
+        embed.set_footer(text=footer, icon_url=footer_img)
+        await ctx.message.delete()
+        await ctx.send(embed=embed)
+
+    @bot.command(aliases=["czystyfolder"]) 
+    async def czystegta(self, ctx):
+        view = discord.ui.View()
+        view.add_item(discord.ui.Button(label="Steam", url="https://i.imgur.com/LssMtWG.png", style=discord.ButtonStyle.url))
+        view.add_item(discord.ui.Button(label="Epic Games", url="https://i.imgur.com/tNLuM7Y.png", style=discord.ButtonStyle.url))
+        view.add_item(discord.ui.Button(label="Rockstar Launcher", url="https://i.imgur.com/yaQbqOi.png", style=discord.ButtonStyle.url))
+        embed=discord.Embed(description=f"Poniżej znajdziesz przyciski, które przekierują cię do obrazka z czystym folderem GTA do każdej platformy.", color=0x2a44ff, timestamp=ctx.message.created_at)
+        embed.set_author(name="PolishEmergencyV")
+        embed.set_footer(text=footer, icon_url=footer_img)
+        await ctx.message.delete()
+        await ctx.send(embed=embed, view=view)
+
+    @bot.command(aliases=["crashe", "crashfaq"]) 
+    async def crash(self, ctx):
+        description = """**Spis Crashy**
+    
+**1.** Zainstalowałem pojazdy i crashuje
+**2.** Crashuje, a nie mam folderu mods. Jak usunę ELS.asi to działa. RPH crashuje mi całą grę.
+**3.** Błąd ERR_MEM_EMBEDDEDALLOC_ALLOC
+**4.** Błąd ERR_FIL_PACK_1"""
+        embed=discord.Embed(description=description, color=0x2a44ff, timestamp=ctx.message.created_at)
+        embed.set_author(name="PolishEmergencyV")
+        embed.set_footer(text=footer, icon_url=footer_img)
+        await ctx.message.delete()
+        await ctx.send(embed=embed, view=self.Crash_Button(ctx))
+
+    class Crash_Button(discord.ui.View):
+        def __init__(self, ctx):
+            super().__init__()
+            self.ctx = ctx
+        @discord.ui.button(label="Spis", style=discord.ButtonStyle.blurple)
+        async def home(self, button: discord.ui.Button, interaction: discord.Interaction):
+            description = """**Spis Crashy**
+    
+**1.** Zainstalowałem pojazdy i crashuje
+**2.** Crashuje, a nie mam folderu mods. Jak usunę ELS.asi to działa, plik RagePluginHook.log się nie generuje.
+**3.** Błąd ERR_MEM_EMBEDDEDALLOC_ALLOC
+**4.** Błąd ERR_FIL_PACK_1"""
+            embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
+            embed.set_author(name="PolishEmergencyV")
+            embed.set_footer(text=footer, icon_url=footer_img)
+            # Make sure to update the message with our updated selves
+            await interaction.response.edit_message(view=self, embed=embed)
+
+        @discord.ui.button(label="Nr. 1", style=discord.ButtonStyle.grey)
+        async def one(self, button: discord.ui.Button, interaction: discord.Interaction):
+            description = """**1. Zainstalowałem pojazdy i crashuje**
+Upewnij się, że masz zainstalowany gameconfig. Link do jego pobrania znajdziesz [tutaj](https://pl.gta5-mods.com/misc/gta-5-gameconfig-300-cars) lub na <#531964192207405096>"""
+            embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
+            embed.set_author(name="PolishEmergencyV")
+            embed.set_footer(text=footer, icon_url=footer_img)
+            await interaction.response.edit_message(view=self, embed=embed)
+
+        @discord.ui.button(label="Nr. 2", style=discord.ButtonStyle.grey)
+        async def two(self, button: discord.ui.Button, interaction: discord.Interaction):
+            description = """**2. Crashuje, a nie mam folderu mods. Jak usunę ELS.asi to działa, plik RagePluginHook.log się nie generuje.**
+Zrestartuj grę, a następnie przejdź do folderu z plikami gry. Kliknij prawym przyciskiem na folder zawierający pliki GTA. 
+Wybierz Właściwości -> Zabezpieczenia -> Edytuj -> Użytkownicy -> Pełna kontrola. Kliknij Zastosuj, a następnie OK."""
+            embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
+            embed.set_author(name="PolishEmergencyV")
+            embed.set_footer(text=footer, icon_url=footer_img)
+            await interaction.response.edit_message(view=self, embed=embed)
+
+        @discord.ui.button(label="Nr. 3", style=discord.ButtonStyle.grey)
+        async def three(self, button: discord.ui.Button, interaction: discord.Interaction):
+            description = """**3. Błąd ERR_MEM_EMBEDDEDALLOC_ALLOC**
+Zainstaluj HeapAdjuster. Link znajdziesz [tutaj](https://www.gta5-mods.com/tools/heapadjuster) lub na <#531964192207405096>"""
+            embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
+            embed.set_author(name="PolishEmergencyV")
+            embed.set_footer(text=footer, icon_url=footer_img)
+            await interaction.response.edit_message(view=self, embed=embed)
+
+        @discord.ui.button(label="Nr. 4", style=discord.ButtonStyle.grey)
+        async def four(self, button: discord.ui.Button, interaction: discord.Interaction):
+            description = """**4. Błąd ERR_FIL_PACK_1**
+Zainstaluj PackfileLimitAdjuster. Link znajdziesz [tutaj](https://www.gta5-mods.com/tools/packfile-limit-adjuster) lub na <#531964192207405096>"""
+            embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
+            embed.set_author(name="PolishEmergencyV")
+            embed.set_footer(text=footer, icon_url=footer_img)
+            await interaction.response.edit_message(view=self, embed=embed)
+
+        @discord.ui.button(label="Usuń", style=discord.ButtonStyle.red)
+        async def delete(self, button: discord.ui.Button, interaction: discord.Interaction):
+            if self.ctx.author == interaction.user:
+                await interaction.message.delete()
+            else:
+                await interaction.response.send_message('Brak uprawnień!', ephemeral=True)
 
     @bot.command() 
     async def faq(self, ctx):
@@ -385,7 +487,10 @@ Spróbuj teraz włączyć grę."""
 - zmodeler/zmodeler3
 - licencja
 - rph
-- pomusz/brakdetali/helpme"""
+- pomusz/brakdetali/helpme
+- cierpliwosc
+- czystyfolder
+- crash"""
         embed=discord.Embed(description=description, color=0x2a44ff, timestamp=ctx.message.created_at)
         embed.set_author(name="PolishEmergencyV")
         embed.set_footer(text=footer, icon_url=footer_img)
