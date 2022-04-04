@@ -19,6 +19,8 @@ class FAQ(commands.Cog):
 # Ticket #
 ##########
 
+
+
     @bot.command(name='24h') 
     async def _24h(self, ctx):
         lastMessage = await ctx.channel.history(limit=100).flatten()
@@ -178,6 +180,7 @@ Wciśnij Scroll Lock."""
     async def gameconfig(self, ctx):
         description = """**1. Jak zainstalować gameconfig?**
 Na kanale <#690184232097939591> są dwa filmy zrobione przez nas, część pierwsza pokazuje instalację gameconfigu.
+Wybierz wersję "More Mods".
 
 **2. Co to jest X traffic i ped?**
 #x to jest mnożnik danej wartości; 
@@ -186,7 +189,7 @@ Na kanale <#690184232097939591> są dwa filmy zrobione przez nas, część pierw
 Stock to domyślne wartości GTA.
 
 **3. Gdzie jest gameconfig?**
-\`mods -> update -> update.rpf -> common -> data\`
+`mods -> update -> update.rpf -> common -> data`
 
 **Link**
 https://pl.gta5-mods.com/misc/gta-5-gameconfig-300-cars"""
