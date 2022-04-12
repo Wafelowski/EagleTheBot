@@ -12,10 +12,12 @@ with open("config.json", "r") as config:
     footer_img = data["footerCopyrightImage"]
 
 class Avatars(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot, intents):
         self.bot = bot
 
-    bot = commands.Bot(command_prefix=prefix)
+    intents = discord.Intents.default()
+    intents.members = True
+    bot = commands.Bot(command_prefix=prefix, intents=intents)
 
     @bot.command()
     async def avatar(self, ctx):
@@ -42,10 +44,12 @@ class Avatars(commands.Cog):
             await ctx.send("Nieznany błąd!")
 
 class Userinfo(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot, intents):
         self.bot = bot
 
-    bot = commands.Bot(command_prefix=prefix)
+    intents = discord.Intents.default()
+    intents.members = True
+    bot = commands.Bot(command_prefix=prefix, intents=intents)
 
     @bot.command()
     async def userinfo(self, ctx):
@@ -93,6 +97,8 @@ class Userinfo(commands.Cog):
         return math.floor((snowflake / 4194304 + DISCORD_EPOCH) / 1000)
         
 
-def setup(bot):
-    bot.add_cog(Avatars(bot))
-    bot.add_cog(Userinfo(bot))
+async def setup(bot):
+    intents = discord.Intents.default()
+    intents.members = True
+    await bot.add_cog(Avatars(bot, intents=intents))
+    await bot.add_cog(Userinfo(bot, intents=intents))

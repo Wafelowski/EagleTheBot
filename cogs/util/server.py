@@ -13,10 +13,12 @@ with open("config.json", "r") as config:
     footer_img = data["footerCopyrightImage"]
 
 class Serverinfo(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot, intents):
         self.bot = bot
 
-    bot = commands.Bot(command_prefix=prefix)
+    intents = discord.Intents.default()
+    intents.members = True
+    bot = commands.Bot(command_prefix=prefix, intents=intents)
 
     @bot.command()
     async def serverinfo(self, ctx):
@@ -111,5 +113,7 @@ class Serverinfo(commands.Cog):
         #return new Date(snowflake / 4194304 + epoch)
         return math.floor((snowflake / 4194304 + DISCORD_EPOCH) / 1000)
 
-def setup(bot):
-    bot.add_cog(Serverinfo(bot))
+async def setup(bot):
+    intents = discord.Intents.default()
+    intents.members = True
+    await bot.add_cog(Serverinfo(bot, intents=intents))
