@@ -6,7 +6,7 @@ from discord.ext.commands import context
 from discord.ext.commands.core import has_permissions
 from discord.ext.commands.errors import MissingPermissions 
 
-with open("config.json", "r") as config: 
+with open("configs/config.json", "r") as config: 
     data = json.load(config)
     prefix = data["prefix"]
     footer = data["footerCopyright"]
@@ -16,8 +16,7 @@ class Serverinfo(commands.Cog):
     def __init__(self, bot, intents):
         self.bot = bot
 
-    intents = discord.Intents.default()
-    intents.members = True
+    intents = discord.Intents.all()
     bot = commands.Bot(command_prefix=prefix, intents=intents)
 
     @bot.command()
@@ -33,7 +32,7 @@ class Serverinfo(commands.Cog):
         embed=discord.Embed(title=f"{ctx.guild.name}", description=description, color=0x7289DA, timestamp=ctx.message.created_at)
         embed.add_field(name="ID Serwera", value=ctx.guild.id, inline=True)
         embed.add_field(name="Właściciel", value=f"<@{ctx.guild.owner_id}>", inline=True)
-        embed.add_field(name="Region", value=ctx.guild.region, inline=True)
+        embed.add_field(name="Region", value="Usunięto", inline=True)
         embed.add_field(name="Założono", value=f"<t:{math.floor(ctx.guild.created_at.timestamp())}>", inline=True)
         embed.add_field(name=f"Liczba Ról", value=f"{len(ctx.guild.roles)}", inline=True)
         embed.add_field(name="Dołączono", value=f"<t:{math.floor(ctx.author.joined_at.timestamp())}>", inline=True)
@@ -54,7 +53,7 @@ class Serverinfo(commands.Cog):
         # danger/red = 4
         # link/url = 5
         @discord.ui.button(label="Lista Ról", style=discord.ButtonStyle.grey)
-        async def roles(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def roles(self, interaction: discord.Interaction, button: discord.ui.Button):
             if button.label == "Lista Ról":
                 role = list(map(lambda r: r.id, interaction.message.guild.roles))
                 role.pop(0)
@@ -93,7 +92,7 @@ class Serverinfo(commands.Cog):
                 return
 
         @discord.ui.button(label="Usuń", style=discord.ButtonStyle.red)
-        async def delete(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def delete(self, interaction: discord.Interaction, button: discord.ui.Button):
             await interaction.message.delete()
 
     @serverinfo.error

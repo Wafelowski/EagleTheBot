@@ -5,7 +5,7 @@ from discord.ext import commands
 from discord.ext.commands.core import has_permissions
 from discord.ext.commands.errors import MissingPermissions 
 
-with open("config.json", "r") as config: 
+with open("configs/config.json", "r") as config: 
     data = json.load(config)
     prefix = data["prefix"]
     footer = data["footerCopyright"]
@@ -15,8 +15,7 @@ class Avatars(commands.Cog):
     def __init__(self, bot, intents):
         self.bot = bot
 
-    intents = discord.Intents.default()
-    intents.members = True
+    intents = discord.Intents.all()
     bot = commands.Bot(command_prefix=prefix, intents=intents)
 
     @bot.command()
@@ -47,8 +46,7 @@ class Userinfo(commands.Cog):
     def __init__(self, bot, intents):
         self.bot = bot
 
-    intents = discord.Intents.default()
-    intents.members = True
+    intents = discord.Intents.all()
     bot = commands.Bot(command_prefix=prefix, intents=intents)
 
     @bot.command()

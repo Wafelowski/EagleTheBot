@@ -3,17 +3,18 @@ from pydoc import describe
 import discord
 from discord.ext import commands
 
-with open("config.json", "r") as config: 
+with open("configs/config.json", "r") as config: 
     data = json.load(config)
     prefix = data["prefix"]
     footer = data["footerCopyright"]
     footer_img = data["footerCopyrightImage"]
 
 class FAQ(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot, intents):
         self.bot = bot
 
-    bot = commands.Bot(command_prefix=prefix)
+    intents = discord.Intents.all()
+    bot = commands.Bot(command_prefix=prefix, intents=intents)
 
 ##########
 # Ticket #
@@ -122,7 +123,7 @@ Za utrudnienia serdecznie przepraszamy.
             super().__init__()
             self.ctx = ctx
         @discord.ui.button(label="Spis", style=discord.ButtonStyle.blurple)
-        async def home(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def home(self, interaction: discord.Interaction, button: discord.ui.Button):
             description = """**Spis błędów**
 
 **1.** ELS nie działa!
@@ -133,7 +134,7 @@ Za utrudnienia serdecznie przepraszamy.
             embed.set_footer(text="!els", icon_url=footer_img)
             await interaction.response.edit_message(view=self, embed=embed)
         @discord.ui.button(label="Nr. 1", style=discord.ButtonStyle.grey)
-        async def one(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def one(self, interaction: discord.Interaction, button: discord.ui.Button):
             description = """**1. ELS nie działa!**
             Upewnij się że masz zainstalowany: 
 - ScriptHookV (http://www.dev-c.com/gtav/scripthookv/)
@@ -144,7 +145,7 @@ Za utrudnienia serdecznie przepraszamy.
             await interaction.response.edit_message(view=self, embed=embed)
 
         @discord.ui.button(label="Nr. 2", style=discord.ButtonStyle.grey)
-        async def two(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def two(self, interaction: discord.Interaction, button: discord.ui.Button):
             description = """**2. ELS Key Lock Active**
 Wciśnij Scroll Lock."""
             embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
@@ -153,7 +154,7 @@ Wciśnij Scroll Lock."""
             await interaction.response.edit_message(view=self, embed=embed)
 
         @discord.ui.button(label="Nr. 3", style=discord.ButtonStyle.grey)
-        async def three(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def three(self, interaction: discord.Interaction, button: discord.ui.Button):
             description = """**3. Światła nie błyskają, działa tylko cruise mode.**
         
 - Włącz OpenIV
@@ -170,7 +171,7 @@ Wciśnij Scroll Lock."""
             await interaction.response.edit_message(view=self, embed=embed)
 
         @discord.ui.button(label="Usuń", style=discord.ButtonStyle.red)
-        async def delete(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def delete(self, interaction: discord.Interaction, button: discord.ui.Button):
             if self.ctx.author == interaction.user:
                 await interaction.message.delete()
             else:
@@ -241,7 +242,7 @@ Nie podmieniaj tego pliku, gdy instalujesz cokolwiek innego."""
             super().__init__()
             self.ctx = ctx
         @discord.ui.button(label="Spis", style=discord.ButtonStyle.blurple)
-        async def home(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def home(self, interaction: discord.Interaction, button: discord.ui.Button):
             description = """**Spis błędów**\n
             
 **1.** Plugin "XXX" was terminated because it caused the game to freeze?
@@ -251,7 +252,7 @@ Nie podmieniaj tego pliku, gdy instalujesz cokolwiek innego."""
             embed.set_footer(text="!rph", icon_url=footer_img)
             await interaction.response.edit_message(view=self, embed=embed)
         @discord.ui.button(label="Nr. 1", style=discord.ButtonStyle.grey)
-        async def one(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def one(self, interaction: discord.Interaction, button: discord.ui.Button):
             description = """**1. Plugin "XXX" was terminated because it caused the game to freeze?**
 Podczas włączania RagePluginHooka kliknij ikonkę Ustawień (trybik), a następnie w polu "Plugin Timeout Threshold" wpisz "60000" (4 zera)."""
             embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
@@ -260,7 +261,7 @@ Podczas włączania RagePluginHooka kliknij ikonkę Ustawień (trybik), a nastę
             await interaction.response.edit_message(view=self, embed=embed)
 
         @discord.ui.button(label="Nr. 2", style=discord.ButtonStyle.grey)
-        async def two(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def two(self, interaction: discord.Interaction, button: discord.ui.Button):
             description = """**2. Insufficient Permissions or Bad Antivirus**
 Są 2 zasady:
 - Nie możesz włączać GTA z innego folderu niż oryginalnie zainstalowałeś. 
@@ -277,7 +278,7 @@ Spróbuj teraz włączyć grę."""
             await interaction.response.edit_message(view=self, embed=embed)
 
         @discord.ui.button(label="Usuń", style=discord.ButtonStyle.red)
-        async def delete(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def delete(self, interaction: discord.Interaction, button: discord.ui.Button):
             if self.ctx.author == interaction.user:
                 await interaction.message.delete()
             else:
@@ -319,7 +320,7 @@ Przesuń pliki `ScriptHookV.dll` oraz `dinput8.dll` do głównego folderu z grą
         # danger/red = 4
         # link/url = 5
         @discord.ui.button(label="Spis", style=discord.ButtonStyle.blurple)
-        async def home(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def home(self, interaction: discord.Interaction, button: discord.ui.Button):
             description = """**Spis błędów**
 
 **1.** Mieszają mi się stroje z amerykańskimi
@@ -332,7 +333,7 @@ Przesuń pliki `ScriptHookV.dll` oraz `dinput8.dll` do głównego folderu z grą
             # Make sure to update the message with our updated selves
             await interaction.response.edit_message(view=self, embed=embed)
         @discord.ui.button(label="Nr. 1", style=discord.ButtonStyle.grey)
-        async def one(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def one(self, interaction: discord.Interaction, button: discord.ui.Button):
             description = """**1. Mieszają mi się stroje z amerykańskimi**
 - w OpenIV usuń folder EUP z `update -> x64 -> dlcpacks`
 - Zainstaluj ponownie PEUP bez instalacji EUP L&O i S&R"""
@@ -343,7 +344,7 @@ Przesuń pliki `ScriptHookV.dll` oraz `dinput8.dll` do głównego folderu z grą
             await interaction.response.edit_message(view=self, embed=embed)
 
         @discord.ui.button(label="Nr. 2", style=discord.ButtonStyle.grey)
-        async def two(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def two(self, interaction: discord.Interaction, button: discord.ui.Button):
             description = """**2. Zainstalowałem automatycznym instalatorem i są dziwne stroje oraz stare jednostki w LSPDFR**
 Zainstaluj konfigi, które są w tym samym archiwum co instalator."""
             embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
@@ -353,7 +354,7 @@ Zainstaluj konfigi, które są w tym samym archiwum co instalator."""
             await interaction.response.edit_message(view=self, embed=embed)
 
         @discord.ui.button(label="Nr. 3", style=discord.ButtonStyle.grey)
-        async def three(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def three(self, interaction: discord.Interaction, button: discord.ui.Button):
             description = """**3. Mam polskie jednostki, ale dziwne stroje.**
 Zainstaluj od nowa pliki konfiguracyjne oraz stroje. Nie instaluj EUP Law&Order czy Server&Rescue."""
             embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
@@ -363,7 +364,7 @@ Zainstaluj od nowa pliki konfiguracyjne oraz stroje. Nie instaluj EUP Law&Order 
             await interaction.response.edit_message(view=self, embed=embed)
         
         @discord.ui.button(label="Nr. 4", style=discord.ButtonStyle.grey)
-        async def four(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def four(self, interaction: discord.Interaction, button: discord.ui.Button):
             description = """**4. Konfig do UltimateBackup**
 [LSPDFR.com](https://www.lcpdfr.com/downloads/gta5mods/misc/29319-ultimate-backup-config-for-polish-eup-polskie-stroje-dla-ultimate-backup/ 'Kliknij by przejść do LSPDFR.com!')
 [Nasza strona](https://polishemergencyv.com/file/3-ultimate-backup-config-for-polish-eup/ 'Kliknij by przejść do PolishEmergencyV.com!')"""
@@ -374,7 +375,7 @@ Zainstaluj od nowa pliki konfiguracyjne oraz stroje. Nie instaluj EUP Law&Order 
             await interaction.response.edit_message(view=self, embed=embed)
 
         @discord.ui.button(label="Usuń", style=discord.ButtonStyle.red)
-        async def delete(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def delete(self, interaction: discord.Interaction, button: discord.ui.Button):
             if self.ctx.author == interaction.user:
                 await interaction.message.delete()
             else:
@@ -403,7 +404,7 @@ Zainstaluj od nowa pliki konfiguracyjne oraz stroje. Nie instaluj EUP Law&Order 
             super().__init__()
             self.ctx = ctx
         @discord.ui.button(label="Spis", style=discord.ButtonStyle.blurple)
-        async def home(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def home(self, interaction: discord.Interaction, button: discord.ui.Button):
             description = """**Spis Crashy**
     
 **1.** Zainstalowałem pojazdy i crashuje
@@ -417,7 +418,7 @@ Zainstaluj od nowa pliki konfiguracyjne oraz stroje. Nie instaluj EUP Law&Order 
             await interaction.response.edit_message(view=self, embed=embed)
 
         @discord.ui.button(label="Nr. 1", style=discord.ButtonStyle.grey)
-        async def one(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def one(self, interaction: discord.Interaction, button: discord.ui.Button):
             description = """**1. Zainstalowałem pojazdy i crashuje**
 Upewnij się, że masz zainstalowany gameconfig. Link do jego pobrania znajdziesz [tutaj](https://pl.gta5-mods.com/misc/gta-5-gameconfig-300-cars) lub na <#531964192207405096>"""
             embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
@@ -426,7 +427,7 @@ Upewnij się, że masz zainstalowany gameconfig. Link do jego pobrania znajdzies
             await interaction.response.edit_message(view=self, embed=embed)
 
         @discord.ui.button(label="Nr. 2", style=discord.ButtonStyle.grey)
-        async def two(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def two(self, interaction: discord.Interaction, button: discord.ui.Button):
             description = """**2. Crashuje, a nie mam folderu mods. Jak usunę ELS.asi to działa, plik RagePluginHook.log się nie generuje.**
 Zrestartuj grę, a następnie przejdź do folderu z plikami gry. Kliknij prawym przyciskiem na folder zawierający pliki GTA. 
 Wybierz Właściwości -> Zabezpieczenia -> Edytuj -> Użytkownicy -> Pełna kontrola. Kliknij Zastosuj, a następnie OK."""
@@ -436,7 +437,7 @@ Wybierz Właściwości -> Zabezpieczenia -> Edytuj -> Użytkownicy -> Pełna kon
             await interaction.response.edit_message(view=self, embed=embed)
 
         @discord.ui.button(label="Nr. 3", style=discord.ButtonStyle.grey)
-        async def three(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def three(self, interaction: discord.Interaction, button: discord.ui.Button):
             description = """**3. Błąd ERR_MEM_EMBEDDEDALLOC_ALLOC**
 Zainstaluj HeapAdjuster. Link znajdziesz [tutaj](https://www.gta5-mods.com/tools/heapadjuster) lub na <#531964192207405096>"""
             embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
@@ -445,7 +446,7 @@ Zainstaluj HeapAdjuster. Link znajdziesz [tutaj](https://www.gta5-mods.com/tools
             await interaction.response.edit_message(view=self, embed=embed)
 
         @discord.ui.button(label="Nr. 4", style=discord.ButtonStyle.grey)
-        async def four(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def four(self, interaction: discord.Interaction, button: discord.ui.Button):
             description = """**4. Błąd ERR_FIL_PACK_1**
 Zainstaluj PackfileLimitAdjuster. Link znajdziesz [tutaj](https://www.gta5-mods.com/tools/packfile-limit-adjuster) lub na <#531964192207405096>"""
             embed=discord.Embed(description=description, color=0x2a44ff, timestamp=self.ctx.message.created_at)
@@ -454,7 +455,7 @@ Zainstaluj PackfileLimitAdjuster. Link znajdziesz [tutaj](https://www.gta5-mods.
             await interaction.response.edit_message(view=self, embed=embed)
 
         @discord.ui.button(label="Usuń", style=discord.ButtonStyle.red)
-        async def delete(self, button: discord.ui.Button, interaction: discord.Interaction):
+        async def delete(self, interaction: discord.Interaction, button: discord.ui.Button):
             if self.ctx.author == interaction.user:
                 await interaction.message.delete()
             else:
@@ -559,5 +560,7 @@ Liczymy na wyrozumiałość."""
         await ctx.message.delete()
         await ctx.send(embed=embed)
 
-def setup(bot):
-    bot.add_cog(FAQ(bot))
+async def setup(bot):
+    intents = discord.Intents.default()
+    intents.members = True
+    await bot.add_cog(FAQ(bot, intents=intents))

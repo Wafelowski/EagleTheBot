@@ -1,25 +1,41 @@
-import json
-import discord
+import json, discord
 from discord.ext import commands
 from discord.ext.commands.core import has_permissions
 
-with open("config.json", "r") as config: 
+with open("configs/config.json", "r") as config: 
     data = json.load(config)
     prefix = data["prefix"]
     footer = data["footerCopyright"]
     footer_img = data["footerCopyrightImage"]
+    administrators = data["administrators"]
+    moderators = data["moderators"]
 
 class Bans(commands.Cog):
     def __init__(self, bot, intents):
         self.bot = bot
 
-    intents = discord.Intents.default()
-    intents.members = True
+    intents = discord.Intents.all()
     bot = commands.Bot(command_prefix=prefix, intents=intents)
+    staff = administrators + moderators
 
-    @bot.command()
-    @has_permissions(ban_members=True)  
-    async def ban(self, ctx, member : discord.Member, *, reason = None):
+    @bot.command(aliases=["zbanuj"])
+    @commands.check_any(commands.has_any_role(*staff), commands.has_guild_permissions(ban_members=True))
+    async def ban(self, ctx, member, *, reason = None):
+        if ctx.message.mention_everyone:
+            await ctx.reply("Na co liczysz?", mention_author=False, delete_after=15.0)
+            return
+        
+        if len(ctx.message.mentions) > 1:
+            await ctx.reply("Możesz podać tylko jednego użytkownika.", mention_author=False, delete_after=15.0)
+            return
+        elif len(ctx.message.mentions) == 0:
+            member = ctx.guild.get_member(member)
+            if member is None:
+                await ctx.reply("Nie znaleziono użytkownika.", mention_author=False, delete_after=15.0)
+                return
+        else:
+            member = ctx.message.mentions[0]
+
         if member.id == ctx.author.id:
             await ctx.send("Dlaczego chcesz zbanować samego siebie?")
             return

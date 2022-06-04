@@ -4,33 +4,45 @@ from discord.ext import commands
 from discord.ext.commands.core import has_permissions
 from discord.ext.commands.errors import MissingPermissions 
 
-with open("config.json", "r") as config: 
+with open("configs/config.json", "r") as config: 
     data = json.load(config)
     prefix = data["prefix"]
     footer = data["footerCopyright"]
     footer_img = data["footerCopyrightImage"]
+    administrators = data["administrators"]
+    moderators = data["moderators"]
 
 class Unbans(commands.Cog):
     def __init__(self, bot, intents):
         self.bot = bot
 
-    intents = discord.Intents.default()
-    intents.members = True
+    intents = discord.Intents.all()
     bot = commands.Bot(command_prefix=prefix, intents=intents)
+    staff = administrators + moderators
 
-    @bot.command()
-    @has_permissions(ban_members=True)  
-    async def unban(ctx, *, member):
-        banned_users = await ctx.guild.bans()
-        member_name, member_discriminator = member.split("#")
+    @bot.command(aliases=["odbanuj"])
+    @commands.check_any(commands.has_any_role(*staff), commands.has_guild_permissions(ban_members=True))
+    async def unban(self, ctx, user_id):
+        try:
+            user_id = int(user_id)
+        except ValueError:
+            await ctx.reply("Musisz podać ID użytkownika.", mention_author=False)
+            return
 
-        for ban_entry in banned_users:
-            user = ban_entry.user
-
-            if (user.name, user.discriminator) == (member_name, member_discriminator):
-                await ctx.guild.unban(user)
-                await ctx.send(f'Unbanned {user.mention}')
-                return
+        user = self.bot.get_user(user_id)
+        if user is None:
+            user = await self.bot.fetch_user(user_id)
+        print(user)
+        await ctx.guild.unban(user)
+        
+        description = f"""**Odbanowano użytkownika.**\n
+        **Użytkownik**: <@{user.id}> ({user.name}#{user.discriminator}) 
+        **Administrator**: <@{ctx.author.id}> ({ctx.author.id})"""
+        embed2=discord.Embed(description=description, color=0x00ff00, timestamp=ctx.message.created_at)
+        embed2.set_author(name=ctx.guild.name)
+        embed2.set_footer(text=footer, icon_url=footer_img)
+        await ctx.send(embed=embed2)
+        await ctx.message.delete()
 
     @unban.error
     async def unban_error(self, ctx, error):

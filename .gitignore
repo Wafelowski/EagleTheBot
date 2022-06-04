@@ -1,10 +1,20 @@
+# Konfiguracja
 token.json
-config.json
+configs/config.json
+# !configs/config-example.json
+
+
+# Dane uzytkownikow
 db/
+
+# Logi
+logs/
+
+# Python
+.venv/
+**/__pycache__/
+
+# Visual Studio Code
 .vs/
 .vscode/
-db/
 *.code-workspace
-**/__pycache__/
-logs/
-.venv/
