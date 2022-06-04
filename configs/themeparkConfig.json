@@ -31,7 +31,7 @@
 	"gban_channel": 909774739860504606,
 	"gban_logs": 909774739860504606,
 	"gban_log_message": ":no_entry: Nadano Now\u0105 Blokad\u0119. \n\n:man_detective: **Gracz:** {nick} // || `{id}` || \n:clock3: **Czas:** `{time}`\n:information_source: **Pow\u00f3d:** `{reason}` \n:police_officer: **Administrator:** {staff} \n- - - - - - - - - - - - - - - -",
-	"gban_message": "!gban {id} {time} {reason} | {time} | {staff} | Odwo\u0142aj si\u0119 na themepark.pl/discord",
+	"gban_message": "!oban {id} {time} {reason} | {time} | {staff} | Odwo\u0142aj si\u0119 na themepark.pl/discord",
 
 	"_Separator98_": 	"---------------------------",
 	"_Wafel_": 			"-------Wafelowski.dev------",
