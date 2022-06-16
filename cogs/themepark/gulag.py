@@ -206,12 +206,12 @@ class Gulag(commands.Cog):
         await member.add_roles(*roles)
 
         await logs_channel.send(f"""
--=- :white_check_mark:  *Otwarcie rejestru!* :white_check_mark:  -=-
+-=- :white_check_mark:  *Otwarcie rejestru!* :white_check_mark: -=-
 
 **Personel**: {ctx.author.mention}
 **Wypuszczony**: {member.mention}
 
--=- :white_check_mark:  *Koniec rejestru!* :white_check_mark:  -=-""")
+-=- :white_check_mark:  *Koniec rejestru!* :white_check_mark: -=-""")
         await ctx.reply("Wypuszczono z gułagu.", mention_author=False, delete_after=10.0)
         await sleep(10)
         await ctx.message.delete()
@@ -233,6 +233,22 @@ class Gulag(commands.Cog):
         else:
             await ctx.send(f"Wystąpił błąd! **Treść**: \n```{error}```")
             raise error
+
+    @commands.Cog.listener()
+    async def on_member_remove(self, member):
+        if gulag_role == [] or str(gulag_role) == "":
+            return
+        roles = list(map(lambda r: r.id, member.roles))
+        if gulag_role in roles:
+            logs_channel = self.bot.get_channel(gulag_logs)
+            description = f"""
+:exclamation:  *Ucieczka!*  :exclamation:
+
+**Użytkownik**: {member.mention} ({member.id})"""
+            embed=discord.Embed(description=description, color=0xe74c3c, timestamp=datetime.now())
+            embed.set_author(name="Ochrona Gułagu")
+            embed.set_footer(text="ThemePark Gułag System", icon_url=footer_img)
+            await logs_channel.send(embed=embed)
 
 async def setup(bot):
     intents = discord.Intents.default()
