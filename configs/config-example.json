@@ -43,9 +43,18 @@
 	"databasePassword": "password_goes_here",
 	"databasePort": 3306,
 
+
 	"_Separator11_": 	"---------------------------",
-	"_AntiAlt_": 		"---- Anti Alt Settings ----",
+	"_ApiKeys_": 		"----- API Secret Keys -----",
 	"_Separator12_": 	"---------------------------",
+
+	"steam_api": "API_KEY_GOES_HERE",
+	"vpnapi_io": "API_KEY_GOES_HERE",
+
+
+	"_Separator13_": 	"---------------------------",
+	"_AntiAlt_": 		"---- Anti Alt Settings ----",
+	"_Separator14_": 	"---------------------------",
 
 	"verifRoles": [860543081324478474, 860610858949672970],
 	"forbiddenRoles": [860543081324478474, 860610858949672970],
