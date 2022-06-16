@@ -1,6 +1,6 @@
-from datetime import datetime
-import discord, json, math, time, platform, psutil
+import discord, json, math, time, platform, psutil, requests
 from discord.ext import commands
+from datetime import datetime
 from asyncio import sleep
 
 with open("configs/config.json", "r") as config: 
@@ -11,6 +11,7 @@ with open("configs/config.json", "r") as config:
     owner_id = data["ownerID"]
     footer = data["footerCopyright"]
     footer_img = data["footerCopyrightImage"]
+    vpnapi_key = data["vpnapi_io"]
 
 
 class BotUtilities(commands.Cog):
@@ -92,6 +93,81 @@ class BotUtilities(commands.Cog):
             error = error.original
         elif isinstance(error, commands.errors.MissingRequiredArgument):
             await ctx.send("Musisz podać treść!")
+        elif isinstance(error, commands.errors.MissingPermissions):
+            await ctx.send("Brak uprawnień!")
+            raise error
+        else:
+            await ctx.send(f"Wystąpił błąd! **Treść**: \n```{error}```")
+
+    @bot.command()
+    async def vpncheck(self, ctx, *, ip):
+
+        if vpnapi_key == "API_KEY_GOES_HERE":
+            ctx.reply("Komenda wyłączona. Nie podano klucza API.")
+            return
+        
+        if "," in ip:
+            ip = ip.split(",")
+        elif "\n" in ip:
+            ip = ip.split("\n")
+        
+        if len(ip) > 500:
+            await ctx.send("Zbyt dużo adresów IP!")
+            return
+
+        await ctx.send(f"📡 | Sprawdzam adres(y) IP...")
+        vpns = []
+        proxy = []
+        tor = []
+        async with ctx.channel.typing():
+            for address in ip:
+                try:
+                    api = requests.get(f"https://vpnapi.io/api/{address}?key={vpnapi_key}")
+                    api = api.json()
+                    print(api)
+                    
+                    if api['security']['vpn'] == True:
+                        vpns.append(address)
+                    if api['security']['proxy'] == True:
+                        proxy.append(address)
+                    if api['security']['tor'] == True:
+                        tor.append(address)
+                except Exception as e:
+                    print("VPNCheck error: " + str(e))
+                    await ctx.send(f"Wystąpił błąd podczas sprawdzania adresu {address}. Anuluję kolejkę.")
+                    return
+
+        embed=discord.Embed(timestamp=datetime.now())
+        if ((vpns != []) or (proxy != []) or (tor != [])):
+            color = 0xFF0000
+            description = "**Znaleziono następujące adresy:**"
+
+            if vpns != []:
+                embed.add_field(name="📡 | VPN", value="```\n{}```".format('\n'.join(vpns)), inline=False)
+
+            if proxy != []:
+                embed.add_field(name="🌐 | Proxy", value="```\n{}```".format('\n'.join(proxy)), inline=False)
+
+            if tor != []:
+                embed.add_field(name="🧅 | Tor", value="```\n{}```".format('\n'.join(tor)), inline=False)
+        else:
+            color = 0x00FF00
+            description = "Nie znaleziono żadnych VPN, Proxy lub TOR."
+
+        embed.description = description
+        embed.color = color
+        embed.set_author(name="Weryfikacja Adresów IP")
+        embed.set_footer(text=footer, icon_url=footer_img)
+
+        await ctx.channel.send(embed=embed, view=BotUtilities.RemoveEmbed_Button(ctx))
+        await ctx.message.delete()
+        
+    @vpncheck.error
+    async def vpncheck_error(self, ctx, error):
+        if isinstance(error, commands.errors.CommandInvokeError):
+            error = error.original
+        elif isinstance(error, commands.errors.MissingRequiredArgument):
+            await ctx.send("Musisz podać adresy IP! Możesz je podzielić przecinkami lub akapitami.")
         elif isinstance(error, commands.errors.MissingPermissions):
             await ctx.send("Brak uprawnień!")
             raise error
