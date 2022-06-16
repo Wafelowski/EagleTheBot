@@ -101,6 +101,7 @@ class BotUtilities(commands.Cog):
 
     @bot.command()
     @commands.check_any(commands.has_any_role(*staff), commands.has_guild_permissions(administrator=True), commands.is_owner())
+    @commands.guild_only()
     async def vpncheck(self, ctx, *, ip):
 
         if vpnapi_key == "API_KEY_GOES_HERE":

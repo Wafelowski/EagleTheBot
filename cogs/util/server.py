@@ -20,6 +20,7 @@ class Serverinfo(commands.Cog):
     bot = commands.Bot(command_prefix=prefix, intents=intents)
 
     @bot.command()
+    @commands.guild_only()
     async def serverinfo(self, ctx):
         # role = list(map(lambda r: r.id, ctx.guild.roles))
         # role.pop(0)
