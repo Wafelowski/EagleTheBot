@@ -123,9 +123,13 @@ async def on_reaction_add(reaction, user):
 async def on_command_error(ctx, error):
     if isinstance(error, commands.errors.CommandNotFound) or isinstance(error, commands.errors.MissingRequiredArgument):
         return
+    print(f"------- \nWystąpił błąd \n--- \n{error} \n-------")
     channel = bot.get_channel(error_channel)
+    if channel is None:
+        raise error
     await channel.send(f"```{ctx}``` \n\n```{error}```") 
     raise error
+    
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
