@@ -72,7 +72,7 @@ class GameBan(commands.Cog):
             
 
     @gban.error
-    async def gulag_error(self, ctx, error):
+    async def gban_error(self, ctx, error):
         if isinstance(error, commands.errors.CommandInvokeError):
             error = error.original
         if isinstance(error, commands.errors.MissingRequiredArgument):
