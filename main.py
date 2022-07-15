@@ -58,6 +58,11 @@ async def LoadCogs():
             await bot.load_extension(f"cogs.util.{filename[:-3]}")
             print(f"[Cogs - Utilities] Loaded - {filename[:-3]}")
 
+    for filename in os.listdir("cogs/fun"):
+        if filename.endswith(".py"):
+            await bot.load_extension(f"cogs.fun.{filename[:-3]}")
+            print(f"[Cogs - Fun] Loaded - {filename[:-3]}")
+    
     if pev_module:
         for filename in os.listdir("cogs/pev"):
             if filename.endswith(".py"):
