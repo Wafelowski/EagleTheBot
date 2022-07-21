@@ -95,6 +95,12 @@ class Gulag(commands.Cog):
                 return
             if role.name == "@everyone":
                 pass
+            if role.is_integration():
+                pass
+            if role.is_premium_subscriber():
+                pass
+            if role.is_bot_managed():
+                pass
             else:
                 roles.append(role.id)
         await member.remove_roles(*member.roles[1:])
