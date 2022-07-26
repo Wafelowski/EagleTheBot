@@ -85,6 +85,7 @@ class Gulag(commands.Cog):
             await ctx.reply("Ten użytkownik jest już w gułagu.", mention_author=False, delete_after=15.0)
             return
 
+        roles_id = []
         roles = []
         for role in member.roles:
             if role.permissions.administrator:
@@ -101,10 +102,11 @@ class Gulag(commands.Cog):
                 pass
             if role.is_bot_managed():
                 pass
+            if not role.is_assignable():
+                pass
             else:
-                roles.append(role.id)
-        await member.remove_roles(*member.roles[1:])
-        await member.add_roles(glg_role, reason=f"Zesłano do gułagu przez {ctx.author.name}. \nIlość węgla do wykopania - {number}")
+                roles_id.append(role.id)
+                roles.append(role)
 
         if not os.path.exists(f"db/gulag/{member.id}.json"):
             with open(f"db/gulag/{member.id}.json", "w+") as file:
@@ -113,7 +115,7 @@ class Gulag(commands.Cog):
                     "ID": member.id,
                     "Wizyta": 1,
                     "Ilosc wegla": number,
-                    "Role": roles
+                    "Role": roles_id
                 }
                 json.dump(gulag_data, file, indent='\t')
         else:
@@ -124,8 +126,11 @@ class Gulag(commands.Cog):
                 gulag_data["Wizyta"] += 1
                 gulag_data["Ilosc wegla"] += number
                 gulag_data["Nick"] = f"{member.name}#{member.discriminator}"
-                gulag_data["Role"] = roles
+                gulag_data["Role"] = roles_id
                 json.dump(gulag_data, file, indent='\t')
+
+        await member.remove_roles(*roles)
+        await member.add_roles(glg_role, reason=f"Zesłano do gułagu przez {ctx.author.name}. \nIlość węgla do wykopania - {number}")
 
         with open(f"db/gulag/{member.id}.json", "r") as file:
             gulag_data = json.load(file)
