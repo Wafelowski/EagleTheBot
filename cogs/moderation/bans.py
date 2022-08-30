@@ -69,7 +69,7 @@ class Bans(commands.Cog):
         embed2.set_author(name=ctx.guild.name)
         embed2.set_footer(text=footer, icon_url=footer_img)
         try:
-            await member.ban(days=days, reason = f"{reason} {silentMsg} {daysMsg}")
+            await member.ban(delete_message_days=days, reason = f"{reason} {silentMsg} {daysMsg}")
         except:
             await ctx.send("Wystąpił błąd. [Bans-53]")
         await ctx.send(embed=embed2)
@@ -114,17 +114,19 @@ class Bans(commands.Cog):
                     continue
                     
                 member = ctx.guild.get_member(int(id))
+                bot_member = ctx.guild.get_member(self.bot.user.id)
                 if member != None:
+                    if member.top_role >= ctx.author.top_role:
+                        failed.append((id, "Nie możesz zbanować użytkownika o identycznej hierarchii"))
+                        continue
+                    elif member.top_role >= bot_member.top_role:
+                        failed.append((id, "Bot jest niższy hierarchią"))
+                        continue
                     members.append(member)
                 else:
-                    failed.append((id, "Błędne ID"))
+                    failed.append((id, "Błędne ID/Zbanowane"))
         else:
             members = ctx.message.mentions
-
-        print("---------------------")
-        print(ids)
-        print(members)
-        print(reason)
 
         days=0
         daysMsg = ""
@@ -137,32 +139,30 @@ class Bans(commands.Cog):
             reason = reason.replace('-7d', '')
             daysMsg = "\nDodatkowo usunięto wiadomości z ostatnich 7 dni."
         
+        silentMsg = "[Flaga -s]"
+        if "-s" not in ctx.message.content:
+            silentMsg = ""
+            reason = reason.replace('-s', '')
 
         for member in members:
             try:
-                if member.bot == True:
-                    continue
-                if not "-s" in ctx.message.content:
+                print(member)
+                if ("-s" not in ctx.message.content) and (member.bot != True):
                     description = f"""Otrzymano banicję. Powód: {reason}"""
                     dm_embed=discord.Embed(description=description, color=0xff0000, timestamp=ctx.message.created_at)
                     dm_embed.set_author(name=ctx.guild.name)
                     dm_embed.set_footer(text=footer, icon_url=footer_img)
                     await member.send(embed=dm_embed)
-                await member.ban(days=days, reason = f"{reason} {silentMsg} {daysMsg}")
-            except discord.HTTPException:
+                print("XDDD")
+                await member.ban(delete_message_days=days, reason = f"{reason} {silentMsg} {daysMsg}")
+            except discord.HTTPException as e:
+                if e.code == 50013:
+                    failed.append((member.id, "Nie można zbanować tego użytkownika"))
                 continue
             except Exception as e:
                 await ctx.send("Wystąpił błąd. [Bans-155]")
                 print(e)
                 raise
-
-        print(failed)
-            
-
-        silentMsg = "[Flaga -s]"
-        if "-s" in ctx.message.content:
-            silentMsg = ""
-            reason = reason.replace('-s', '')
 
         members_formatted = []
         for member in members:
@@ -172,8 +172,10 @@ class Bans(commands.Cog):
         description = f"""**Nadano banicje.**\n
         **Użytkownicy**: \n - {members_formatted}
         **Administrator**: <@{ctx.author.id}> ({ctx.author.name}#{ctx.author.discriminator}) 
-        **Powód**: {reason} {silentMsg} \n{daysMsg}"""
+        **Powód**: \n```{reason} {silentMsg} \n{daysMsg}```"""
         if failed != []:
+            if members == []:
+                description = ""
             description += "\n**Nieudane:**"
             for fail in failed:
                 description += f"\n<@{fail[0]}> - {fail[1]}"
