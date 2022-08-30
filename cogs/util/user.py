@@ -30,8 +30,8 @@ class Avatars(commands.Cog):
             if member is None:
                 member = ctx.message.author
                 
-        embed=discord.Embed(title=f"Avatar - {member.name}", color=member.color, timestamp=ctx.message.created_at, url=member.avatar.url)
-        embed.set_image(url=member.avatar.url)
+        embed=discord.Embed(title=f"Avatar - {member.name}", color=member.color, timestamp=ctx.message.created_at, url=member.display_avatar)
+        embed.set_image(url=member.display_avatar)
         embed.set_footer(text=footer, icon_url=footer_img)
         await ctx.message.delete()
         await ctx.send(embed=embed)
@@ -71,6 +71,9 @@ class Userinfo(commands.Cog):
             if member is None:
                 member = ctx.message.author
 
+        if member == None:
+            member = ctx.message.author
+
         if member.public_flags == "":
             flagi = "Brak"
         else:
@@ -80,7 +83,7 @@ class Userinfo(commands.Cog):
         role.pop(0)
         role = ["<@&" + str(sub) + ">" for sub in role]
         role2 = ", ".join(role)
-        embed=discord.Embed(title=f"{member.name}#{member.discriminator}", color=member.color, timestamp=ctx.message.created_at, url=member.avatar.url)
+        embed=discord.Embed(title=f"{member.name}#{member.discriminator}", color=member.color, timestamp=ctx.message.created_at, url=member.display_avatar)
         embed.add_field(name="Użytkownik", value=f"{member.display_name}", inline=True)
         embed.add_field(name="Tag", value=f"{member.name}#{member.discriminator}", inline=True)
         embed.add_field(name="ID", value=f"{member.id}", inline=True)
@@ -88,7 +91,7 @@ class Userinfo(commands.Cog):
         embed.add_field(name="Flagi", value=f"{flagi}", inline=True)
         embed.add_field(name="Dołączono", value=f"<t:{math.floor(member.joined_at.timestamp())}>", inline=True)
         embed.add_field(name=f"Role - {len(role)}", value=f"{role2}", inline=True)
-        embed.set_thumbnail(url=member.avatar.url)
+        embed.set_thumbnail(url=member.display_avatar)
         embed.set_footer(text=footer, icon_url=footer_img)
         await ctx.message.delete()
         await ctx.send(embed=embed)
