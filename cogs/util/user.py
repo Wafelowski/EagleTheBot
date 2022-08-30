@@ -1,9 +1,5 @@
-import json
-import discord
-import math
+import json, discord, math, re
 from discord.ext import commands
-from discord.ext.commands.core import has_permissions
-from discord.ext.commands.errors import MissingPermissions 
 
 with open("configs/config.json", "r") as config: 
     data = json.load(config)
@@ -21,9 +17,19 @@ class Avatars(commands.Cog):
     @bot.command()
     async def avatar(self, ctx):
         if len(ctx.message.mentions) == 0:
-            member = ctx.message.author
+            content = ctx.message.content.split(" ")
+            if len(content) >= 2:
+                x = re.search("[0-9]{17,18}", content[1])
+                member = ctx.message.guild.get_member(int(x.group(0)))
+                if member == None:
+                    member = ctx.message.author
+            else: 
+                member = ctx.message.author
         else:
             member = ctx.message.mentions[0]
+            if member is None:
+                member = ctx.message.author
+                
         embed=discord.Embed(title=f"Avatar - {member.name}", color=member.color, timestamp=ctx.message.created_at, url=member.avatar.url)
         embed.set_image(url=member.avatar.url)
         embed.set_footer(text=footer, icon_url=footer_img)
@@ -52,13 +58,23 @@ class Userinfo(commands.Cog):
     @bot.command()
     async def userinfo(self, ctx):
         if len(ctx.message.mentions) == 0:
-            member = ctx.message.author
+            content = ctx.message.content.split(" ")
+            if len(content) >= 2:
+                x = re.search("[0-9]{17,18}", content[1])
+                member = ctx.message.guild.get_member(int(x.group(0)))
+                if member == None:
+                    member = ctx.message.author
+            else: 
+                member = ctx.message.author
         else:
             member = ctx.message.mentions[0]
+            if member is None:
+                member = ctx.message.author
+
         if member.public_flags == "":
             flagi = "Brak"
         else:
-            #flagi = member.public_flags
+            #flagi = member.public_flags.all()
             flagi = "Work in Progress"
         role = list(map(lambda r: r.id, member.roles))
         role.pop(0)
