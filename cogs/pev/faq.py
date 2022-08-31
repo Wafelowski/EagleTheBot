@@ -24,7 +24,7 @@ class FAQ(commands.Cog):
 
     @bot.command(name='24h') 
     async def _24h(self, ctx):
-        lastMessage = await ctx.channel.history(limit=100).flatten()
+        lastMessage = [message async for message in ctx.channel.history(limit=100)]
         urlText = ""
         if "Twój ticket właśnie został utworzony" in lastMessage[-1].content:
             view = discord.ui.View()
@@ -86,7 +86,7 @@ Za utrudnienia serdecznie przepraszamy.
     
     @bot.command() 
     async def zamknij(self, ctx):
-        lastMessage = await ctx.channel.history(limit=100).flatten()
+        lastMessage = [message async for message in ctx.channel.history(limit=100)]
         urlText = ""
         if "Twój ticket właśnie został utworzony" in lastMessage[-1].content:
             view = discord.ui.View()
