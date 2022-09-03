@@ -1,0 +1,39 @@
+{
+	"_Separator1_": 	"---------------------------",
+	"_MainSettings_": 	"-------Main Settings-------",
+	"_Separator2_": 	"---------------------------",
+	
+	
+	"_Separator7_": 	"---------------------------",
+	"_Gulag1_": 		"----- Gulag SubModule -----",
+	"_Gulag2_": 		"-------- aka Jail ---------",
+	"_Separator8_": 	"---------------------------",
+
+	"gulag_role": 860973420086820875,
+    "gulag_staff": [861924070478839829, 861924091799928844],
+	"gulag_welcome_channel": 910227215336243230,
+	"gulag_welcome_message": "Witaj {user} w **Pot\u0119\u017cnym Gu\u0142agu**! \nDo wykopania masz **{wegiel} kilo** w\u0119gla. \nJest to twoja *{visit}* wizyta, a \u0142\u0105cznie do wykopania by\u0142o *{wegiel_lacznie} kilo* w\u0119gla. \nPoradnik pocz\u0105tkuj\u0105cego g\u00f3rnika znajdziesz na kanale <#778657543794065458> \nJe\u017celi nie wiesz z jakiego powodu Ci\u0119 zes\u0142ano lub masz inne w\u0105tpliwo\u015bci napisz do naczelnika. \n**Mi\u0142ego pobytu! \u26cf\ufe0f**",
+    "gulag_logs": 910227215336243230,
+
+	"_Separator9_": 	"------------------------------",
+	"_Suggestion1_": 	"----- Channel  Reactions -----",
+	"_Suggestion2_": 	"--- Auto-react to messages ---",
+	"_Separator10_": 	"------------------------------",
+
+	"suggestion_channel": 909774739860504606,
+    "reactions": ["\ud83d\udc4d", "<:information:559816419508748308>", "790538554727071755"],
+
+	"_Separator11_": 	"---------------------------",
+	"_GameBan_": 		"---- GameBan SubModule ----",
+	"_Separator12_": 	"---------------------------",
+
+	"game_staff": [909774739860504606],
+	"gban_channel": 909774739860504606,
+	"gban_logs": 909774739860504606,
+	"gban_log_message": ":no_entry: Nadano Now\u0105 Blokad\u0119. \n\n:man_detective: **Gracz:** {nick} // || `{id}` || \n:clock3: **Czas:** `{time}`\n:information_source: **Pow\u00f3d:** `{reason}` \n:police_officer: **Administrator:** {staff} \n- - - - - - - - - - - - - - - -",
+	"gban_message": "!oban {id} {time} {reason} | {time} | {staff} | Odwo\u0142aj si\u0119 na themepark.pl/discord",
+
+	"_Separator98_": 	"---------------------------",
+	"_Wafel_": 			"-------Wafelowski.dev------",
+	"_Separator99_": 	"---------------------------"
+}
