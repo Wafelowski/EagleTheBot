@@ -19,7 +19,7 @@ class ChatExporter(commands.Cog):
     bot = commands.Bot(command_prefix=prefix, intents=intents)
     staff = administrators + moderators
 
-    @bot.command()
+    @bot.command(aliases=["transkrypt", "chatexport"])
     @commands.check_any(commands.has_any_role(*staff), commands.has_guild_permissions(manage_messages=True))
     @commands.guild_only()
     async def transcript(self, ctx):
