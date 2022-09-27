@@ -22,22 +22,23 @@ class Reactions(commands.Cog):
     intents = discord.Intents.all()
     bot = commands.Bot(command_prefix=prefix, intents=intents)
 
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        if message.author.id != self.bot.user.id:
-            if message.channel.id == suggestion_channel:
-                for reaction in reactions:
-                    if reaction in re.findall(".* .*", reaction):
-                        continue
-                    elif reaction in re.findall("[0-9]*", reaction):
-                        emoji = self.bot.get_emoji(int(reaction))
-                    else:
-                        emoji = reaction
+    if str(suggestion_channel) != "0":
+        @commands.Cog.listener()
+        async def on_message(self, message):
+            if message.author.id != self.bot.user.id:
+                if message.channel.id == suggestion_channel:
+                    for reaction in reactions:
+                        if reaction in re.findall(".* .*", reaction):
+                            continue
+                        elif reaction in re.findall("[0-9]*", reaction):
+                            emoji = self.bot.get_emoji(int(reaction))
+                        else:
+                            emoji = reaction
 
-                    if emoji is None:
-                        continue
-                    else:
-                        await message.add_reaction(emoji)
+                        if emoji is None:
+                            continue
+                        else:
+                            await message.add_reaction(emoji)
 
 
 async def setup(bot):
