@@ -18,9 +18,10 @@
 	"_Separator9_": 	"------------------------------",
 	"_Suggestion1_": 	"----- Channel  Reactions -----",
 	"_Suggestion2_": 	"--- Auto-react to messages ---",
+	"_Suggestions3_": 	"---- Set to 0 to disable -----",
 	"_Separator10_": 	"------------------------------",
 
-	"suggestion_channel": 909774739860504606,
+	"suggestion_channel": 0,
     "reactions": ["\ud83d\udc4d", "<:information:559816419508748308>", "790538554727071755"],
 
 	"_Separator11_": 	"---------------------------",

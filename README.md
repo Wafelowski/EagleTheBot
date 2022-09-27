@@ -3,7 +3,7 @@
 <a href="https://discord.gg/kYnKgf4na2">
     <img src="https://img.shields.io/discord/531961175114645534?color=7289DA&label=Discord&logo=discord"/></a>
 
-Bot używany na serwerze [PolishEmergencyV](https://discord.gg/kYnKgf4na2).
+Bot używany na serwerze [PolishEmergencyV](https://discord.gg/kYnKgf4na2) oraz [ThemePark](https://discord.gg/ZjMX3YD).
 
 ## Instalacja
 #### **Wymagania**
@@ -17,11 +17,15 @@ Bot używany na serwerze [PolishEmergencyV](https://discord.gg/kYnKgf4na2).
 <br>certifi==2022.5.18.1
 <br>chardet==4.0.0
 <br>charset-normalizer==2.0.12
+<br>chat-exporter==2.3
 <br>discord.py @ git+https://github.com/Rapptz/discord.py@348764583d95265f40b8a683e2f8ac73d6c173f5
+<br>emoji==2.1.0
+<br>grapheme==0.6.0
 <br>idna==3.3
 <br>multidict==6.0.2
 <br>protobuf==3.20.0
 <br>psutil==5.9.1
+<br>pytz==2022.2.1
 <br>requests==2.27.1
 <br>typing_extensions==4.1.1
 <br>urllib3==1.26.9
