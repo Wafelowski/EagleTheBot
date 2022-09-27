@@ -38,8 +38,9 @@ def __init__(self, bot):
 intents = discord.Intents.default()
 intents.members = True
 intents.message_content = True
+
 # The bot
-bot = commands.Bot(command_prefix=prefix, intents=intents, help_command=None)
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(prefix), intents=intents, help_command=None)
 
 # Load cogs
 async def LoadCogs():
