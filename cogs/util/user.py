@@ -83,6 +83,7 @@ class Userinfo(commands.Cog):
         role.pop(0)
         role = ["<@&" + str(sub) + ">" for sub in role]
         role2 = ", ".join(role)
+        
         embed=discord.Embed(title=f"{member.name}#{member.discriminator}", color=member.color, timestamp=ctx.message.created_at, url=member.display_avatar)
         embed.add_field(name="Użytkownik", value=f"{member.display_name}", inline=True)
         embed.add_field(name="Tag", value=f"{member.name}#{member.discriminator}", inline=True)
@@ -90,7 +91,8 @@ class Userinfo(commands.Cog):
         embed.add_field(name="Założono", value=f"<t:{await self.convertSnowflakeToDate(member.id)}>", inline=True)
         embed.add_field(name="Flagi", value=f"{flagi}", inline=True)
         embed.add_field(name="Dołączono", value=f"<t:{math.floor(member.joined_at.timestamp())}>", inline=True)
-        embed.add_field(name=f"Role - {len(role)}", value=f"{role2}", inline=True)
+        if len(role2) is not 0:
+            embed.add_field(name=f"Role - {len(role)}", value=f"{role2}", inline=True)
         embed.set_thumbnail(url=member.display_avatar)
         embed.set_footer(text=footer, icon_url=footer_img)
         await ctx.message.delete()
