@@ -492,6 +492,16 @@ Zainstaluj PackfileLimitAdjuster. Link znajdziesz [tutaj](https://www.gta5-mods.
         await ctx.message.delete()
         await ctx.send(embed=embed)
 
+    @bot.command() 
+    async def schemat(self, ctx):
+        description = """Przeglądnij poniższy schemat i wykonaj instrukcje zgodne z twoim problemem."""
+        embed=discord.Embed(description=description, color=0x2a44ff, timestamp=ctx.message.created_at)
+        embed.set_author(name="PolishEmergencyV")
+        embed.set_image(url="https://cdn.discordapp.com/attachments/841594628003856414/1018551204747419758/unknown.png")
+        embed.set_footer(text=footer, icon_url=footer_img)
+        await ctx.message.delete()
+        await ctx.send(embed=embed)
+
 ########
 # Inne #
 ########
