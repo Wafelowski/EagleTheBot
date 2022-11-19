@@ -91,7 +91,7 @@ class Userinfo(commands.Cog):
         embed.add_field(name="Założono", value=f"<t:{await self.convertSnowflakeToDate(member.id)}>", inline=True)
         embed.add_field(name="Flagi", value=f"{flagi}", inline=True)
         embed.add_field(name="Dołączono", value=f"<t:{math.floor(member.joined_at.timestamp())}>", inline=True)
-        if len(role2) is not 0:
+        if len(role2) != 0:
             embed.add_field(name=f"Role - {len(role)}", value=f"{role2}", inline=True)
         embed.set_thumbnail(url=member.display_avatar)
         embed.set_footer(text=footer, icon_url=footer_img)
