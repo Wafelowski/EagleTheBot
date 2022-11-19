@@ -80,7 +80,7 @@ class Bans(commands.Cog):
         if isinstance(error, commands.errors.CommandInvokeError):
             error = error.original
         if isinstance(error, commands.errors.MissingRequiredArgument):
-            await ctx.reply(f"Nie podano wszystkich argumentów! \n```{prefix}ban <@Użytkownik>/ID <powód> (-s) (-24h/-7d) \n```", mention_author=False)
+            await ctx.reply(f"Nie podano wszystkich argumentów! \n```{prefix}ban <@Użytkowni(-k/-cy)/ID> <powód> (-s) (-24h/-7d) \n```", mention_author=False)
         elif isinstance(error, commands.errors.MissingPermissions):
             await ctx.reply("Brak uprawnień!", mention_author=False)
             raise error
@@ -122,7 +122,8 @@ class Bans(commands.Cog):
                     elif member.top_role >= bot_member.top_role:
                         failed.append((id, "Bot jest niższy hierarchią"))
                         continue
-                    members.append(member)
+                    else:
+                        members.append(member)
                 else:
                     failed.append((id, "Błędne ID/Zbanowane"))
         else:
@@ -142,22 +143,21 @@ class Bans(commands.Cog):
         silentMsg = "[Flaga -s]"
         if "-s" not in ctx.message.content:
             silentMsg = ""
+        else:
             reason = reason.replace('-s', '')
 
         for member in members:
             try:
-                print(member)
                 if ("-s" not in ctx.message.content) and (member.bot != True):
                     description = f"""Otrzymano banicję. Powód: {reason}"""
                     dm_embed=discord.Embed(description=description, color=0xff0000, timestamp=ctx.message.created_at)
                     dm_embed.set_author(name=ctx.guild.name)
                     dm_embed.set_footer(text=footer, icon_url=footer_img)
                     await member.send(embed=dm_embed)
-                print("XDDD")
                 await member.ban(delete_message_days=days, reason = f"{reason} {silentMsg} {daysMsg}")
             except discord.HTTPException as e:
                 if e.code == 50013:
-                    failed.append((member.id, "Nie można zbanować tego użytkownika"))
+                    failed.append((member.id, "Nie można zbanować tego użytkownika, brak uprawnień."))
                 continue
             except Exception as e:
                 await ctx.send("Wystąpił błąd. [Bans-155]")
