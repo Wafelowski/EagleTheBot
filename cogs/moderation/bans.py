@@ -70,8 +70,8 @@ class Bans(commands.Cog):
         embed2.set_footer(text=footer, icon_url=footer_img)
         try:
             await member.ban(delete_message_days=days, reason = f"{reason} {silentMsg} {daysMsg}")
-        except:
-            await ctx.send("Wystąpił błąd. [Bans-53]")
+        except Exception as e:
+            await ctx.send(f"Wystąpił błąd. [Bans-53] ```\n{e}\n```")
         await ctx.send(embed=embed2)
         
 

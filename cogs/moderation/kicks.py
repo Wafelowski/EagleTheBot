@@ -60,8 +60,8 @@ class Kicks(commands.Cog):
         embed2.set_footer(text=footer, icon_url=footer_img)
         try:
             await member.kick(reason = f"{reason} {silentMsg}")
-        except:
-            await ctx.send("Wystąpił błąd. [Kicks-64]")
+        except Exception as e:
+            await ctx.send(f"Wystąpił błąd. [Kicks-64]  ```\n{e}\n```")
         await ctx.send(embed=embed2)
 
     @kick.error
