@@ -192,6 +192,12 @@ Stock to domyślne wartości GTA.
 **3. Gdzie jest gameconfig?**
 `mods -> update -> update.rpf -> common -> data`
 
+**4. Czy aby na pewno mam zainstalowany gameconfig?**
+Idź do jego lokalizacji, w linijce pliku gameconfig.xml powinieneś widzieć tylko jeden atrybut, `Compressed`.
+Jeśli dodatkowo widnieje tam atrybut `Encrypted`, oznacza to że gameconfig nie został zainstalowany.
+Widzisz takie pomarańczowe WIELKIE ostrzeżenie, gdy odpalisz Edit Mode? Dlaczego go nie przeczytasz, i nie wykonasz kroku o jakim mówi? 
+Jest to aż tak ciężkie?
+
 **Link**
 https://pl.gta5-mods.com/misc/gta-5-gameconfig-300-cars"""
         embed=discord.Embed(description=description, color=0x2a44ff, timestamp=ctx.message.created_at)
