@@ -35,8 +35,12 @@ class ChatExporter(commands.Cog):
                         members.append(message.author.id)
 
                 for member in members:
-                    member = await ctx.guild.fetch_member(member)
-                    members2.append(f"- {member.mention}")
+                    try:
+                        member = await ctx.guild.fetch_member(member)
+                        members2.append(f"- {member.mention}")
+                    except discord.errors.NotFound:
+                        members2.append(f"- <@{member}>")
+                    
 
                 members2 = str(members2).replace("[", "").replace("]", "").replace("'", "").replace(",", "\n")
 
