@@ -23,6 +23,7 @@ Bot używany na serwerze [PolishEmergencyV](https://discord.gg/kYnKgf4na2) oraz 
 <br>grapheme==0.6.0
 <br>idna==3.3
 <br>multidict==6.0.2
+<br>Pillow==9.4.0
 <br>protobuf==3.20.0
 <br>psutil==5.9.1
 <br>pytz==2022.2.1
