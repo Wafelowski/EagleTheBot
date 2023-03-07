@@ -127,7 +127,7 @@ async def on_reaction_add(reaction, user):
 
 @bot.event
 async def on_command_error(ctx, error):
-    if isinstance(error, commands.errors.CommandNotFound) or isinstance(error, commands.errors.MissingRequiredArgument):
+    if isinstance(error, commands.errors.CommandNotFound) or isinstance(error, commands.errors.MissingRequiredArgument) or isinstance(error, commands.errors.CommandOnCooldown):
         return
     print(f"------- \nWystąpił błąd \n--- \n{error} \n-------")
     channel = bot.get_channel(error_channel)
@@ -135,13 +135,20 @@ async def on_command_error(ctx, error):
         raise error
     await channel.send(f"```{ctx}``` \n\n```{error}```") 
     raise error
-    
 
+#Logging
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler(filename='logs/discord.log', encoding='utf-8', mode='w')
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
+
+#Cleanup temp files
+def cleanupTemp():
+    for filename in os.listdir("db/temp"):
+        os.remove(f"db/temp/{filename}")
+        logger.debug(f"[Temp] Deleted - {filename}")
+cleanupTemp()
 
 async def main():
     async with bot:
