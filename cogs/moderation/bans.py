@@ -101,7 +101,7 @@ class Bans(commands.Cog):
             members = []
             failed = []
 
-            ids = re.findall("[0-9]{17,18}", args)
+            ids = re.findall("[0-9]{17,19}", args)
             reason = [x for x in args.split(" ") if x not in ids]
             reason = " ".join(reason)
 
