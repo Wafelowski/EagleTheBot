@@ -42,7 +42,7 @@ class GameBan(commands.Cog):
             await ctx.reply(f"Błąd w konfiguracji, nie znaleziono kanału do wysłania logów gbana o ID {gameban_channel}.", mention_author=False, delete_after=30.0)
             return
         
-        if not re.match(r"^([0-9]{17}@steam|[0-9@]{17,18}@discord)$", id):
+        if not re.match(r"^([0-9]{17}@steam|[0-9]{17,19}@discord)$", id):
             await ctx.reply("Podano błędne ID.", mention_author=False, delete_after=10.0)
             return
 

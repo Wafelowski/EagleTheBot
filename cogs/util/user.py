@@ -19,7 +19,7 @@ class Avatars(commands.Cog):
         if len(ctx.message.mentions) == 0:
             content = ctx.message.content.split(" ")
             if len(content) >= 2:
-                x = re.search("[0-9]{17,18}", content[1])
+                x = re.search("[0-9]{17,19}", content[1])
                 member = ctx.message.guild.get_member(int(x.group(0)))
                 if member == None:
                     member = ctx.message.author
@@ -60,7 +60,7 @@ class Userinfo(commands.Cog):
         if len(ctx.message.mentions) == 0:
             content = ctx.message.content.split(" ")
             if len(content) >= 2:
-                x = re.search("[0-9]{17,18}", content[1])
+                x = re.search("[0-9]{17,19}", content[1])
                 member = ctx.message.guild.get_member(int(x.group(0)))
                 if member == None:
                     member = ctx.message.author
