@@ -3,6 +3,7 @@ import discord
 from discord.ext import commands
 from discord.ext.commands.core import has_permissions
 from discord.ext.commands.errors import MissingPermissions 
+from discord.ext.commands import MemberConverter
 
 with open("configs/config.json", "r") as config: 
     data = json.load(config)
@@ -32,7 +33,8 @@ class Kicks(commands.Cog):
             await ctx.reply("Możesz podać tylko jednego użytkownika.", mention_author=False, delete_after=15.0)
             return
         elif len(ctx.message.mentions) == 0:
-            member = ctx.guild.get_member(member)
+            converter = MemberConverter()
+            member = await converter.convert(ctx, member)
             if member is None:
                 await ctx.reply("Nie znaleziono użytkownika.", mention_author=False, delete_after=15.0)
                 return

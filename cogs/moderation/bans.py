@@ -1,8 +1,9 @@
 import json, discord, re
 from discord.ext import commands
 from discord.ext.commands.core import has_permissions
+from discord.ext.commands import MemberConverter
 
-with open("configs/config.json", "r") as config: 
+with open("configs/config.json", "r") as config:
     data = json.load(config)
     prefix = data["prefix"]
     footer = data["footerCopyright"]
@@ -24,12 +25,13 @@ class Bans(commands.Cog):
         if ctx.message.mention_everyone:
             await ctx.reply("Na co liczysz?", mention_author=False, delete_after=15.0)
             return
-        
+
         if len(ctx.message.mentions) > 1:
-            await ctx.reply(f"Użyj komendy {prefix} jeśli potrzebujesz zbanować kilku użytkowników.", mention_author=False, delete_after=15.0)
+            await ctx.reply(f"Użyj komendy {prefix}multiban jeśli potrzebujesz zbanować kilku użytkowników.", mention_author=False, delete_after=15.0)
             return
         elif len(ctx.message.mentions) == 0:
-            member = ctx.guild.get_member(member)
+            converter = MemberConverter()
+            member = await converter.convert(ctx, member)
             if member is None:
                 await ctx.reply("Nie znaleziono użytkownika.", mention_author=False, delete_after=15.0)
                 return
@@ -62,8 +64,8 @@ class Bans(commands.Cog):
             await member.send(embed=embed)
         reason = reason.replace('-s', '')
         description = f"""**Nadano banicję.**\n
-        **Użytkownik**: <@{member.id}> ({member.name}#{member.discriminator}) 
-        **Administrator**: <@{ctx.author.id}> ({ctx.author.id}) 
+        **Użytkownik**: <@{member.mention}> ({member.name}#{member.discriminator})
+        **Administrator**: <@{ctx.author.mention}> ({ctx.author.name}#{ctx.author.discriminator})
         **Powód**: {reason} {silentMsg} \n{daysMsg}"""
         embed2=discord.Embed(description=description, color=0xff0000, timestamp=ctx.message.created_at)
         embed2.set_author(name=ctx.guild.name)
@@ -73,7 +75,7 @@ class Bans(commands.Cog):
         except Exception as e:
             await ctx.send(f"Wystąpił błąd. [Bans-53] ```\n{e}\n```")
         await ctx.send(embed=embed2)
-        
+
 
     @ban.error
     async def ban_error(self, ctx, error):
@@ -94,10 +96,10 @@ class Bans(commands.Cog):
         if ctx.message.mention_everyone:
             await ctx.reply("Na co liczysz?", mention_author=False, delete_after=15.0)
             return
-        
+
         if len(ctx.message.mentions) == 0:
             ids = []
-            reason = [] 
+            reason = []
             members = []
             failed = []
 
@@ -112,8 +114,9 @@ class Bans(commands.Cog):
                 elif str(id) == str(self.bot.user.id):
                     failed.append((id, "Podano ID bota"))
                     continue
-                    
-                member = ctx.guild.get_member(int(id))
+
+                converter = MemberConverter()
+                member = await converter.convert(ctx, member)
                 bot_member = ctx.guild.get_member(self.bot.user.id)
                 if member != None:
                     if member.top_role >= ctx.author.top_role:
@@ -139,7 +142,7 @@ class Bans(commands.Cog):
             days=7
             reason = reason.replace('-7d', '')
             daysMsg = "\nDodatkowo usunięto wiadomości z ostatnich 7 dni."
-        
+
         silentMsg = "[Flaga -s]"
         if "-s" not in ctx.message.content:
             silentMsg = ""
@@ -171,7 +174,7 @@ class Bans(commands.Cog):
 
         description = f"""**Nadano banicje.**\n
         **Użytkownicy**: \n - {members_formatted}
-        **Administrator**: <@{ctx.author.id}> ({ctx.author.name}#{ctx.author.discriminator}) 
+        **Administrator**: <@{ctx.author.id}> ({ctx.author.name}#{ctx.author.discriminator})
         **Powód**: \n```{reason} {silentMsg} \n{daysMsg}```"""
         if failed != []:
             if members == []:
@@ -183,7 +186,7 @@ class Bans(commands.Cog):
         reply_embed.set_author(name=ctx.guild.name)
         reply_embed.set_footer(text=footer, icon_url=footer_img)
         await ctx.send(embed=reply_embed)
-        
+
 
     @multiban.error
     async def multiban_error(self, ctx, error):

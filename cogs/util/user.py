@@ -1,5 +1,6 @@
 import json, discord, math, re
 from discord.ext import commands
+from discord.ext.commands import MemberConverter
 
 with open("configs/config.json", "r") as config: 
     data = json.load(config)
@@ -19,8 +20,8 @@ class Avatars(commands.Cog):
         if len(ctx.message.mentions) == 0:
             content = ctx.message.content.split(" ")
             if len(content) >= 2:
-                x = re.search("[0-9]{17,19}", content[1])
-                member = ctx.message.guild.get_member(int(x.group(0)))
+                converter = MemberConverter()
+                member = await converter.convert(ctx, content[1])
                 if member == None:
                     member = ctx.message.author
             else: 
@@ -60,8 +61,8 @@ class Userinfo(commands.Cog):
         if len(ctx.message.mentions) == 0:
             content = ctx.message.content.split(" ")
             if len(content) >= 2:
-                x = re.search("[0-9]{17,19}", content[1])
-                member = ctx.message.guild.get_member(int(x.group(0)))
+                converter = MemberConverter()
+                member = await converter.convert(ctx, content[1])
                 if member == None:
                     member = ctx.message.author
             else: 
