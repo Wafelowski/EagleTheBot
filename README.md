@@ -7,30 +7,35 @@ Bot używany na serwerze [PolishEmergencyV](https://discord.gg/kYnKgf4na2) oraz 
 
 ## Instalacja
 #### **Wymagania**
-- Python 3.8+
+- Python 3.8+ + pip
 - Internet (oczywiste, nie?)
+- Rozumne czytanie
 <details>
 <summary>Pakiety</summary>
-<br>aiohttp==3.7.4.post0
-<br>async-timeout==3.0.1
-<br>attrs==21.4.0
-<br>certifi==2022.5.18.1
-<br>chardet==4.0.0
-<br>charset-normalizer==2.0.12
-<br>chat-exporter==2.3
-<br>discord.py @ git+https://github.com/Rapptz/discord.py@348764583d95265f40b8a683e2f8ac73d6c173f5
-<br>emoji==2.1.0
-<br>grapheme==0.6.0
-<br>idna==3.3
-<br>multidict==6.0.2
-<br>Pillow==9.4.0
-<br>protobuf==3.20.0
-<br>psutil==5.9.1
-<br>pytz==2022.2.1
-<br>requests==2.27.1
-<br>typing_extensions==4.1.1
-<br>urllib3==1.26.9
-<br>yarl==1.7.2
+
+```
+aiohttp==3.7.4.post0
+async-timeout==3.0.1
+attrs==21.4.0
+certifi==2022.5.18.1
+chardet==4.0.0
+charset-normalizer==2.0.12
+chat-exporter==2.3
+discord.py==2.3.1
+emoji==2.1.0
+grapheme==0.6.0
+idna==3.3
+multidict==6.0.2
+Pillow==9.5.0
+protobuf==3.20.0
+psutil==5.9.1
+pytz==2022.2.1
+requests==2.27.1
+typing_extensions==4.1.1
+urllib3==1.26.9
+yarl==1.7.2
+```
+
 </details>
 
 #### **Tokeny**
