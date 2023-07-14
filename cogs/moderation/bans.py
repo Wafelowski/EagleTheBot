@@ -96,6 +96,7 @@ class Bans(commands.Cog):
     @commands.check_any(commands.has_any_role(*staff), commands.has_guild_permissions(ban_members=True))
     async def multiban(self, ctx, *, args):
         reason = None
+        failed = []
         if ctx.message.mention_everyone:
             await ctx.reply("Na co liczysz?", mention_author=False, delete_after=15.0)
             return
@@ -104,7 +105,7 @@ class Bans(commands.Cog):
             ids = []
             reason = [] 
             members = []
-            failed = []
+            
 
             ids = re.findall("[0-9]{17,19}", args)
             reason = [x for x in args.split(" ") if x not in ids]
