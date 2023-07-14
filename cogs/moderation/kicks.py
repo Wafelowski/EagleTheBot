@@ -44,6 +44,7 @@ class Kicks(commands.Cog):
         if member.id == ctx.author.id:
             await ctx.send("Dlaczego chcesz wyrzucić samego siebie?")
             return
+        
         silentMsg = "[Flaga -s]"
         if not "-s" in ctx.message.content:
             silentMsg = ""
@@ -51,7 +52,11 @@ class Kicks(commands.Cog):
             embed=discord.Embed(description=description, color=0xff0000, timestamp=ctx.message.created_at)
             embed.set_author(name=ctx.guild.name)
             embed.set_footer(text=footer, icon_url=footer_img)
-            await member.send(embed=embed)
+            try:
+                await member.send(embed=embed)
+            except:
+                pass
+
         reason = reason.replace('-s', '')
         description = f"""**Wyrzucono użytkownika.**\n
         **Użytkownik**: <@{member.id}> ({member.name}#{member.discriminator}) 
