@@ -52,6 +52,7 @@ class Bans(commands.Cog):
             days=7
             reason = reason.replace('-7d', '')
             daysMsg = "\nDodatkowo usunięto wiadomości z ostatnich 7 dni."
+
         silentMsg = "[Flaga -s]"
         if not "-s" in ctx.message.content:
             silentMsg = ""
@@ -59,7 +60,11 @@ class Bans(commands.Cog):
             embed=discord.Embed(description=description, color=0xff0000, timestamp=ctx.message.created_at)
             embed.set_author(name=ctx.guild.name)
             embed.set_footer(text=footer, icon_url=footer_img)
-            await member.send(embed=embed)
+            try:
+                await member.send(embed=embed)
+            except:
+                pass
+
         reason = reason.replace('-s', '')
         description = f"""**Nadano banicję.**\n
         **Użytkownik**: <@{member.id}> ({member.name}#{member.discriminator}) 
@@ -153,7 +158,10 @@ class Bans(commands.Cog):
                     dm_embed=discord.Embed(description=description, color=0xff0000, timestamp=ctx.message.created_at)
                     dm_embed.set_author(name=ctx.guild.name)
                     dm_embed.set_footer(text=footer, icon_url=footer_img)
-                    await member.send(embed=dm_embed)
+                    try:
+                        await member.send(embed=dm_embed)
+                    except:
+                        pass
                 await member.ban(delete_message_days=days, reason = f"{reason} {silentMsg} {daysMsg}")
             except discord.HTTPException as e:
                 if e.code == 50013:
