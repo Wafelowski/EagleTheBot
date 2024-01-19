@@ -18,3 +18,10 @@ logs/
 .vs/
 .vscode/
 *.code-workspace
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
