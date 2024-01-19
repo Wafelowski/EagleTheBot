@@ -7,7 +7,7 @@ Bot używany na serwerze [PolishEmergencyV](https://discord.gg/kYnKgf4na2) oraz 
 
 ## Instalacja
 #### **Wymagania**
-- Python 3.8+ + pip
+- Python 3.10+ + pip
 - Internet (oczywiste, nie?)
 - Rozumne czytanie
 <details>
@@ -21,7 +21,7 @@ certifi==2022.5.18.1
 chardet==4.0.0
 charset-normalizer==2.0.12
 chat-exporter==2.3
-discord.py==2.3.1
+discord.py==2.3.2
 emoji==2.1.0
 grapheme==0.6.0
 idna==3.3
