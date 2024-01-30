@@ -40,7 +40,16 @@ intents.members = True
 intents.message_content = True
 
 # The bot
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(prefix), intents=intents, help_command=None)
+class EagleBot(commands.Bot):
+    async def setup_hook(self):
+        print(f"""Zalogowano jako {self.user}
+Discord.py - {discord.__version__}
+Bot by Wafelowski.dev""")
+        if status_list != False:
+            status_change.start()
+        # await self.load_extension(...)
+
+bot = EagleBot(command_prefix=commands.when_mentioned_or(prefix), intents=intents, help_command=None)
 
 # Load cogs
 async def LoadCogs():
@@ -79,23 +88,36 @@ async def LoadCogs():
 if __name__ == '__main__':
     asyncio.run(LoadCogs())
 
-
 @loop()
 async def status_change():
+    """
+    A coroutine function that changes the bot's status periodically.
+
+    This function iterates over a list of statuses and updates the bot's presence
+    with each status. It uses the `discord.Activity` class to set the activity type
+    and name of the status. The function then waits for a specified duration before
+    moving on to the next status.
+
+    Note: This function should be used as a decorator for an asynchronous event loop.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
     for status in status_list:
         statusType = eval(f"discord.ActivityType.{status[0]}")
         await bot.change_presence(activity=discord.Activity(type=statusType, name=status[1]))
         await sleep(int(status[2]))
-    
 
-@bot.event
-async def on_ready():
-    print(f"""Zalogowano jako {bot.user}
-Discord.py - {discord.__version__}
-Bot by Wafelowski.dev""")
-    if status_list != False:
-            status_change.start()
-
+@status_change.before_loop
+async def before_loop_func():
+    """
+    This function is called before the status_change loop starts.
+    It waits for the bot to be ready before proceeding.
+    """
+    await bot.wait_until_ready()
 
 @bot.listen('on_message')
 async def on_message(message):
@@ -148,11 +170,27 @@ def cleanupTemp():
     for filename in os.listdir("db/temp"):
         os.remove(f"db/temp/{filename}")
         logger.debug(f"[Temp] Deleted - {filename}")
+
+async def sendError(error, err_type = "Error"):
+    if err_type == "Error":
+        logger.error(error)
+    elif err_type == "Warning":
+        logger.warning(error)
+    elif err_type == "Info":
+        logger.info(error)
+    elif err_type == "Debug":
+        logger.debug(error)
+    else:
+        logger.error(error)
+
+    channel = bot.get_channel(error_channel)
+    if channel is None:
+        raise error
+
+    embed = discord.Embed(title=f"**{err_type}**", description=f"```{error}```", color=0xff0000)
+    embed.set_footer(text=footer, icon_url=footer_img)
+    await channel.send(embed=embed)
+    return embed
 cleanupTemp()
 
-async def main():
-    async with bot:
-        await bot.start(token)
-
-asyncio.run(main())
-# bot.run(token)
+bot.run(token)
