@@ -52,41 +52,63 @@ Bot by Wafelowski.dev""")
 bot = EagleBot(command_prefix=commands.when_mentioned_or(prefix), intents=intents, help_command=None)
 
 # Load cogs
-async def LoadCogs():
-    for filename in os.listdir("cogs"):
-        if filename.endswith(".py"):
-            await bot.load_extension(f"cogs.{filename[:-3]}")
-            print(f"[Cogs] Loaded - {filename[:-3]}")
+async def load_cogs_category(bot, category, category_name=None):
+    """
+    Loads all the Python files ending with '.py' in the specified category directory as extensions for the bot.
 
-    for filename in os.listdir("cogs/moderation"):
-        if filename.endswith(".py"):
-            await bot.load_extension(f"cogs.moderation.{filename[:-3]}")
-            print(f"[Cogs - Moderation] Loaded - {filename[:-3]}")
+    Args:
+        bot (discord.ext.commands.Bot): The bot instance.
+        category (str): The name of the category directory containing the cogs.
+        category_name (str, optional): The display name of the category. Defaults to None.
 
-    for filename in os.listdir("cogs/util"):
-        if filename.endswith(".py"):
-            await bot.load_extension(f"cogs.util.{filename[:-3]}")
-            print(f"[Cogs - Utilities] Loaded - {filename[:-3]}")
+    Returns:
+        None
+    """
+    if category_name is None:
+        category_name = category
 
-    for filename in os.listdir("cogs/fun"):
+    for filename in os.listdir(f"cogs/{category}"):
         if filename.endswith(".py"):
-            await bot.load_extension(f"cogs.fun.{filename[:-3]}")
-            print(f"[Cogs - Fun] Loaded - {filename[:-3]}")
-    
-    if pev_module:
-        for filename in os.listdir("cogs/pev"):
-            if filename.endswith(".py"):
-                await bot.load_extension(f"cogs.pev.{filename[:-3]}")
-                print(f"[Cogs - PolishEmergencyV] Loaded - {filename[:-3]}")
+            cog_path = f"cogs.{category}.{filename[:-3]}"
+            await bot.load_extension(cog_path)
+            print(f"[Cogs - {category_name}] Loaded - {filename[:-3]}")
 
-    if themepark_module:
-        for filename in os.listdir("cogs/themepark"):
-            if filename.endswith(".py"):
-                await bot.load_extension(f"cogs.themepark.{filename[:-3]}")
-                print(f"[Cogs - ThemePark] Loaded - {filename[:-3]}")
+async def load_all_cogs(bot, modules_mapping):
+    """
+    Load all cogs based on the given modules_mapping.
+
+    Parameters:
+    - bot (discord.ext.commands.Bot): The bot instance.
+    - modules_mapping (dict): A dictionary mapping modules to categories.
+
+    Returns:
+    - None
+    """
+    for module, category in modules_mapping.items():
+        if module is None:
+            # Handle files in the root directory
+            for filename in os.listdir("cogs"):
+                if filename.endswith(".py"):
+                    cog_path = f"cogs.{filename[:-3]}"
+                    await bot.load_extension(cog_path)
+                    print(f"[Cogs] Loaded - {filename[:-3]}")
+        elif os.path.exists(f"cogs/{category}"):
+            await load_cogs_category(bot, category, module)
 
 if __name__ == '__main__':
-    asyncio.run(LoadCogs())
+    pev_module = os.path.exists("cogs/pev")
+    themepark_module = os.path.exists("cogs/themepark")
+
+    modules_mapping = {
+        None: "",  # For cogs at the root level
+        "Moderation": "moderation",
+        "Utilities": "util",
+        "Fun": "fun",
+        "PolishEmergencyV": "pev" if pev_module else None,
+        "ThemePark": "themepark" if themepark_module else None,
+    }
+
+    asyncio.run(load_all_cogs(bot, modules_mapping))
 
 @loop()
 async def status_change():
