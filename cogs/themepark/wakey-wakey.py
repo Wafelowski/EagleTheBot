@@ -1,13 +1,13 @@
 from datetime import datetime
-import discord, json, os.path
+import discord, tomli
 from discord.ext import commands
 from asyncio import sleep
 
-with open("configs/config.json", "r") as config: 
-    data = json.load(config)
-    prefix = data["prefix"]
-    administrators = data["administrators"]
-    moderators = data["moderators"]
+with open("configs/config.toml", "rb") as config:
+    data = tomli.load(config)
+    prefix = data["bot"]["prefix"]
+    administrators = data["bot"]["roles"]["administrators"]
+    moderators = data["bot"]["roles"]["moderators"]
 
 class Pobudka(commands.Cog):
     def __init__(self, bot, intents):

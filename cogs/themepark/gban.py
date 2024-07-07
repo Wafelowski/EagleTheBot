@@ -1,16 +1,16 @@
-import discord, json, re, requests
+import discord, json, re, requests, tomli
 from typing import Optional
 from discord.ext import commands
 from asyncio import sleep
 
-with open("configs/config.json", "r") as config: 
-    data = json.load(config)
-    prefix = data["prefix"]
-    footer = data["footerCopyright"]
-    footer_img = data["footerCopyrightImage"]
-    administrators = data["administrators"]
-    moderators = data["moderators"]
-    steam_api_key = data["steam_api"]
+with open("configs/config.toml", "rb") as config:
+    data = tomli.load(config)
+    prefix = data["bot"]["prefix"]
+    footer = data["modules"]["embeds"]["footerCopyright"]
+    footer_img = data["modules"]["embeds"]["footerCopyrightImage"]
+    administrators = data["bot"]["roles"]["administrators"]
+    moderators = data["bot"]["roles"]["moderators"]
+    steam_api_key = data["api"]["steam_api"]
 
 with open("configs/themeparkConfig.json", "r") as config:
     data = json.load(config)

@@ -1,17 +1,17 @@
-import discord, json, math, time, platform, psutil, requests
+import discord, json, tomli, time, platform, psutil, requests
 from discord.ext import commands
 from datetime import datetime
 from asyncio import sleep
 
-with open("configs/config.json", "r") as config: 
-    data = json.load(config)
-    prefix = data["prefix"]
-    administrators = data["administrators"]
-    moderators = data["moderators"]
-    owner_id = data["ownerID"]
-    footer = data["footerCopyright"]
-    footer_img = data["footerCopyrightImage"]
-    vpnapi_key = data["vpnapi_io"]
+with open("configs/config.toml", "rb") as config:
+    data = tomli.load(config)
+    prefix = data["bot"]["prefix"]
+    administrators = data["bot"]["roles"]["administrators"]
+    moderators = data["bot"]["roles"]["moderators"]
+    owner_id = data["bot"]["ownerID"]
+    footer = data["modules"]["embeds"]["footerCopyright"]
+    footer_img = data["modules"]["embeds"]["footerCopyrightImage"]
+    vpnapi_key = data["api"]["vpnapi_io"]
 
 
 class BotUtilities(commands.Cog):
@@ -65,7 +65,7 @@ class BotUtilities(commands.Cog):
             await ctx.reply(embed=embed, view=BotUtilities.RemoveEmbed_Button(ctx), mention_author=False)
 
     @botinfo.error
-    async def userinfo_error(self, ctx, error):
+    async def botinfo_error(self, ctx, error):
         if isinstance(error, commands.errors.CommandInvokeError):
             error = error.original
         elif isinstance(error, commands.errors.MissingRequiredArgument):

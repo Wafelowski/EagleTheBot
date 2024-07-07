@@ -1,28 +1,27 @@
 import os
 import discord
 import time
-import json
+import tomli
 import logging
 import asyncio
 from discord.ext import commands
 from discord.ext.tasks import loop
 from asyncio import sleep
-from datetime import datetime
 
 
 # Get configuration.json
-with open("configs/config.json", "r") as config: 
-    data = json.load(config)
-    prefix = data["prefix"]
-    token = data["token"]
-    owner_id = data["ownerID"]
-    error_channel = data["errorChannel"]
-    footer = data["footerCopyright"]
-    footer_img = data["footerCopyrightImage"]
+with open("configs/config.toml", "rb") as config:
+    data = tomli.load(config)
+    prefix = data["bot"]["prefix"]
+    token = data["bot"]["token"]
+    owner_id = data["bot"]["ownerID"]
+    error_channel = data["bot"]["errorChannel"]
+    footer = data["modules"]["embeds"]["footerCopyright"]
+    footer_img = data["modules"]["embeds"]["footerCopyrightImage"]
 
-    status_list = data["statusList"]
-    pev_module = data["pevModule"]
-    themepark_module = data["themeparkModule"]
+    status_list = data["modules"]["statusList"]
+    pev_module = data["modules"]["pev"]
+    themepark_module = data["modules"]["themepark"]
 
 if token == "TOKEN":
     print("Błędny token.")
@@ -45,7 +44,7 @@ class EagleBot(commands.Bot):
         print(f"""Zalogowano jako {self.user}
 Discord.py - {discord.__version__}
 Bot by Wafelowski.dev""")
-        if status_list != False:
+        if status_list["active"] != False:
             status_change.start()
         # await self.load_extension(...)
 
@@ -128,7 +127,7 @@ async def status_change():
     Returns:
         None
     """
-    for status in status_list:
+    for status in status_list["list"]:
         statusType = eval(f"discord.ActivityType.{status[0]}")
         await bot.change_presence(activity=discord.Activity(type=statusType, name=status[1]))
         await sleep(int(status[2]))

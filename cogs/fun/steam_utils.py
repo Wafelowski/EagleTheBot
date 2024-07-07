@@ -1,15 +1,15 @@
-import discord, json, re, requests
+import discord, tomli, re, requests
 from typing import Optional
 from datetime import datetime
 from discord.ext import commands
 from asyncio import sleep
 
-with open("configs/config.json", "r") as config: 
-    data = json.load(config)
-    prefix = data["prefix"]
-    footer = data["footerCopyright"]
-    footer_img = data["footerCopyrightImage"]
-    steam_api_key = data["steam_api"]
+with open("configs/config.toml", "rb") as config:
+    data = tomli.load(config)
+    prefix = data["bot"]["prefix"]
+    footer = data["modules"]["embeds"]["footerCopyright"]
+    footer_img = data["modules"]["embeds"]["footerCopyrightImage"]
+    steam_api_key = data["api"]["steam_api"]
 
 
 class SteamUtils(commands.Cog):

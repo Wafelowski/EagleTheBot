@@ -1,17 +1,17 @@
-import json
+import tomli
 import discord
 from discord.ext import commands
 from discord.ext.commands.core import has_permissions
 from discord.ext.commands.errors import MissingPermissions 
 from discord.ext.commands import MemberConverter
 
-with open("configs/config.json", "r") as config: 
-    data = json.load(config)
-    prefix = data["prefix"]
-    footer = data["footerCopyright"]
-    footer_img = data["footerCopyrightImage"]
-    administrators = data["administrators"]
-    moderators = data["moderators"]
+with open("configs/config.toml", "rb") as config:
+    data = tomli.load(config)
+    prefix = data["bot"]["prefix"]
+    footer = data["modules"]["embeds"]["footerCopyright"]
+    footer_img = data["modules"]["embeds"]["footerCopyrightImage"]
+    administrators = data["bot"]["roles"]["administrators"]
+    moderators = data["bot"]["roles"]["moderators"]
 
 class Kicks(commands.Cog):
     def __init__(self, bot, intents):

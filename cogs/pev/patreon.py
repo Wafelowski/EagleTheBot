@@ -1,5 +1,5 @@
 from datetime import datetime
-import discord, json, os
+import discord, json, os, tomli
 from discord.ext import commands
 from discord.ext.commands.core import has_permissions
 from asyncio import sleep
@@ -7,11 +7,11 @@ from asyncio import sleep
 # Role1 is the main role for this cog, usually named Supporter. Command goes through members of this role.
 # Role2 and Role3 and some additional roles, usually named after tiers. These roles are removed additionaly to the main role.
 
-with open("configs/config.json", "r") as config: 
-    data = json.load(config)
-    prefix = data["prefix"]
-    footer = data["footerCopyright"]
-    footer_img = data["footerCopyrightImage"]
+with open("configs/config.toml", "rb") as config:
+    data = tomli.load(config)
+    prefix = data["bot"]["prefix"]
+    footer = data["modules"]["embeds"]["footerCopyright"]
+    footer_img = data["modules"]["embeds"]["footerCopyrightImage"]
 
 with open("configs/pevConfig.json", "r") as config:
     data = json.load(config)
@@ -27,7 +27,7 @@ class Patreon(commands.Cog):
     bot = commands.Bot(command_prefix=prefix, intents=intents)
 
     @bot.command()
-    @has_permissions(administrator=True)  
+    @has_permissions(administrator=True)
     async def patreoncleanup(self, ctx, confirmation):
         if confirmation != "confirm":
             await ctx.reply("Komendę trzeba potwierdzić dodając argument `confirm` do komendy!", mention_author=False)

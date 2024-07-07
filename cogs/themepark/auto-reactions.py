@@ -1,13 +1,13 @@
 from datetime import datetime
-import discord, json, re
+import discord, json, re, tomli
 from discord.ext import commands
 from asyncio import sleep
 
-with open("configs/config.json", "r") as config: 
-    data = json.load(config)
-    prefix = data["prefix"]
-    footer = data["footerCopyright"]
-    footer_img = data["footerCopyrightImage"]
+with open("configs/config.toml", "rb") as config:
+    data = tomli.load(config)
+    prefix = data["bot"]["prefix"]
+    footer = data["modules"]["embeds"]["footerCopyright"]
+    footer_img = data["modules"]["embeds"]["footerCopyrightImage"]
 
 with open("configs/themeparkConfig.json", "r") as config:
     data = json.load(config)

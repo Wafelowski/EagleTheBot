@@ -1,17 +1,16 @@
 from datetime import datetime
-import discord, json, os.path
+import discord, tomli
 from discord.ext import commands
-from asyncio import sleep
 
-with open("configs/config.json", "r") as config: 
-    data = json.load(config)
-    prefix = data["prefix"]
+with open("configs/config.toml", "rb") as config:
+    data = tomli.load(config)
+    prefix = data["bot"]["prefix"]
     p = prefix
-    administrators = data["administrators"]
-    moderators = data["moderators"]
-    owner_id = data["ownerID"]
-    footer = data["footerCopyright"]
-    footer_img = data["footerCopyrightImage"]
+    administrators = data["bot"]["roles"]["administrators"]
+    moderators = data["bot"]["roles"]["moderators"]
+    owner_id = data["bot"]["ownerID"]
+    footer = data["modules"]["embeds"]["footerCopyright"]
+    footer_img = data["modules"]["embeds"]["footerCopyrightImage"]
 
 
 class Help(commands.Cog):

@@ -1,17 +1,17 @@
-import discord, datetime, json
+import discord, datetime, tomli
 from discord.ext import commands
 from discord.ext.commands.core import has_permissions
 
-with open("configs/config.json", "r") as config: 
-    data = json.load(config)
-    prefix = data["prefix"]
-    footer = data["footerCopyright"]
-    footer_img = data["footerCopyrightImage"]
-    administrators = data["administrators"]
-    moderators = data["moderators"]
-    forbidden_roles = data["forbiddenRoles"]
-    verif_roles = data["verifRoles"]
-    anti_alt_channel = data["antiAltChannel"]
+with open("configs/config.toml", "rb") as config:
+    data = tomli.load(config)
+    prefix = data["bot"]["prefix"]
+    footer = data["modules"]["embeds"]["footerCopyright"]
+    footer_img = data["modules"]["embeds"]["footerCopyrightImage"]
+    administrators = data["bot"]["roles"]["administrators"]
+    moderators = data["bot"]["roles"]["moderators"]
+    forbidden_roles = data["modules"]["pev"]["forbiddenRoles"]
+    verif_roles = data["modules"]["pev"]["verifRoles"]
+    anti_alt_channel = data["modules"]["pev"]["antiAltChannel"]
 
 class AntiAlt(commands.Cog):
     def __init__(self, bot, intents):

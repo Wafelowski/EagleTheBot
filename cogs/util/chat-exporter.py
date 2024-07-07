@@ -1,14 +1,14 @@
 from asyncio import sleep
-import discord, io, json, chat_exporter
+import discord, io, tomli, chat_exporter
 from discord.ext import commands
 
-with open("configs/config.json", "r") as config: 
-    data = json.load(config)
-    prefix = data["prefix"]
-    footer = data["footerCopyright"]
-    footer_img = data["footerCopyrightImage"]
-    administrators = data["administrators"]
-    moderators = data["moderators"]
+with open("configs/config.toml", "rb") as config:
+    data = tomli.load(config)
+    prefix = data["bot"]["prefix"]
+    footer = data["modules"]["embeds"]["footerCopyright"]
+    footer_img = data["modules"]["embeds"]["footerCopyrightImage"]
+    administrators = data["bot"]["roles"]["administrators"]
+    moderators = data["bot"]["roles"]["moderators"]
 
 
 class ChatExporter(commands.Cog):
