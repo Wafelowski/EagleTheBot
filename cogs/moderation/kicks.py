@@ -59,8 +59,8 @@ class Kicks(commands.Cog):
 
         reason = reason.replace('-s', '')
         description = f"""**Wyrzucono użytkownika.**\n
-        **Użytkownik**: <@{member.id}> ({member.name}#{member.discriminator}) 
-        **Administrator**: <@{ctx.author.id}> ({ctx.author.id}) 
+        **Użytkownik**: {member.mention} ({member.name}#{member.discriminator}) 
+        **Administrator**: {ctx.author.mention} ({ctx.author.id}) 
         **Powód**: {reason} {silentMsg}"""
         embed2=discord.Embed(description=description, color=0xff0000, timestamp=ctx.message.created_at)
         embed2.set_author(name=ctx.guild.name)

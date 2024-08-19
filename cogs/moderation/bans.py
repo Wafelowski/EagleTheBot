@@ -69,8 +69,8 @@ class Bans(commands.Cog):
 
         reason = reason.replace('-s', '')
         description = f"""**Nadano banicję.**\n
-        **Użytkownik**: <@{member.mention}> ({member.name}#{member.discriminator})
-        **Administrator**: <@{ctx.author.mention}> ({ctx.author.name}#{ctx.author.discriminator})
+        **Użytkownik**: {member.mention} ({member.name}#{member.discriminator})
+        **Administrator**: {ctx.author.mention} ({ctx.author.name}#{ctx.author.discriminator})
         **Powód**: {reason} {silentMsg} \n{daysMsg}"""
         embed2=discord.Embed(description=description, color=0xff0000, timestamp=ctx.message.created_at)
         embed2.set_author(name=ctx.guild.name)
