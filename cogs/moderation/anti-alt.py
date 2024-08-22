@@ -9,9 +9,10 @@ with open("configs/config.toml", "rb") as config:
     footer_img = data["modules"]["embeds"]["footerCopyrightImage"]
     administrators = data["bot"]["roles"]["administrators"]
     moderators = data["bot"]["roles"]["moderators"]
-    forbidden_roles = data["modules"]["pev"]["forbiddenRoles"]
-    verif_roles = data["modules"]["pev"]["verifRoles"]
-    anti_alt_channel = data["modules"]["pev"]["antiAltChannel"]
+    anti_alt_active = data["modules"]["anti_alt"]["active"]
+    forbidden_roles = data["modules"]["anti_alt"]["forbiddenRoles"]
+    verif_roles = data["modules"]["anti_alt"]["verifRoles"]
+    anti_alt_channel = data["modules"]["anti_alt"]["antiAltChannel"]
 
 class AntiAlt(commands.Cog):
     def __init__(self, bot, intents):
@@ -23,6 +24,8 @@ class AntiAlt(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_update(self, before, after):
+        if not anti_alt_active:
+            return
         if verif_roles == [] or forbidden_roles == []:
             return
         if len(before.roles) < len(after.roles):
