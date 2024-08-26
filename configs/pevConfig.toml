@@ -1,0 +1,13 @@
+[pevmp]
+	[pevmp.api]
+	url = "https://pevmp.polishemergencyv.com/api/"
+	token = "TOKEN IS TO BE SET INSIDE MAIN CONFIG FILE!"
+	create_token = false # Set to true, then set a proper password in main config file.
+	token_id = 7 # This is the ID of the token that will be used to authenticate with the PEVMP API. During creation, not used.
+	name = "PolishEmergencyV Eagle"
+
+[patreon]
+role_1 = 531965941958049833
+role_2 = 788091673384058942
+role_3 = 788092090172440648
+

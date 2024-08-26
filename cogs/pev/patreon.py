@@ -13,11 +13,11 @@ with open("configs/config.toml", "rb") as config:
     footer = data["modules"]["embeds"]["footerCopyright"]
     footer_img = data["modules"]["embeds"]["footerCopyrightImage"]
 
-with open("configs/pevConfig.json", "r") as config:
+with open("configs/pevConfig.tomlo", "rb") as config:
     data = json.load(config)
-    role1 = data["role_1"]
-    role2 = data["role_2"]
-    role3 = data["role_3"]
+    role1 = data["patreon"]["role_1"]
+    role2 = data["patreon"]["role_2"]
+    role3 = data["patreon"]["role_3"]
 
 class Patreon(commands.Cog):
     def __init__(self, bot, intents):

@@ -1,0 +1,53 @@
+# Made by Wafelowski
+# https://wafelowski.pl
+
+[bot]
+prefix = "!"
+token = "TOKEN_GOES_HERE"
+errorChannel = 123456789
+ownerID = "YOUR_ID"
+debug = false
+
+    [bot.roles]
+    administrators = [123456789, 123456789]
+	moderators = [123456789, 123456789]
+
+[modules]
+
+	[modules.statusList]
+	active = true
+	list = [
+		["watching", "TueYube", 120], 
+		["competing", "in games", 120],
+		["playing", "Borlox", 120],
+		["listening", "music", 120]
+	]
+
+	[modules.anti_alt]
+	active = false
+	verifRoles = [123456789] # Whenever user has one of these roles, forbiddenRoles can not be applied.
+	forbiddenRoles = [123456789, 123456789]
+	antiAltChannel = 123456789 # Channel ID where the bot will send a message when a user has forbidden role applied
+
+	[modules.pev]
+	active = false
+
+	[modules.themepark]
+	active = false
+
+	[modules.embeds]
+	authorImage = "https://i.imgur.com/g3a3tLo.png"
+	footerCopyright = "wafelowski.pl"
+	footerCopyrightImage = "https://i.imgur.com/g3a3tLo.png"
+
+[database]
+server = "127.0.0.1"
+ports = [ 3306 ]
+user = "eagle"
+password = "DATABASE_PASSWORD"
+
+[api]
+steam_api = "STEAM_API_KEY"
+vpnapi_io = "VPNAPI_KEY"
+pevmp_api = "PEMVP_API_KEY" # Some useless keys, most likely won't be used by you
+pevmp_api_create_key = "PEVMP_API_KEY" # This password is used to create a PEVMP API token. Do not share
