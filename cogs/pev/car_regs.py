@@ -1,5 +1,5 @@
 from datetime import datetime
-import discord, json, os
+import discord, tomli, re
 from discord.ext import commands
 from discord.ext.commands.core import has_permissions
 from asyncio import sleep
@@ -9,27 +9,46 @@ from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 
-with open("configs/config.json", "r") as config: 
-    data = json.load(config)
-    prefix = data["prefix"]
-    footer = data["footerCopyright"]
-    footer_img = data["footerCopyrightImage"]
+with open("configs/config.toml", "rb") as config:
+    data = tomli.load(config)
+    prefix = data["bot"]["prefix"]
+    footer = data["modules"]["embeds"]["footerCopyright"]
+    footer_img = data["modules"]["embeds"]["footerCopyrightImage"]
 
 class CarRegistrations(commands.Cog):
     def __init__(self, bot, intents):
         self.bot = bot
 
     intents = discord.Intents.all()
-    bot = commands.Bot(command_prefix=prefix, intents=intents)
+    bot = commands.Bot(command_prefix=prefix, intents = intents)
+
+    def check_word_pattern(word):
+        patterns = [
+            1, r'^[A-Za-z]{3}[A-Za-z]\d{3}$',       # 3L 1L_3C
+            # 2, r'^[A-Za-z]{3}\d{2}[A-Za-z]{2}$',    # 3L 2C_2L
+            # 3, r'^[A-Za-z]{3}\d[A-Za-z]{2}\d$',     # 3L 1C_2L_1C
+            # 4, r'^[A-Za-z]{3}\d{2}[A-Za-z]\d$',     # 3L 2C_1L_1C
+            5, r'^[A-Za-z]{2}\d{4}[A-Za-z]$',       # 2L 4C_1L
+            # 6, r'^[A-Za-z]{2}\d{5}$',               # 2L 5C
+        ]
+
+        for pattern in patterns:
+            if re.match(pattern, word):
+                return pattern[0]
+        return False
 
     @bot.command()
-    @commands.cooldown(1, 30, commands.BucketType.user) 
+    @commands.cooldown(1, 30, commands.BucketType.user) # DEBUG 
     async def rejestracja(self, ctx, reg_prefix, reg_suffix):
-        if (len(reg_prefix) != 3) or (len(reg_suffix) > 4):
-            return await ctx.reply("Komenda nie wspiera na ten moment innego formatu niż XXX X???. Gdzie X to wymagany znak, a ? to dowolny znak.", mention_author=False)
-
-
-        img = Image.open('db/pev/rejestracja.png')
+        pattern = CarRegistrations.check_word_pattern(reg_prefix+reg_suffix)
+        if pattern == 0 or pattern == False:
+            return await ctx.reply("Nieprawidłowy format rejestracji! Dostępne formaty to: \n> - XX X??? \n> - XXX X???? \nGdzie X oznacza wymagany znak, a ? opcjonalny.", mention_author=False)
+    
+        # img = Image.open('db/pev/rejestracja.png') # DISABLED, no point in using it
+        if pattern == 1:
+            img = Image.open('db/pev/rejestracja-3L-1L3C.png')
+        elif pattern == 5:
+            img = Image.open('db/pev/rejestracja-2L-4C1L.png')
         img_process = ImageDraw.Draw(img)
 
         # Znaczek PL i flaga UE
@@ -44,24 +63,32 @@ class CarRegistrations(commands.Cog):
         for x in temp:
             text.append(x)
 
-        temp = reg_suffix.upper().strip("")
+        temp = reg_suffix.lower().strip("")
         for x in temp:
             text.append(x)
 
-        # Pierwsze 2/3 litery - ZWĘŻONE CZYLI MAŁE
-        # POZOSTAŁE - DUŻE
+        # Pierwsze 2/3 litery - DUŻE
+        # POZOSTAŁE - ZWĘŻONE CZYLI MAŁE
 
         coordinates_triple = [
-            129,
-            285,
-            442,
-            652,
-            809,
-            966,
-            1122
+            162,
+            314,
+            466,
+            694,
+            848,
+            1002,
+            1156
         ]
 
-        coordinates_double = [] #TODO: Fill this
+        coordinates_double = [
+            162,
+            319,
+            547,
+            701,
+            855,
+            1009,
+            1163
+        ] #TODO: Fill this
 
         # Flaga + PL
         img_process.text((22, 16), "*", font=plFont, fill=(255, 255, 0))
@@ -72,7 +99,7 @@ class CarRegistrations(commands.Cog):
             if len(reg_prefix) == 3:
                 img_process.text((coordinates_triple[i], 6), letter, font=font, fill=(0, 0, 0))
             elif len(reg_prefix) == 2:
-                return
+                img_process.text((coordinates_double[i], 6), letter, font=font, fill=(0, 0, 0))
 
         img.save(f'db/temp/{ctx.author.id}.png', "PNG")
 
@@ -85,7 +112,7 @@ class CarRegistrations(commands.Cog):
         )
 
     @rejestracja.error
-    async def patreon_error(self, ctx, error):
+    async def rejestracja_error(self, ctx, error):
         if isinstance(error, commands.errors.CommandInvokeError):
             error = error.original
         elif isinstance(error, commands.errors.MissingRequiredArgument):
