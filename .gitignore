@@ -1,6 +1,7 @@
 # Konfiguracja
 token.json
 configs/config.json
+configs/._*
 # !configs/config-example.json
 configs/config.toml
 
