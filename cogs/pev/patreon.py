@@ -13,8 +13,8 @@ with open("configs/config.toml", "rb") as config:
     footer = data["modules"]["embeds"]["footerCopyright"]
     footer_img = data["modules"]["embeds"]["footerCopyrightImage"]
 
-with open("configs/pevConfig.tomlo", "rb") as config:
-    data = json.load(config)
+with open("configs/pevConfig.toml", "rb") as config:
+    data = tomli.load(config)
     role1 = data["patreon"]["role_1"]
     role2 = data["patreon"]["role_2"]
     role3 = data["patreon"]["role_3"]
