@@ -24,23 +24,23 @@ class CarRegistrations(commands.Cog):
 
     def check_word_pattern(word):
         patterns = [
-            1, r'^[A-Za-z]{3}[A-Za-z]\d{3}$',       # 3L 1L_3C
-            # 2, r'^[A-Za-z]{3}\d{2}[A-Za-z]{2}$',    # 3L 2C_2L
-            # 3, r'^[A-Za-z]{3}\d[A-Za-z]{2}\d$',     # 3L 1C_2L_1C
-            # 4, r'^[A-Za-z]{3}\d{2}[A-Za-z]\d$',     # 3L 2C_1L_1C
-            5, r'^[A-Za-z]{2}\d{4}[A-Za-z]$',       # 2L 4C_1L
-            # 6, r'^[A-Za-z]{2}\d{5}$',               # 2L 5C
+            [1, r'^[a-zA-Z0-9_.-]{3}[a-zA-Z0-9_.-]{1,4}$'],       # 3L 1L_3C
+            # [2, r'^[A-Za-z]{3}\d{2}[A-Za-z]{2}$'],    # 3L 2C_2L
+            # [3, r'^[A-Za-z]{3}\d[A-Za-z]{2}\d$'],     # 3L 1C_2L_1C
+            # [4, r'^[A-Za-z]{3}\d{2}[A-Za-z]\d$'],     # 3L 2C_1L_1C
+            [5, r'^[A-Za-z]{2}\d{4}[A-Za-z]$'],       # 2L 4C_1L
+            # [6, r'^[A-Za-z]{2}\d{5}$'],               # 2L 5C
         ]
 
         for pattern in patterns:
-            if re.match(pattern, word):
-                return pattern[0]
+            if re.match(pattern[1], word):
+                return pattern[1]
         return False
 
     @bot.command()
-    @commands.cooldown(1, 30, commands.BucketType.user) # DEBUG 
+    @commands.cooldown(1, 30, commands.BucketType.user)
     async def rejestracja(self, ctx, reg_prefix, reg_suffix):
-        pattern = CarRegistrations.check_word_pattern(reg_prefix+reg_suffix)
+        pattern = CarRegistrations.check_word_pattern(f"{reg_prefix} {reg_suffix}")
         if pattern == 0 or pattern == False:
             return await ctx.reply("Nieprawidłowy format rejestracji! Dostępne formaty to: \n> - XX X??? \n> - XXX X???? \nGdzie X oznacza wymagany znak, a ? opcjonalny.", mention_author=False)
     
