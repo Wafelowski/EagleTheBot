@@ -44,18 +44,18 @@ class CarRegistrations(commands.Cog):
         if pattern == 0 or pattern == False:
             return await ctx.reply("Nieprawidłowy format rejestracji! Dostępne formaty to: \n> - XX X??? \n> - XXX X???? \nGdzie X oznacza wymagany znak, a ? opcjonalny.", mention_author=False)
     
-        # img = Image.open('db/pev/rejestracja.png') # DISABLED, no point in using it
+        # img = Image.open('cogs/pev/car_regs/rejestracja.png') # DISABLED, no point in using it
         if pattern == 1:
-            img = Image.open('db/pev/rejestracja-3L-1L3C.png')
+            img = Image.open('cogs/pev/car_regs/rejestracja-3L-1L3C.png')
         elif pattern == 5:
-            img = Image.open('db/pev/rejestracja-2L-4C1L.png')
+            img = Image.open('cogs/pev/car_regs/rejestracja-2L-4C1L.png')
         img_process = ImageDraw.Draw(img)
 
         # Znaczek PL i flaga UE
-        plFont = ImageFont.truetype('db/pev/arklatrs.ttf', 240)
+        plFont = ImageFont.truetype('cogs/pev/car_regs/arklatrs.ttf', 240)
 
         # Tekst
-        font = ImageFont.truetype('db/pev/arklatrs.ttf', 260)
+        font = ImageFont.truetype('cogs/pev/car_regs/arklatrs.ttf', 260)
 
         text = []
 
