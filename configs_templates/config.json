@@ -1,0 +1,76 @@
+{
+    "_Separator1_": 	"---------------------------",
+	"_MainSettings_": 	"------ Main Settings ------",
+	"_Separator2_": 	"---------------------------",
+	
+	"prefix": "!",
+	"token": "TOKEN_GOES_HERE",
+	"errorChannel": 123456789,
+	"ownerID": "YOUR_ID",
+	"debug": "false",
+
+
+	"_Separator5_": 	"---------------------------",
+	"_Staff1_": 		"---------- Roles ----------",
+	"_Staff2_": 		"------- Can be empty ------",
+	"_Separator6_": 	"---------------------------",
+
+	"administrators": [860610701462470666, 860610775772823563],
+	"moderators": [860543081324478474, 860610858949672970],
+
+
+	"_Separator7_": 	"---------------------------",
+	"_Modules1_": 		"--------- Modules ---------",
+	"_Modules2_": 		"- Set to false to disable -",
+	"_Separator8_": 	"---------------------------",
+
+	"statusList": [
+		["watching", "YouTube", 120], 
+		["competing", "in games", 120],
+		["playing", "Borlox", 120],
+		["listening", "music", 120]
+	],
+	"pevModule": false,
+	"themeparkModule": false,
+
+
+	"_Separator9_": 	"---------------------------",
+	"_Database_": 		"---- Database Settings ----",
+	"_Separator10_": 	"---------------------------",
+
+	"databaseHost": "127.0.0.1",
+	"databaseUser": "eagle",
+	"databasePassword": "password_goes_here",
+	"databasePort": 3306,
+
+
+	"_Separator11_": 	"---------------------------",
+	"_ApiKeys_": 		"----- API Secret Keys -----",
+	"_Separator12_": 	"---------------------------",
+
+	"steam_api": "API_KEY_GOES_HERE",
+	"vpnapi_io": "API_KEY_GOES_HERE",
+
+
+	"_Separator13_": 	"---------------------------",
+	"_AntiAlt_": 		"---- Anti Alt Settings ----",
+	"_Separator14_": 	"---------------------------",
+
+	"verifRoles": [860543081324478474, 860610858949672970],
+	"forbiddenRoles": [860543081324478474, 860610858949672970],
+	"antiAltChannel": 690185755989114885,
+
+
+	"_Separator94_": 	"---------------------------",
+	"_Embeds_": 		"------ Embed Settings -----",
+	"_Separator95_": 	"---------------------------",
+
+	"authorImage": "https://i.imgur.com/g3a3tLo.png",
+	"footerCopyright": "Wafelowski",
+	"footerCopyrightImage": "https://i.imgur.com/g3a3tLo.png",
+
+
+	"_Separator98_": 	"---------------------------",
+	"_Wafel_": 			"-------- Wafelowski -------",
+	"_Separator99_": 	"---------------------------"
+}

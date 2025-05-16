@@ -1,0 +1,26 @@
+{
+	"_Separator1_": 	"---------------------------",
+	"_MainSettings_": 	"-------Main Settings-------",
+	"_Separator2_": 	"---------------------------",
+	
+	"_Separator7_": 	"---------------------------",
+	"_Patreon_": 		"---- Patreon SubModule ----",
+	"_Separator8_": 	"---------------------------",
+
+	"role_1": 111111111111111,
+    "role_2": 222222222222222,
+    "role_3": 333333333333333,
+
+	"_Separator9_": 	"----------------------------",
+	"_Invision_": 		"---- Invision Submodule ----",
+	"_Separator10_": 	"----------------------------",
+
+	"invision_db_address": "IP_ADDRESS",
+	"invision_db": "Database Name",
+	"invision_db_user": "Database Login",
+	"invision_db_password": "Database Password",
+
+	"_Separator98_": 	"---------------------------",
+	"_Wafel_": 			"---------Wafelowski--------",
+	"_Separator99_": 	"---------------------------"
+}
