@@ -1,4 +1,4 @@
-import tomli, discord, re
+import tomli, discord, re, json
 from discord.ext import commands
 from discord.ext.commands.core import has_permissions
 from discord.ext.commands import MemberConverter
@@ -208,6 +208,43 @@ class Bans(commands.Cog):
             raise error
         else:
             await ctx.send(f"Wystąpił błąd! **Treść**: \n```{error}```")
+
+    @bot.command()
+    @commands.check_any(commands.has_any_role(*staff), commands.has_guild_permissions(ban_members=True))
+    async def getbans(self, ctx, *, args):
+        try:
+            server_id = int(args)
+            guild = self.bot.get_guild(server_id)
+
+            if guild is None:
+                await ctx.send("Guild not found. Please provide a valid server ID.")
+                return
+
+            # bans = await guild.bans(limit=2000)
+            bans = [entry async for entry in guild.bans(limit=2000)]
+            ban_list = []
+            for ban_entry in bans:
+                ban_list.append({
+                    "user_id": ban_entry.user.id,
+                    "username": str(ban_entry.user),
+                    "reason": ban_entry.reason,
+                })
+
+            # Save to a JSON file
+            file_name = f"bans_{server_id}.json"
+            with open(file_name, "w") as json_file:
+                json.dump(ban_list, json_file, indent=4)
+
+            await ctx.reply(content=f"Wyeksportowano {len(ban_list)} banów", file=discord.File(file_name))
+
+        except ValueError:
+            await ctx.send("Please provide a valid numeric server ID.")
+
+        except discord.Forbidden:
+            await ctx.send("I don't have permission to fetch bans for this server.")
+
+        except Exception as e:
+            await ctx.send(f"An error occurred: {e}")
 
 async def setup(bot):
     intents = discord.Intents.default()
