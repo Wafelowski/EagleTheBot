@@ -43,7 +43,7 @@ class EagleBot(commands.Bot):
     async def setup_hook(self):
         print(f"""Zalogowano jako {self.user}
 Discord.py - {discord.__version__}
-Bot by Wafelowski.dev""")
+Bot by Wafelowski""")
         if status_list["active"] != False:
             status_change.start()
         # await self.load_extension(...)
