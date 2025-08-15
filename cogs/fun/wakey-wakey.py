@@ -99,6 +99,7 @@ class Pobudka(commands.Cog):
             raise error
 
 async def setup(bot):
-    intents = discord.Intents.default()
-    intents.members = True
-    await bot.add_cog(Pobudka(bot, intents=intents))
+    pass
+    # intents = discord.Intents.default()
+    # intents.members = True
+    # await bot.add_cog(Pobudka(bot, intents=intents))
