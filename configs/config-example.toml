@@ -32,8 +32,12 @@ debug = false
 	[modules.pev]
 	active = false
 
-	[modules.themepark]
-	active = false
+	[modules.fun]
+	active = true
+	auto_react = false
+		[modules.fun.auto_reactions]
+		123456789012345678 = ["❤", "😊"]
+		987654321098765432 = ["😂", "🔥", "<:customEmoji:112233445566778899>"]
 
 	[modules.embeds]
 	authorImage = "https://i.imgur.com/g3a3tLo.png"
