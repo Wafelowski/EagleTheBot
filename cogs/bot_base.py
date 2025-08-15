@@ -22,13 +22,13 @@ class BotBase(commands.Cog):
 
     # def getConfigValue(self, config_key, key):
     #     # check if file exists
-    #     if not os.path.isfile(f"configs/{config_key}-config.json"):
-    #         print(f"Nie znaleziono pliku konfiguracyjnego {config_key}-config.json!")
-    #         # sendError(f"Nie znaleziono pliku konfiguracyjnego {config_key}-config.json!")
+    #     if not os.path.isfile(f"configs/{config_key}-config.toml"):
+    #         print(f"Nie znaleziono pliku konfiguracyjnego {config_key}-config.toml!")
+    #         # sendError(f"Nie znaleziono pliku konfiguracyjnego {config_key}-config.toml!")
     #         return False
 
-    #     with open(f"configs/{config_key}-config.json", "r") as config: 
-    #         data = json.load(config)
+    #     with open(f"configs/{config_key}-config.toml", "r") as config: 
+    #         data = tomli.load(config)
     #         return data[key]
 
 async def setup(bot):

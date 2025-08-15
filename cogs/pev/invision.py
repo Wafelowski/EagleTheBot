@@ -1,5 +1,5 @@
 from datetime import datetime
-import discord, json, os
+import discord, json, tomli
 from discord.ext import commands
 from discord.ext.commands.core import has_permissions
 from asyncio import sleep
@@ -7,13 +7,13 @@ from asyncio import sleep
 # checkuser
 import re
 
-with open("configs/config.json", "r") as config: 
-    data = json.load(config)
-    prefix = data["prefix"]
-    footer = data["footerCopyright"]
-    footer_img = data["footerCopyrightImage"]
-    administrators = data["administrators"]
-    moderators = data["moderators"]
+with open("configs/config.toml", "rb") as config:
+    data = tomli.load(config)
+    prefix = data["bot"]["prefix"]
+    footer = data["modules"]["embeds"]["footerCopyright"]
+    footer_img = data["modules"]["embeds"]["footerCopyrightImage"]
+    administrators = data["bot"]["roles"]["administrators"]
+    moderators = data["bot"]["roles"]["moderators"]
 
 class Invision(commands.Cog):
     def __init__(self, bot, intents):
