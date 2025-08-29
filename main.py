@@ -21,7 +21,6 @@ with open("configs/config.toml", "rb") as config:
 
     status_list = data["modules"]["statusList"]
     pev_module = data["modules"]["pev"]
-    themepark_module = data["modules"]["themepark"]
 
 if token == "TOKEN":
     print("Błędny token.")
@@ -96,7 +95,6 @@ async def load_all_cogs(bot, modules_mapping):
 
 if __name__ == '__main__':
     pev_module = os.path.exists("cogs/pev")
-    themepark_module = os.path.exists("cogs/themepark")
 
     modules_mapping = {
         None: "",  # For cogs at the root level
@@ -104,7 +102,6 @@ if __name__ == '__main__':
         "Utilities": "util",
         "Fun": "fun",
         "PolishEmergencyV": "pev" if pev_module else None,
-        "ThemePark": "themepark" if themepark_module else None,
     }
 
     asyncio.run(load_all_cogs(bot, modules_mapping))
