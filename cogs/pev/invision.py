@@ -1,8 +1,6 @@
-from datetime import datetime
-import discord, json, tomli
+import discord, tomli
 from discord.ext import commands
-from discord.ext.commands.core import has_permissions
-from asyncio import sleep
+from pev_db import execute_query, get_connection
 
 # checkuser
 import re
@@ -34,9 +32,22 @@ class Invision(commands.Cog):
         else:
             return await ctx.reply(f"Nie podano wszystkich argumentów! \n```{prefix}checkuser <profil>\n<profil> - link do profilu lub ID użytkownika znajdujące się w linku\n```", mention_author=False)
         
-        
+        print(profile)
+
+        # from profile get id, for example "2-wafel"
+
+        DB = get_connection()
 
 
+        # 
+
+        async with DB.cursor() as cursor:
+            await cursor.execute("SELECT * FROM users WHERE profile_id = %s", (profile,))
+            result = await cursor.fetchone()
+            if result:
+                await ctx.reply(f"Znaleziono użytkownika: {result['username']}", mention_author=False)
+            else:
+                await ctx.reply("Nie znaleziono użytkownika.", mention_author=False)
 
     @checkuser.error
     async def checkuser_error(self, ctx, error):
