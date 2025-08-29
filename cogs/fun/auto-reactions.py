@@ -19,23 +19,17 @@ class Reactions(commands.Cog):
     intents = discord.Intents.all()
     bot = commands.Bot(command_prefix=prefix, intents=intents)
 
-    @bot.command()
-    async def autoreact(self, ctx):
-        print(auto_reactions, type(auto_reactions))
-        await ctx.reply(f"Auto reactions: {auto_reactions}", mention_author=False)
-
     # Convert keys from string to int (TOML keys are strings by default)
     auto_reactions = {int(k): v for k, v in auto_reactions.items()}
 
     @commands.Cog.listener()
     async def on_message(self, message):
+        if not active:
+            return
         if message.author.id == self.bot.user.id:
             return  # Ignore bot's own messages
         
-        print(message)
-
         reactions = auto_reactions.get(str(message.channel.id))
-        print(reactions, type(reactions))
 
         if not reactions:
             return
@@ -67,6 +61,5 @@ class Reactions(commands.Cog):
 async def setup(bot):
     intents = discord.Intents.default()
     intents.members = True
-    if not auto_reactions or not active:
-        pass
-    await bot.add_cog(Reactions(bot, intents=intents))
+    if auto_reactions and active:
+        await bot.add_cog(Reactions(bot, intents=intents))
