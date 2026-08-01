@@ -21,6 +21,7 @@ with open("configs/config.toml", "rb") as config:
 
     status_list = data["modules"]["statusList"]
     pev_module = data["modules"]["pev"]
+    ignored_cogs = data["modules"]["ignored_cogs"]
 
 if token == "TOKEN":
     print("Błędny token.")
@@ -66,7 +67,7 @@ async def load_cogs_category(bot, category, category_name=None):
         category_name = category
 
     for filename in os.listdir(f"cogs/{category}"):
-        if filename.endswith(".py"):
+        if filename.endswith(".py") and filename not in ignored_cogs:
             cog_path = f"cogs.{category}.{filename[:-3]}"
             await bot.load_extension(cog_path)
             print(f"[Cogs - {category_name}] Loaded - {filename[:-3]}")
@@ -86,7 +87,7 @@ async def load_all_cogs(bot, modules_mapping):
         if module is None:
             # Handle files in the root directory
             for filename in os.listdir("cogs"):
-                if filename.endswith(".py"):
+                if filename.endswith(".py") and filename not in ignored_cogs:
                     cog_path = f"cogs.{filename[:-3]}"
                     await bot.load_extension(cog_path)
                     print(f"[Cogs] Loaded - {filename[:-3]}")
